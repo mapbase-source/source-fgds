@@ -50,11 +50,15 @@
 // Designed to be used on both NPCs and entities deriving from Studiomodel.
 @BaseClass = StudiomodelBase
 [
+	lightingorigin(target_destination) : "Lighting Origin" : "" : "Select an entity to specify a location to sample lighting from, instead of using this entity's origin."
+
 	// Inputs
 	input Skin(integer) : "Changes the model skin to the specified number."
 	input SetModel(string) : "Sets this entity's model. Must include 'models/' as well as the extension."
+	input BecomeRagdoll(void) : "This entity will instantly become a ragdoll with ZERO force (just go limp). OnDeath, OnHalfHealth, etc. outputs will **NOT** BE FIRED."
 	input CreateSeparateRagdoll(void) : "Creates a separate serverside ragdoll at this entity's origin."
 	input CreateSeparateRagdollClient(void) : "Creates a separate clientside ragdoll at this entity's origin."
+	input SetLightingOrigin(target_destination) : "Sets this entity's lighting origin." // Was this really not in the FGD before?
 	
 	// Outputs
 	output OnIgnite(void) : "Fires when this object catches fire."
@@ -685,7 +689,6 @@
 	input IgnoreDangerSounds(float) : "Ignore danger sounds for the specified number of seconds."
 	input ForceInteractionWithNPC(target_destination) : "Force the NPC to use a dynamic interaction with another NPC. Parameter format: <target NPC name> <dynamic interaction name>"
 	input UpdateEnemyMemory(target_destination) : "Update (or Create) this NPC's memory of an enemy and its location"
-	input BecomeRagdoll(void) : "This NPC will instantly become a ragdoll with ZERO force (just go limp). OnDeath, OnHalfHealth, etc. Outputs will **NOT** BE FIRED."
 	
 	input SetMoveType(integer) : "Sets this NPC's movetype."
 	input AddCapabilities(integer) : "Adds capabilities to this NPC."
@@ -1511,7 +1514,7 @@
 [
 ]
 
-@SolidClass base(Targetname) color(0 128 255) = func_areaportalwindow : 
+@SolidClass base(Targetname) color(0 128 255) sphere(FadeStartDist) sphere(FadeDist) = func_areaportalwindow : 
 	"An entity that can be used to optimize the visibility in a map. If you seal off an area with them, when the viewer moves the specified distance away from them, they will go opaque and the parts inside the area will not be drawn. The 'target' brush model should enclose the func_areaportal window so no parts of it are culled by the window. If you use the optional foreground brush model, then it should enclose the 'target' brush model."
 [
 	target(target_destination)  : "Rendered Window" : : "The name of a brush model to render as the window."
@@ -4289,6 +4292,8 @@
 	health(integer) : "Health (0 = Unbreakable)" : 0
 	soundlockedoverride(sound) : "Locked Sound" : : "Sound played when the player tries to open the door, and fails because it's locked."
 	soundunlockedoverride(sound) : "Unlocked Sound" : : "Sound played when the door is unlocked."
+	
+	lightingorigin(target_destination) : "Lighting Origin" : "" : "Select an entity to specify a location to sample lighting from, instead of using this entity's origin."
 
 	forceclosed(choices) : "Force Closed" : 0 : "If set, this door will close no matter what. Useful for doors that have to close even if the player tries to block them with objects." =
 	[
@@ -5866,31 +5871,34 @@
 
 	Damage(integer) : "Damage" : 0 : "How much damage to inflict."
 	MaxDamage(integer) : "Max Damage" : : "Function not fully understood, likely something related to multidamage"
-	//DamageBonus(integer) : "Damage Bonus" : : "" // No references found, likely unused
-	DamageBonus(integer) : "Damage Bonus" : : ""
+	DamageBonus(integer) : "Damage Bonus" : : "Function unknown, possibly unused"
 ]
 
 @PointClass base(Targetname, PointDamageInfoInit, DamageTypes) iconsprite("editor/point_damageinfo.vmt") = point_damageinfo :
-	"Applies damage with as precise control possible."
+	"Applies damage with full control over the variables of CTakeDamageInfo, providing as much precision as possible."
 [
 	// Keys
-	DamageCustom(integer) : "Damage Custom" : : "Function not fully understood, likely something related to multiplayer"
-	MaxDamage(integer) : "Max Damage" : : "Function not fully understood, likely something related to multidamage"
-	//DamageBonus(integer) : "Damage Bonus" : : "" // No references found, likely unused
-	//DamageStats(integer) : "Damage Stats" : : "" // No references found, likely unused
+	DamageCustom(integer) : "Damage Custom" : : "A special, game-specific identifier mostly used in mods or multiplayer games."
+	DamageStats(integer) : "Damage Stats" : : "Function unknown, possibly unused"
 	ForceFriendlyFire(choices) : "Force Friendly Fire" : 0 : "Disregards friendly fire safechecks and applies the damage regardless of the attacker's relationship to the victim." =
 	[
 		0 : "No"
 		1 : "Yes"
 	]
+	
+	AmmoType(integer) : "Ammo Type" : : "Uses a specific ammo type by order in the ammo def. (not to be confused with damage type)"
+	PlayerPenetrationCount(integer) : "Player Penetration Count" : : "Presumably how many players the inflictor has gone through before reaching the current victim. Appears to be unused in singleplayer games."
+	DamagedOtherPlayers(integer) : "Player Penetration Count" : : "Function unknown, possibly unused"
+	
+	DamageForce(vector) : "Damage Force" : "0 0 0" : "The force to apply when the damage is applied."
+	DamagePosition(vector) : "Damage Position" : "0 0 0" : "What position the damage took place."
+	ReportedPosition(vector) : "Reported Position" : "0 0 0" : "Function unknown, possibly related to multidamage (buckshot)"
+	
 	SuppressDeathSound(choices) : "Suppress Death Sound" : 0 : "Attempts to suppress the target entity's death sound." =
 	[
 		0 : "No"
 		1 : "Yes"
 	]
-	DamageForce(vector) : "Damage Force" : "0 0 0" : "The force to apply when the damage is applied."
-	DamagePosition(vector) : "Damage Position" : "0 0 0" : "What position the damage took place."
-	ReportedPosition(vector) : "Reported Position" : "0 0 0" : "I have no idea what this does."
 	
 	// Inputs
 	input SetInflictor(target_destination) : "Sets the inflictor."
@@ -5898,12 +5906,14 @@
 	input SetWeapon(target_destination) : "Sets the weapon."
 	input SetDamage(integer) : "Sets the damage."
 	input SetMaxDamage(integer) : "Sets the max damage."
-	//input SetDamageBonus(integer) : "Sets the damage bonus."
+	input SetDamageBonus(integer) : "Sets the damage bonus."
 	input SetDamageType(integer) : "Sets the damage type."
 	input SetDamageCustom(integer) : "Sets the damage custom."
-	//input SetDamageStats(integer) : "Sets the damage stats."
+	input SetDamageStats(integer) : "Sets the damage stats."
 	input SetForceFriendlyFire(bool) : "Sets force friendly fire."
 	input SetAmmoType(integer) : "Sets the ammo type."
+	input SetPlayerPenetrationCount(integer) : "Sets player penetration count."
+	input SetDamagedOtherPlayers(integer) : "Sets damaged other players."
 	input SetDamageForce(vector) : "Sets the damage force."
 	input SetDamagePosition(vector) : "Sets the damage position."
 	input SetReportedPosition(vector) : "Sets the reported position."
@@ -7365,8 +7375,6 @@
 	// Outputs
 	output OnAnimationBegun(void) : "Fired whenever a new animation has begun playing."
 	output OnAnimationDone(void) : "Fired whenever an animation is complete."
-
-	lightingorigin(target_destination) : "Lighting Origin" : "" : "Select a path_corner entity to specify a location to sample lighting from, instead of using this entity's origin."
 ]
 
 @PointClass base(prop_detail_base) studioprop() = prop_detail : 
