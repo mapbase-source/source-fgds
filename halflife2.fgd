@@ -4930,11 +4930,11 @@
 //-------------------------------------------------------------------------
 @PointClass base(Targetname, Parentname, Angles) studioprop("models/editor/camera.mdl") frustum(FOV,-1,128,250 250 250,-1) = point_camera : "Camera"
 [
-	// MAPBASE TODO: sphere(fogstart) sphere(fogend) seems distracting. Should we add it in anyway?
+	// MAPBASE TODO: sphere(fogstart) sphere(fogend) seems distracting, especially with the frustum. Should we add it in anyway?
 
 	spawnflags(Flags) =
 	[
-		1 : "[1] Start Off" : 0 
+		1 : "[1] Start Off" : 0
 	]
 
 	FOV(float) : "FOV" : 90 : "Field of view in degrees"

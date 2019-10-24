@@ -3827,7 +3827,7 @@
 		1 : "Yes"
 	] 
 	
-	Width(string) : "Width (1-64)" : "2" : "Width of the rope."
+	Width(float) : "Width" : "2" : "Width of the rope."
 
 	TextureScale(string) : "Texture Scale" : "1" : "This changes the texture resolution. The default resolution is 4 pixels per inch. Larger values stretch the texture and smaller values scrunch it up."
 	
@@ -4379,7 +4379,14 @@
 		9 : "256x256"
 	]
 	sides(sidelist) : "Brush faces": : "(Optional) Brushes faces to directly attach to the env_cubemap. Press Pick then click on faces in the 3D View to select them. Use CTRL while clicking to add or remove from the selection."
+	
+	//parallaxobb(target_destination) : "Cubemap Bounds" : : "(Optional) assigns this cubemap a bounding box for parallax correction (brush entity tied to parallax_obb)."
 ]
+
+//@SolidClass = parallax_obb
+//[
+//	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
+//]
 
 @BaseClass = BModelParticleSpawner
 [ 
@@ -6161,7 +6168,7 @@
 		1 : "Yes"
 	]
 	
-	Mapname(string) : "Map Name" : : "logic_externaldata normally uses ''%mapname%_externaldata.txt'', but you could override the map name here to create/access external data intended for other maps. You could also just use this to write to additional external data files whether they're intended for another map or not."
+	Mapname(string) : "Map Name" : : "logic_externaldata normally uses ''<current map's name>_externaldata.txt'', but you could override the map name here to create/access external data intended for other maps. You could also just use this to write to additional external data files whether they're intended for another map or not."
 	
 	// Inputs
 	input WriteKeyValue(string) : "Writes the specified keyvalue. If the keyvalue already exists, it will be overwritten. If not, it will be created. Format is '<key> <value>', like AddOutput. (Spaces after the first will still be incorporated into the value)"
@@ -6652,6 +6659,8 @@
 
 //-------------------------------------------------------------------------
 // 
+// Special Mapbase Entities
+// 
 //-------------------------------------------------------------------------
 
 @PointClass base(Targetname) iconsprite("editor/mapbase_manifest.vmt") color(239 163 14) = mapbase_manifest : "Mounts additional manifest files"
@@ -6672,7 +6681,7 @@
 @PointClass base(Targetname) iconsprite("editor/convar_mod.vmt") color(239 163 14) = game_convar_mod : "Mods cvars"
 [
 	// Keys
-	target(string) : "ConVars" : "" : "The convars to modify. Multiple cvars can be modded with ';', e.g. 'host_timescale 0.25; npc_alyx_interact_manhacks 1'"
+	target(string) : "ConVars" : "" : "The convars to modify. Multiple cvars can be modded with ';', e.g. 'host_timescale 0.5; npc_alyx_interact_manhacks 1'"
 	
 	spawnflags(Flags) =
 	[
@@ -8652,7 +8661,7 @@
 	input TurnFlashlightOff(void) : "Turns the player's flashlight off."
 	
 	input SquadForceSummon(void) : "Forces the player's squad to be resummoned."
-	input SquadForceGoTo(target_destination) : "Forces the player's squad to go to a specific point or entity."
+	input SquadForceGoTo(vector) : "Forces the player's squad to go to the specified point."
 	
 	input EnableGeigerCounter(void) : "Allows the player's geiger counter to respond to radiation if it was prevented before."
 	input DisableGeigerCounter(void) : "Prevents the player's geiger counter from responding to radiation."
