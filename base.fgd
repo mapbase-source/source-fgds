@@ -2086,7 +2086,7 @@
 	input Ignite(void) : "Ignite the target entity."
 ]
 
-@PointClass base(Targetname, DXLevelChoice, Angles) iconsprite("editor/fog_controller.vmt") color(255 255 255) = env_fog_controller : 
+@PointClass base(Targetname, DXLevelChoice, Angles) iconsprite("editor/fog_controller.vmt") sphere(fogstart) sphere(fogend) color(255 255 255) = env_fog_controller : 
 	"An entity that controls the fog and view distance in the map."
 [
 	// Inputs

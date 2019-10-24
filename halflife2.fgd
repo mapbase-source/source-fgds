@@ -1902,11 +1902,13 @@
 		65536 :  "[65536] No Dynamic Light" : 0
 		131072: "[131072] Strider Scout Scanner" : 0
 	]
-
-	spotlightlength(integer) : "SpotlightLength" : 500
-	spotlightwidth(integer) : "SpotlightWidth" : 50	
 	
-	spotlightdisabled(choices) : "SpotlightDisabled" : 0 =
+	CustomFlightSpeed(float) : "Custom Flight Speed" : "0" : "Overrides the scanner's default speed. 0 = use default"
+
+	spotlightlength(integer) : "Spotlight Length" : 500
+	spotlightwidth(integer) : "Spotlight Width" : 50	
+	
+	spotlightdisabled(choices) : "Spotlight Disabled" : 0 =
 	[
 		0 : "No"
 		1 : "Yes"
@@ -1940,7 +1942,7 @@
 	input DisableSpotlight(void) : "DisableSpotlight"
 	input InspectTargetPhoto(target_destination) : "Tells the scanner to photograph the given entity, named by classname or by target name. !activator or !player works here also."
 	input InspectTargetSpotlight(target_destination) : "Tells the scanner to spotlight the given entity, named by classname or by target name. !activator or !player works here also."
-	input InputSetFlightSpeed(integer) : "Sets the flight speed of the scanner"
+	input SetFlightSpeed(integer) : "Sets the flight speed of the scanner"
 	input InputShouldInspect(integer) : "Set whether should inspect or not"
 	input SetFollowTarget(target_destination) : "Set target to follow until told otherwise"
 	input ClearFollowTarget(void) : "Stop following our target"
@@ -4926,8 +4928,10 @@
 // Camera/monitor entities
 //
 //-------------------------------------------------------------------------
-@PointClass base(Targetname, Parentname, Angles) studioprop("models/editor/camera.mdl") = point_camera : "Camera"
+@PointClass base(Targetname, Parentname, Angles) studioprop("models/editor/camera.mdl") frustum(FOV,-1,128,250 250 250,-1) = point_camera : "Camera"
 [
+	// MAPBASE TODO: sphere(fogstart) sphere(fogend) seems distracting. Should we add it in anyway?
+
 	spawnflags(Flags) =
 	[
 		1 : "[1] Start Off" : 0 
