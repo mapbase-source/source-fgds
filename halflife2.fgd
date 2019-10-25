@@ -4928,9 +4928,10 @@
 // Camera/monitor entities
 //
 //-------------------------------------------------------------------------
-@PointClass base(Targetname, Parentname, Angles) studioprop("models/editor/camera.mdl") frustum(FOV,-1,128,250 250 250,-1) = point_camera : "Camera"
+@PointClass base(Targetname, Parentname, Angles) studioprop("models/editor/camera.mdl") frustum(FOV,fogstart,fogend,250 250 250,-1) = point_camera : "Camera"
 [
-	// MAPBASE TODO: sphere(fogstart) sphere(fogend) seems distracting, especially with the frustum. Should we add it in anyway?
+	// MAPBASE: sphere(fogstart) sphere(fogend) is distracting, especially with the frustum.
+	// Instead of using spheres, we just stuck it into the frustum peroperties.
 
 	spawnflags(Flags) =
 	[
