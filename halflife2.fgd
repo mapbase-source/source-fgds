@@ -2401,14 +2401,14 @@
 	m_iszIdle(string) : "Pre Action Idle Animation" : "" : "The name of the sequence (such as 'idle01') or activity (such as 'ACT_IDLE') to play before the action animation if the NPC must wait for the script to be triggered. Use 'Start on Spawn' flag or MoveToPosition input to play this idle animation."
 	m_iszEntry(string) : "Entry Animation" : "" : "The name of the sequence (such as 'reload02') or activity (such as 'ACT_RELOAD') to play when the sequence starts, before transitioning to play the main action sequence."
 	m_iszPlay(string) : "Action Animation" : "" : "The name of the main sequence (such as 'reload02') or activity (such as 'ACT_RELOAD') to play."
-	m_iszPostIdle(string) : "Post Action Idle Animation" : "" : "The name of the sequence (such as 'idle01') or activity (such as 'ACT_IDLE') to play after the action animation."
+	m_iszPostIdle(string) : "Post Action Idle Animation" : "" : "The name of the sequence (such as 'idle01') or activity (such as 'ACT_IDLE') to play after the action animation. If the ''Loop in Post Idle'' spawnflag is not ticked, this will act as an Exit Animation, similar to the Entry Animation."
 	m_iszCustomMove(string) : "Custom Move Animation" : "" : "Used in conjunction with the 'Custom movement' setting for the 'Move to Position' property, specifies the sequence (such as 'crouch_run01') or activity (such as 'ACT_RUN') to use while moving to the scripted position."
-	m_bLoopActionSequence(Choices) : "Loop Action Animation?" : 0 =
+	m_bLoopActionSequence(Choices) : "Loop Action Animation?" : 0 : "Loops the action animation until the sequence is cancelled or interrupted." =
 	[
 		0 : "No"
 		1 : "Yes"
 	]
-	m_bSynchPostIdles(Choices) : "Synch Post Idles?" : 0 =
+	m_bSynchPostIdles(Choices) : "Synch Post Idles?" : 0 : "Causes scripts with the same targetname to immediately play their Post Action Idle Animation when the NPC starts playing the Post Action Idle Animation." =
 	[
 		0 : "No"
 		1 : "Yes"
@@ -2449,6 +2449,7 @@
 	output OnPostIdleEndSequence(void) : "Fires when the post-idle animation completes."
 	output OnCancelSequence(void) : "Fires when the sequence is cancelled."
 	output OnCancelFailedSequence(void) : "Fires when the sequence is cancelled without ever playing (OnCancelSequence will also fire)."
+	output OnPreIdleSequence(void) : "Fires when the pre-idle animation begins."
 	output OnScriptEvent01(void) : "Fires when a 'trigger' anim event occurs while playing the script. Use { event 1003 framenum 1 } in the QC."
 	output OnScriptEvent02(void) : "Fires when a 'trigger' anim event occurs while playing the script. Use { event 1003 framenum 2 } in the QC."
 	output OnScriptEvent03(void) : "Fires when a 'trigger' anim event occurs while playing the script. Use { event 1003 framenum 3 } in the QC."
@@ -4158,7 +4159,7 @@
 //	model(studio) : "Model" : "models/items/item_item_crate.mdl" : "The model of this item_item_crate. Only works when this crate's appearance is set to use a custom model."
 //]
 
-@PointClass base(Targetname, Angles, BaseFadeProp) studio( "models/props_combine/health_charger001.mdl" ) = item_healthcharger : "Health Charger"
+@PointClass base(Targetname, Angles, Parentname, RenderFields, BaseFadeProp) studio( "models/props_combine/health_charger001.mdl" ) = item_healthcharger : "Health Charger"
 [
 	// dmdelay(integer) : "Deathmatch recharge delay" : 0
 	_minlight(string) : "Minimum light level"
@@ -4181,7 +4182,7 @@
 	output OnPlayerUse(void) : "Fired when the player +USEs this charger."
 ]
 
-@PointClass base(Targetname, Angles, BaseFadeProp) studio( "models/props_combine/suit_charger001.mdl" ) = item_suitcharger : "Battery recharger"
+@PointClass base(Targetname, Angles, Parentname, RenderFields, BaseFadeProp) studio( "models/props_combine/suit_charger001.mdl" ) = item_suitcharger : "Battery recharger"
 [
 	// dmdelay(integer) : "Deathmatch recharge delay" : 0
 	_minlight(string) : "Minimum light level"
@@ -4215,7 +4216,7 @@
 // Weapons
 //
 //-------------------------------------------------------------------------
-@BaseClass color(0 0 200) base(Targetname, Angles) sphere(fademindist) sphere(fademaxdist) = Weapon
+@BaseClass color(0 0 200) base(Targetname, Angles, RenderFields) sphere(fademindist) sphere(fademaxdist) = Weapon
 [
 	spawnflags(Flags) =
 	[
