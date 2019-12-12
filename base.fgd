@@ -1036,18 +1036,13 @@
 
 @BaseClass = worldbase
 [
-	message(string) : "Map Description / Title"
+	message(string) : "Map Description / Title" : : "A description/title for your map. This is not used in the code, but it's saved in the VMF and can be used for metadata purposes."
 	skyname(string) : "SkyBox Texture Name" : "sky_day01_01"
-	chaptertitle(string) : "Chapter Title Message" : "" : "Chapter Title that appears onscreen when this level starts."
-	startdark(choices) : "Level Fade In" : 0 =
+	chaptertitle(string) : "Chapter/Savegame Title" : "" : "A ''chapter'' title that this map should identify with. Outside of Mapbase, this is used to make the chapter title appear onscreen when the level starts, but now it can change the message seen in the save/load menus, can be seen in Discord RPC, and the onscreen message behavior is now disabled by default (doesn't affect existing maps) through the ''Display Chapter Title Message'' keyvalue."
+	chaptertitlenomessage(choices) : "Display Chapter Title Message" : 1 : "Controls whether the Chapter Title Message should show up in a generated env_message when the map loads or whether it should only be used for savegame comments and RPC. This would normally be set to ''Yes'' outside of Mapbase." = 
 	[	
-		0 : "No"
-		1 : "Yes"
-	]
-	gametitle(choices) : "Display Game Title" : 0 : "Game Title that appears onscreen when this level starts." = 
-	[	
-		0 : "No"
-		1 : "Yes"
+		0 : "Yes"
+		1 : "No"
 	]
 	newunit(choices) : "New Level Unit" : 0 : "Used to clear out savegame data of previous levels to keep the savegame size as small as possible. Only set it to Yes if the player cannot return to any previous levels." = 
 	[
@@ -1062,6 +1057,16 @@
 	minpropscreenwidth(float) : "End Fade Pixels" : 0 : "Minimum number of pixels wide at which the prop is visible (0 = don't fade out). This number is ignored if the prop has a specific fade distance specified."
 	detailvbsp(string) : "Detail.vbsp file" : "detail.vbsp" : "Detail.vbsp file to use for emitting detail props (found in directory <root>/modname)"
 	detailmaterial(string) : "Detail material file" : "detail/detailsprites" : "Material for detail sprites to use for drawing detail props"
+	startdark(choices) : "Level Fade In" : 0 =
+	[	
+		0 : "No"
+		1 : "Yes"
+	]
+	gametitle(choices) : "Display Game Title" : 0 : "Game Title that appears onscreen when this level starts." = 
+	[	
+		0 : "No"
+		1 : "Yes"
+	]
 	coldworld(choices) : "World is cold" : 0 =
 	[	
 		0 : "No"
@@ -8745,7 +8750,19 @@
 	
 ]
 
-@PointClass base(Parentname, Targetname) size(-8 -8 -8, 8 8 8 ) = env_spritetrail : 
+@PointClass base(Targetname) iconsprite("editor/logic_playerinfo.vmt") = logic_playerinfo : 
+	"An entity that gets basic info about a player, or finds a player by their basic info." 
+[
+	input GetPlayerInfo(target_destination) : "Gets player info from the specified entity. If no entity is passed, this will get the local player."
+	input GetPlayerByID(string) : "Gets a player by their steam ID. Supports wildcards."
+	input GetPlayerByName(string) : "Gets a player by their Steam name. Supports wildcards."
+	
+	output OutUserID(string) : "Outputs a player's user ID."
+	output OutPlayerName(string) : "Outputs a player's Steam name."
+	output OutPlayerEntity(ehandle) : "Outputs a player's entity."
+]
+
+@PointClass base(Targetname, Parentname) size(-8 -8 -8, 8 8 8 ) = env_spritetrail : 
 	"A magical trail you can parent to anything you heart desires."
 [
 	lifetime(float) : "Lifetime" : "0.5"
