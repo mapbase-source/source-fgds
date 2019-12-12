@@ -5094,28 +5094,28 @@
 	"performed and only the OutValue output will be fired."
 [
 	// Keys
-	startvalue(integer) : "Initial Value" : 0 : "Starting value for the counter."
-	min(integer) : "Minimum Legal Value" : 0 : "Minimum legal value for the counter. If min=0 and max=0, no clamping is performed."
-	max(integer) : "Maximum Legal Value" : 0 : "Maximum legal value for the counter. If min=0 and max=0, no clamping is performed."
+	startvalue(float) : "Initial Value" : 0 : "Starting value for the counter."
+	min(float) : "Minimum Legal Value" : 0 : "Minimum legal value for the counter. If min=0 and max=0, no clamping is performed."
+	max(float) : "Maximum Legal Value" : 0 : "Maximum legal value for the counter. If min=0 and max=0, no clamping is performed."
 
 	// Inputs
-	input Add(integer) : "Add an amount to the counter and fire the OutValue output with the result."
-	input Divide(integer): "Divide the counter by an amount and fire the OutValue output with the result."
-	input Multiply(integer): "Multiply the counter by an amount and fire the OutValue output with the result."
-	input SetValue(integer): "Set the counter to a new value and fire the OutValue output with the result."
-	input SetValueNoFire(integer): "Set the counter to a new value without firing any outputs."
-	input Subtract(integer): "Subtract an amount from the counter and fire the OutValue output with the result."
-	input SetHitMax(integer): "Set the upper bound of the counter and fire the OutValue output with the current value."
-	input SetHitMin(integer): "Set the lower bound of the counter and fire the OutValue output with the current value."
-	input GetValue(void): "Causes the counter fire its OnGetValue output with the current value of the counter. Used for polling the counter when you don't want constant updates from the OutValue output."
-	input SetMaxValueNoFire(integer): "Set the upper bound of the counter without firing any outputs."
-	input SetMinValueNoFire(integer): "Set the lower bound of the counter without firing any outputs."
+	input Add(float) : "Add an amount to the counter and fire the OutValue output with the result."
+	input Divide(float): "Divide the counter by an amount and fire the OutValue output with the result."
+	input Multiply(float): "Multiply the counter by an amount and fire the OutValue output with the result."
+	input SetValue(float): "Set the counter to a new value and fire the OutValue output with the result."
+	input SetValueNoFire(float): "Set the counter to a new value without firing any outputs."
+	input Subtract(float): "Subtract an amount from the counter and fire the OutValue output with the result."
+	input SetHitMax(float): "Set the upper bound of the counter and fire the OutValue output with the current value."
+	input SetHitMin(float): "Set the lower bound of the counter and fire the OutValue output with the current value."
+	input GetValue(void): "Causes the counter to fire its OnGetValue output with the current value of the counter. Used for polling the counter when you don't want constant updates from the OutValue output."
+	input SetMaxValueNoFire(float): "Set the upper bound of the counter without firing any outputs."
+	input SetMinValueNoFire(float): "Set the lower bound of the counter without firing any outputs."
 
 	// Outputs
-	output OutValue(integer) : "Fired when the counter value changes."
+	output OutValue(float) : "Fired when the counter value changes."
 	output OnHitMin(void) : "Fired when the counter value meets or goes below the min value. The counter must go back above the min value before the output will fire again."
 	output OnHitMax(void) : "Fired when the counter value meets or exceeds the max value. The counter must go below the max value before the output will fire again."
-	output OnGetValue(integer) : "Fired in response to the GetValue input. Used for polling the counter when you don't want constant updates from the OutValue output."
+	output OnGetValue(float) : "Fired in response to the GetValue input. Used for polling the counter when you don't want constant updates from the OutValue output."
 	output OnChangedFromMin(void) : "Fired when the counter value changes from the minimum value."
 	output OnChangedFromMax(void) : "Fired when the counter value changes from the maximum value."
 ]
@@ -5136,6 +5136,8 @@
 		0 : "No"
 		1 : "Yes"
 	]
+	
+	SetLerpPercent(float) : "Lerp Percent" : "0.5" : "The percentage used by the LerpTo input."
 
 	// Inputs
 	input PreserveValue(bool): "Sets whether this counter's value should be preserved after calculations. 1 = Yes, 0 = No"
@@ -5157,6 +5159,9 @@
 	
 	input RandomInt(string) : "Generates a random integer between the specified bounds. Format = 'lowerbound upperbound', like '22 65'. Fires the OutValue output with the result."
 	input RandomFloat(string) : "Generates a random float between the specified bounds. Format = 'lowerbound upperbound', like '22.5 48.721'. Fires the OutValue output with the result."
+	
+	input LerpTo(float) : "Lerps this counter's value to the specified value based on the lerp percent."
+	input SetLerpPercent(float) : "Sets the lerp percent."
 ]
 
 @PointClass base(Targetname) size(-8 -8 -8, 8 8 8) = logic_lineto : 
@@ -5522,6 +5527,7 @@
 	input GetValue(void): "Causes this entity to fire its OnGetValue output with its current vector. Used for polling the counter when you don't want constant updates from the OutValue output."
 	
 	input Normalize(void): "Normalizes this entity's vector and fires the OutValue output with the result."
+	input NormalizeAngles(void): "Normalizes this entity's vector as angles and fires the OutValue output with the result."
 	
 	input SetX(float) : "Sets this entity's X coordinate."
 	input SetY(float) : "Sets this entity's Y coordinate."
@@ -5585,6 +5591,7 @@
 	input SetTarget(target_destination) : "Sets this entity's target."
 	input GetNumSkins(void) : "Gets the number of skins on the target entity."
 	input LookupSequence(string) : "Looks up the specified sequence on the target entity."
+	input LookupActivity(string) : "Looks up the specified activity on the target entity. Uses the sequence outputs and outputs the first sequence with the given activity."
 
 	// Outputs
 	output OutNumSkins(integer) : "Outputs number of skins."
@@ -5779,6 +5786,7 @@
 	// Inputs
 	input SetValue(float): "Sets the math_generate to a new value and fires the OutValue output with the result, performing all generation from that value."
 	input SetValueNoFire(float): "Sets the math_generate to a new value without firing any outputs."
+	input GetValue(void): "Causes the math_generate to fire its OnGetValue output with the current value. Used for polling the value when you don't want constant updates from the OutValue output."
 	input SetGenerateType(integer) : "Sets the type of generation this math_generate should perform."
 	
 	input Enable(void) : "Enables this entity."
@@ -5787,6 +5795,11 @@
 	
 	// Outputs
 	output OutValue(string) : "Fires each tick while generation is active, passing the value continuously generated by the math_generate."
+	output OnHitMin(void) : "Fired when generation meets the min value. Generation must go back above the min value before the output will fire again."
+	output OnHitMax(void) : "Fired when generation meets the max value. Generation must go below the max value before the output will fire again."
+	output OnGetValue(float) : "Fired in response to the GetValue input. Used for polling the value when you don't want constant updates from the OutValue output."
+	output OnChangedFromMin(void) : "Fired when the current generation value changes from the minimum value."
+	output OnChangedFromMax(void) : "Fired when the current generation value changes from the maximum value."
 ]
 
 //
