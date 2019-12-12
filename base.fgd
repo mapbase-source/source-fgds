@@ -6704,6 +6704,12 @@
 	// Keys
 	target(string) : "ConVars" : "" : "The convars to modify. Multiple cvars can be modded with ';', e.g. 'host_timescale 0.5; npc_alyx_interact_manhacks 1'"
 	
+	UseServer(choices) : "Command from Server" : 0 : "Mods convars directly from the server instead of acting as if the convars were typed into the local player's console, similar to using point_servercommand as opposed to point_clientcommand. Required to function in MP games." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+	
 	spawnflags(Flags) =
 	[
 		1 : "[1] Start Activated" : 1
@@ -6825,6 +6831,8 @@
 
 	// Inputs
 	input Teleport(void) : "Teleport the target entity."
+	input TeleportEntity(target_destination) : "Teleport the output parameter box entity."
+	input TeleportToCurrentPos(void) : "Teleport to the current position."
 ]
 
 @PointClass base(Targetname, Parentname, DamageTypes) sphere(DamageRadius) = point_hurt :
@@ -6883,6 +6891,7 @@
 		2097152 : "[2097152] Physgun is NOT allowed to pick this up." : 0 
 		4194304 : "[4194304] Physgun is NOT allowed to punt this object." : 0
 		8388608: "[8388608] Prevent motion enable on player bump" : 0
+		16777216: "[16777216] Radius pickup (easer to pickup)" : 0
 	]
 	
 	Damagetype(choices) : "Impact Damage Type" : 0 =

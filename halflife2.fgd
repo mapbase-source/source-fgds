@@ -1819,6 +1819,7 @@
 	]
 
 	output OnSwattedProp(ehandle) : "Fires when this NPC swats a prop, passing the prop as the activator and parameter."
+	output OnCrab(ehandle) : "Fires when the zombie releases a headcrab, passing the headcrab as the activator and parameter."
 ]
 
 @NPCClass base(BaseZombie) studio("models/Zombie/fast.mdl") = npc_fastzombie : "Fast Zombie"
@@ -3132,7 +3133,7 @@
 		1 : "Yes"
 	]
 	
-	NextBusy(string) : "NPC Cooldown Time" : "0,0" : "NPCs that leave this actbusy won't actbusy on their own again until this cooldown expires. This is for when an ai_goal_actbusy only gets NPCs to act busy with Activate, not any of the 'Force' inputs. The cooldown would be a random decimal in between the first number and the second number. Leaving both at 0 will cause ai_actbusy_search_time and ai_actbusy_search_time*2 to be used instead, which is default behavior."
+	NextBusy(float) : "NPC Cooldown Time" : "0,0" : "NPCs that leave this actbusy won't actbusy on their own again until this cooldown expires. This is for when an ai_goal_actbusy only gets NPCs to act busy with Activate, not any of the 'Force' inputs. The cooldown would be a random decimal in between the first number and the second number. Leaving both at 0 will cause ai_actbusy_search_time and ai_actbusy_search_time*2 to be used instead, which is default behavior."
 
 	// Inputs
 	input Activate( void ) : "Begin acting busy"
@@ -3669,7 +3670,7 @@
 		"antlion_allied" : "Antlions are player allies" 
 //		"player_stealth" : "Player in APC is disguised as combine" 
 		"suit_no_sprint" : "Suit sprint function not yet enabled" 
-		"super_phys_gun" : "Super phys gun is enabled" 
+		"super_phys_gun" : "Super phys gun is enabled (Mapbase: Counter 1 prevents item dissolve)" 
 		"friendly_encounter" : "Friendly encounter sequence (lower weapons, etc.)"
 //		"citizens_passive" : "Citizens are *not* player allies (cannot be commanded)"
 		"gordon_invulnerable" : "Gordon is invulnerable"
@@ -4223,6 +4224,7 @@
 		4 : "[4] Not puntable by Gravity Gun" : 0
 		8 : "[8] Deny NPC pickup (reserve for player)" : 0
 		16 : "[16] Preserve ammo values when picked up" : 0
+		32 : "[32] Preserve name on player pickup" : 0
 	]
 	
 	SetAmmo1(integer) : "Ammo 1 Override" : 0 : "Overrides the amount of primary ammo this weapon has. Be sure to set 'Preserve ammo values when picked up' for this to be maintained upon pickup."
@@ -4441,12 +4443,16 @@
 		128: "[128] Suppress zoom" : 0
 		256: "[256] Don't suppress flashlight" : 0
 	]
+	
+	AdditionalButtons(integer) : "Additional Buttons" : 0 : "Additional buttons to suppress, other than those listed in the spawnflags. Advanced users only."
 
 	// Inputs
 	input ModifySpeed(float) : "Modifies player speed by X ammount. Use 1.0 to reset."
 	
 	input Enable(void) : "Enables the spawnflag abilities without actually modifying the player's speed."
 	input Disable(void) : "Disables the spawnflag abilities without actually modifying the player's speed."
+	
+	input SetAdditionalButtons(integer) : "Sets the additional suppressed buttons."
 ]
 
 
@@ -5160,6 +5166,8 @@
 	input EnableRadarDetectEnemies( void ) : "Enable Jalopy radar to detect Striders and Hunters"
 	input AddBusterToCargo( void ) : "Put a striderbuster in the cargo trigger"
 	input SetCargoHopperVisibility ( bool ) : "Set the strider buster hopper thingy to be visible, or invisible."
+	input EnableHazardLights ( void ) : "Enables the jalopy's hazard lights."
+	input DisableHazardLights ( void ) : "Disables the jalopy's hazard lights."
 
 	input DisablePhysGun(void) : "Disable physgun interactions with the jeep."
 	input EnablePhysGun(void) : "Enable physgun interactions with the jeep (default)."
