@@ -4385,13 +4385,13 @@
 	]
 	sides(sidelist) : "Brush faces": : "(Optional) Brushes faces to directly attach to the env_cubemap. Press Pick then click on faces in the 3D View to select them. Use CTRL while clicking to add or remove from the selection."
 	
-	//parallaxobb(target_destination) : "Cubemap Bounds" : : "(Optional) assigns this cubemap a bounding box for parallax correction (brush entity tied to parallax_obb)."
+	parallaxobb(target_destination) : "Cubemap Bounds" : : "MAPBASE VBSP ONLY: Optionally assigns this cubemap a bounding box for parallax correction (brush entity tied to parallax_obb). This means the cubemap reflection will move as the camera moves, similar to func_reflective_glass. Cubemap sizes of 64x64 or above are recommended for this since parallax correction lets the cubemap be seen in higher detail."
 ]
 
-//@SolidClass = parallax_obb
-//[
-//	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
-//]
+@SolidClass = parallax_obb
+[
+	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
+]
 
 @BaseClass = BModelParticleSpawner
 [ 
@@ -8825,6 +8825,7 @@
 		0 : "Low"
 		1 : "High"
 	]
+	shadowatten(float)			: "Shadow Atten" : "0.0" : "The attenuation of the shadows, or how much the shadows should fade into the light of the projected texture, if at all. The player's flashlight uses 0.35 by default, although higher values may be needed for a visible effect."
 	
 	lightonlytarget(Choices) : "Light Only Target" : 0 : "Limit flashlight effect to only effect target entity." =
 	[
@@ -8841,6 +8842,10 @@
 
 	lightcolor(color255)		: "Light Color" : "255 255 255 200" : "The color of the projected texture. Format is RGB-Intensity, like a light entity. Intensity can only range from 0 to 255, so use the Brightness Scale keyvalue to make the projected texture brighter than 255."
 	colortransitiontime(float)	: "Color Transition Time" : "0" : "Amount of time it takes for a color or brightness change to occur. 0 = instant"
+	constant_attn(string)	: "Constant" : "0" : "The light's constant attenuation, giving the light no falloff. (This value is internally corrected with x*0.5)"
+	linear_attn(string)	: "Linear" : "1" : "The light's linear attenuation, giving the light linear decline. This is the most common attenuation for projected textures. (This value is internally corrected with x*100)"
+	quadratic_attn(string)	: "Quadratic" : "0" : "The light's quadratic attenuation, giving the light exponentially decreasing falloff. (This value is internally corrected with x*10000)"
+	
 	cameraspace(Choices)		: "Camera Space" : 0 : "Angles are interpreted as being relative to camera." =
 	[
 		0 : "No"
@@ -8872,6 +8877,10 @@
 	input LightColor(color255)		: "Change the light color"
 	input SetBrightness(float)		: "Sets brightness."
 	input SetColorTransitionTime(float)		: "Sets the color transition time."
+	input SetConstant(float)		: "Sets the constant attenuation."
+	input SetLinear(float)		: "Sets the linear attenuation."
+	input SetQuadratic(float)		: "Sets the quadratic attenuation."
+	input SetShadowAtten(float)		: "Sets the shadow attenuation."
 	input SetNearZ(float)		: "Sets NearZ."
 	input SetFarZ(float)		: "Sets FarZ."
 	input AlwaysDrawOn(void)	: "Turns off BBox culling (for skybox or monitor lights)"
