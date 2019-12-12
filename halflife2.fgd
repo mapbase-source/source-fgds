@@ -3677,7 +3677,7 @@
 	]
 ]
 
-@PointClass base(Targetname, EnableDisable) sphere(SetRadius) = point_radiation_source : "Radiation source that trips the player's geiger counter. Does no actual damage."
+@PointClass base(Targetname, Parentname, EnableDisable) sphere(SetRadius) = point_radiation_source : "Radiation source that trips the player's geiger counter. Does no actual damage."
 [
 	SetRadius(float): "Radius" : "0" : "Only affects the geiger counter if the player is within this radius. 0 = no radius, use intensity only"
 	SetIntensity(float): "Intensity" : "1.0" : "The intensity of the radiation source. Cannot be 0."
@@ -4344,7 +4344,7 @@
 	input	Toggle(void) : "Toggle enable/disable."
 ]
 
-@PointClass base(Targetname) size( 16 16 16) sphere() color( 255 255 0 ) = point_bugbait : "Bugbait sensor point"
+@PointClass base(Targetname, Parentname) size( 16 16 16) sphere() color( 255 255 0 ) = point_bugbait : "Bugbait sensor point"
 [
 	Enabled(choices) : "Start Enabled" : 1 =
 	[
