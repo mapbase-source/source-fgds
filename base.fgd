@@ -39,7 +39,8 @@
 	angles(angle) : "Pitch Yaw Roll (Y Z X)" : "0 0 0" : "This entity's orientation in the world. Pitch is rotation around the Y axis, " +
 		"yaw is the rotation around the Z axis, roll is the rotation around the X axis."
 		
-	input SetLocalAngles(vector) : "Set this entity's angles."
+	input SetLocalAngles(vector) : "Set this entity's angles in local space, relative to its parent if one exists. Otherwise relative to the world."
+	input SetAbsAngles(vector) : "Set this entity's angles, always relative to the world origin."
 ]
 
 @BaseClass = Origin
@@ -124,7 +125,8 @@
 	input AcceptInput(string) : "Fires the named input on this entity. Format: '<input name>:<parameter>:<activator>:<caller>:<output ID>' (SetTarget:cheese). Everything beyond the input name is optional. Mind the fact this is arranged differently from FireOutput, having the parameter right after the input name."
 	input CancelPending(void) : "Cancels any events fired by this entity that are currently pending in the I/O event queue."
 	
-	input SetLocalOrigin(vector) : "Sets this entity's origin in the map."
+	input SetLocalOrigin(vector) : "Sets this entity's origin in local space, relative to its parent if one exists. Otherwise relative to the world."
+	input SetAbsOrigin(vector) : "Sets this entity's origin in the map, always relative to the world origin."
 	input SetLocalVelocity(vector) : "Sets this entity's current velocity."
 	input SetLocalAngularVelocity(vector) : "Sets this entity's current angular velocity."
 	
@@ -573,7 +575,7 @@
 		512 : "[512] Fade Corpse" : 1
 		1024 : "[1024] Think outside PVS (allows AI to stay active outside of combat and PVS)" : 0
 		2048 : "[2048] Template NPC (used by npc_maker, will not spawn)" : 0
-		4096 : "[4096] Do Alternate collision for this NPC (player avoidance)" : 0
+		4096 : "[4096] Do alternate collision/player avoidance (largely obsolete, use Start/StopScripting)" : 0
 		8192 : "[8192] Don't drop weapons" : 0
 		16384 : "[16384] Ignore player push (dont give way to player)" : 0
 	]
@@ -5520,7 +5522,7 @@
 	"A math_counter variant that specializes in vector operations."
 [
 	// Keys
-	startvalue(vector) : "Initial Value" : "0 0 0" : "The vector this entity shuold start with."
+	startvalue(vector) : "Initial Value" : "0 0 0" : "The vector this entity should start with."
 
 	// Inputs
 	input Add(vector) : "Adds a vector to this entity's current value and fires the OutValue output with the result."
@@ -5644,6 +5646,7 @@
 
 	// Outputs
 	output OutPosition(vector) : "Outputs the position."
+	output OutAngles(vector) : "Outputs the angles."
 ]
 
 @PointClass base(Targetname) iconsprite("editor/logic_context_accessor.vmt") = logic_context_accessor :
