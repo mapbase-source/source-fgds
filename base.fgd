@@ -17,6 +17,7 @@
     "Cubemaps"
     [
         "env_cubemap"
+        "parallax_obb"
     ]
     "Soundscapes"
     [
@@ -145,6 +146,7 @@
 	input SetThinkNull(void) : "Sets this entity's general think function to null. Behavior varies from entity to entity.."
 	
 	input Use(void) : "More or less replicates the player interacting with an entity. (+USE)"
+	input Touch(target_destination) : "Simulates this entity touching the specified entity."
 	
 	output OnKilled(void) : "Fires when this entity is removed with the 'Kill' input."
 
