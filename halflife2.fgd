@@ -4091,7 +4091,7 @@
 	]
 ]
 
-@PointClass base(Targetname, Parentname, Angles, BaseFadeProp) studio("models/items/ammocrate_rockets.mdl") = item_ammo_crate : "Ammo Crate"
+@PointClass base(Targetname, Parentname, Angles, RenderFields, BaseFadeProp) studio("models/items/ammocrate_empty.mdl") = item_ammo_crate : "Ammo Crate"
 [
 	AmmoType(choices) : "Ammo Type" : 0 =
 	[
@@ -4108,11 +4108,15 @@
 		10 : "S.L.A.M."
 		11 : "Empty"
 	]
+	
+	skin(integer) : "Skin" : 0 : "The ''Empty'' ammo crate can use multiple skins based on other crates. Changing the skin might be reflected in the viewport, but it will only apply to the empty ammo crate."
 
 	// Inputs
 	input Kill(void) : "Remove the ammo crate"
 	output OnUsed(void) : "Fires when +used by the player."
 	output OnAmmoTaken(void) : "Fires the instant ammo is taken from this crate."
+	
+	input Skin(integer) : "Changes the model skin to the specified number."
 ]
 
 @PointClass base(BasePropPhysics, Targetname, Angles, DamageFilter, BaseFadeProp) studioprop() = item_item_crate : "Item Crate" // studio("models/items/item_item_crate.mdl")
