@@ -2450,6 +2450,7 @@
 	output OnCancelSequence(void) : "Fires when the sequence is cancelled."
 	output OnCancelFailedSequence(void) : "Fires when the sequence is cancelled without ever playing (OnCancelSequence will also fire)."
 	output OnPreIdleSequence(void) : "Fires when the pre-idle animation begins."
+	output OnFoundNPC(void) : "Fires when a target NPC is found and begins moving to play the script."
 	output OnScriptEvent01(void) : "Fires when a 'trigger' anim event occurs while playing the script. Use { event 1003 framenum 1 } in the QC."
 	output OnScriptEvent02(void) : "Fires when a 'trigger' anim event occurs while playing the script. Use { event 1003 framenum 2 } in the QC."
 	output OnScriptEvent03(void) : "Fires when a 'trigger' anim event occurs while playing the script. Use { event 1003 framenum 3 } in the QC."
