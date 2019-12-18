@@ -4165,10 +4165,12 @@
 //	model(studio) : "Model" : "models/items/item_item_crate.mdl" : "The model of this item_item_crate. Only works when this crate's appearance is set to use a custom model."
 //]
 
-@PointClass base(Targetname, Angles, Parentname, RenderFields, BaseFadeProp) studio( "models/props_combine/health_charger001.mdl" ) = item_healthcharger : "Health Charger"
+@PointClass base(Targetname, Parentname, Angles, RenderFields, Studiomodel, BaseFadeProp) studioprop() = item_healthcharger : "Health Charger"
 [
 	// dmdelay(integer) : "Deathmatch recharge delay" : 0
-	_minlight(string) : "Minimum light level"
+	//_minlight(string) : "Minimum light level"
+	
+	model(studio) : "Model" : "models/props_combine/health_charger001.mdl"
 	
 	Charge(integer) : "Juice" : 0 : "Overrides the amount of suit power this charger contains. Use 0 for the default charge, which is usually the maximum juice. Use -1 if you want the charger to start empty."
 	MaxCharge(integer) : "Max Juice" : 0 : "Overrides the maximum suit power this charger contains. Use 0 for the default charge, 75."
@@ -4188,10 +4190,12 @@
 	output OnPlayerUse(void) : "Fired when the player +USEs this charger."
 ]
 
-@PointClass base(Targetname, Angles, Parentname, RenderFields, BaseFadeProp) studio( "models/props_combine/suit_charger001.mdl" ) = item_suitcharger : "Battery recharger"
+@PointClass base(Targetname, Parentname, Angles, RenderFields, Studiomodel, BaseFadeProp) studioprop() = item_suitcharger : "Battery recharger"
 [
 	// dmdelay(integer) : "Deathmatch recharge delay" : 0
-	_minlight(string) : "Minimum light level"
+	//_minlight(string) : "Minimum light level"
+	
+	model(studio) : "Model" : "models/props_combine/suit_charger001.mdl"
 	
 	Charge(integer) : "Juice" : 0 : "Overrides the amount of suit power this charger contains. Use 0 for the maximum juice. (which is normally 75) Use -1 if you want the charger to start empty."
 	MaxCharge(integer) : "Max Juice" : 0 : "Overrides the maximum suit power this charger contains. Use 0 for the default charge, which varies based on this entity's spawnflags. (Normal = 75, Citadel = 500, Kleiner = 25)"
