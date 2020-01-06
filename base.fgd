@@ -1341,7 +1341,7 @@
 	input SetMaxPiecesDX8(integer)	: "Set the max gib count under DX8."
 ]
 
-@PointClass base(Parentname, Targetname, Angles, EnableDisable) color(255 128 0) studio("models/editor/axis_helper_thick.mdl") sphere(MinDist) sphere(MaxDist) = env_lightglow : 
+@PointClass base(Parentname, Targetname, Angles, EnableDisable) color(255 128 0) studio("models/editor/axis_helper_thick.mdl") sphere(MinDist) sphere(MaxDist) sphere(OuterMaxDist) sphere(GlowProxySize) = env_lightglow : 
 	"An entity that puts an additive glow in the world, mostly used over light sources."
 [
 	rendercolor(color255) : "Color (R G B)" : "255 255 255"
@@ -2515,7 +2515,7 @@
 	input SparkOnce(void) : "Spark once."
 ]
 
-@PointClass base(Targetname, Parentname, RenderFields,DXLevelChoice) size(-2 -2 -2, 2 2 2) sprite() color(20 140 20) = env_sprite : 
+@PointClass base(Targetname, Parentname, RenderFields,DXLevelChoice) size(-2 -2 -2, 2 2 2) sprite() color(20 140 20) sphere(GlowProxySize) = env_sprite : 
 	"An entity that controls the drawing of a sprite in the world." 
 [
 	framerate(string) : "Framerate" : "10.0" : "Rate at which the sprite should animate, if at all."
@@ -2541,7 +2541,7 @@
 	input ToggleSprite(void) : "Toggle the sprite between hidden and shown."
 ]
 
-@PointClass base(env_sprite, Angles) = env_sprite_oriented :
+@PointClass base(env_sprite, Angles) sphere(GlowProxySize) = env_sprite_oriented :
     "A env_sprite that allows orientation."
 [
 	framerate(string) : "Framerate" : "10.0" : "Rate at which the sprite should animate, if at all."
