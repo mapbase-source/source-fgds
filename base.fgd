@@ -61,6 +61,7 @@
 	input CreateSeparateRagdoll(void) : "Creates a separate serverside ragdoll at this entity's origin."
 	input CreateSeparateRagdollClient(void) : "Creates a separate clientside ragdoll at this entity's origin."
 	input SetLightingOrigin(target_destination) : "Sets this entity's lighting origin." // Was this really not in the FGD before?
+	input SetPoseParameter(string) : "Sets the specified pose parameter to the specified value (e.g. ''aim_yaw 45'')."
 	
 	// Outputs
 	output OnIgnite(void) : "Fires when this object catches fire."
@@ -5528,6 +5529,13 @@
 [
 	// Keys
 	startvalue(vector) : "Initial Value" : "0 0 0" : "The vector this entity should start with."
+	
+	spawnflags(flags) =
+	[
+		1 : "[1] Disable X" : 0
+		2 : "[2] Disable Y" : 0
+		4 : "[4] Disable Z" : 0
+	]
 
 	// Inputs
 	input Add(vector) : "Adds a vector to this entity's current value and fires the OutValue output with the result."
@@ -5538,8 +5546,15 @@
 	input Subtract(vector): "Subtracts a vector from this entity's current value and fires the OutValue output with the result."
 	input GetValue(void): "Causes this entity to fire its OnGetValue output with its current vector. Used for polling the counter when you don't want constant updates from the OutValue output."
 	
+	input PointAtLocation(vector): "Creates an angle pointing from the entity's current vector to the specified point and fires the OutValue output with the result."
+	input PointAtEntity(target_destination): "Creates an angle pointing from the entity's current vector to the specified entity and fires the OutValue output with the result."
+	
 	input Normalize(void): "Normalizes this entity's vector and fires the OutValue output with the result."
 	input NormalizeAngles(void): "Normalizes this entity's vector as angles and fires the OutValue output with the result."
+	input VectorAngles(void): "Converts this entity's vector to an angle, assuming the current vector is a direction vector. Fires the OutValue output with the result."
+	input AngleVectorForward(void): "Converts this entity's vector angles to a vector in the forward direction. Fires the OutValue output with the result."
+	input AngleVectorRight(void): "Converts this entity's vector angles to a vector in the right direction. Fires the OutValue output with the result."
+	input AngleVectorUp(void): "Converts this entity's vector angles to a vector in the up direction. Fires the OutValue output with the result."
 	
 	input SetX(float) : "Sets this entity's X coordinate."
 	input SetY(float) : "Sets this entity's Y coordinate."
@@ -5604,11 +5619,17 @@
 	input GetNumSkins(void) : "Gets the number of skins on the target entity."
 	input LookupSequence(string) : "Looks up the specified sequence on the target entity."
 	input LookupActivity(string) : "Looks up the specified activity on the target entity. Uses the sequence outputs and outputs the first sequence with the given activity."
+	
+	input SetPoseParameterName(string) : "Sets the pose parameter to target."
+	input SetPoseParameterValue(float) : "Sets the target pose parameter's current value."
+	input GetPoseParameter(void) : "Gets the current value of the target pose parameter and fires OutPoseParameterValue with it."
 
 	// Outputs
 	output OutNumSkins(integer) : "Outputs number of skins."
 	output OnHasSequence(integer) : "Fires when the target has the sequence requested. Outputs the sequence's index."
 	output OnLacksSequence(void) : "Fires when the target does not have the sequence requested."
+	
+	output OutPoseParameterValue(float) : "Fires when the pose parameter value is requested, outputting its current value."
 ]
 
 @PointClass base(Targetname, EnableDisable) size(-8 -8 -8, 8 8 8) = game_globalvars :
