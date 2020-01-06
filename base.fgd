@@ -2862,11 +2862,11 @@
 
 ]
 
-@PointClass base(Targetname, Parentname) size(-8 -8 -8, 8 8 8) = point_tesla : 
+@PointClass base(Targetname, Parentname) size(-8 -8 -8, 8 8 8) sphere(m_flRadius) = point_tesla : 
 	"An entity that creates tesla lightning arcs around its origin."
 [
 	m_SourceEntityName(target_destination) : "Source Entity" : "" : "If specified, tesla lightning will originate from the specified entity. Otherwise, they originate from this entity."
-	m_SoundName(string) : "Sound Name" : "DoSpark" : "Sound to be played whenever lightning is created."
+	m_SoundName(sound) : "Sound Name" : "DoSpark" : "Sound to be played whenever lightning is created."
 
 	texture(sprite) : "Sprite Name" : "sprites/physbeam.vmt" : "Material to use for the tesla lightning beams."
 
