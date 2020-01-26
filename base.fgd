@@ -103,8 +103,8 @@
 	// Inputs
 	input Kill(void) : "Removes this entity from the world."
 	input KillHierarchy(void) : "Removes this entity and all its children from the world."
-	input KillIfNotVisible(void) : "Removes this entity if it is not in the player's viewcone."
-	input KillWhenNotVisible(void) : "Removes this entity when it is not in the player's viewcone."
+	input KillIfNotVisible(void) : "Removes this entity if it is not in a player's viewcone."
+	input KillWhenNotVisible(float) : "Removes this entity when it is not in a player's viewcone. You can pass a time for when this should start."
 	input AddOutput(string) : "Adds an entity I/O connection or a keyvalue to this entity. Format: '<output name> <targetname>:<inputname>:<parameter>:<delay>:<max times to fire (-1 == infinite)>'. You could also use it on regular keyvalues: '<key name> <key value>'. Very dangerous, use with care."
 	input ChangeVariable(string) : "Similar to AddOutput, except it changes an internal variable similar to logic_datadesc_accessor instead. Very dangerous, use with care."
 	input FireUser1(void) : "Causes this entity's OnUser1 output to be fired."
@@ -5945,7 +5945,7 @@
 	
 	AmmoType(integer) : "Ammo Type" : : "Uses a specific ammo type by order in the ammo def. (not to be confused with damage type)"
 	PlayerPenetrationCount(integer) : "Player Penetration Count" : : "Presumably how many players the inflictor has gone through before reaching the current victim. Appears to be unused in singleplayer games."
-	DamagedOtherPlayers(integer) : "Player Penetration Count" : : "Function unknown, possibly unused"
+	DamagedOtherPlayers(integer) : "Damaged Other Players" : : "Function unknown, possibly unused"
 	
 	DamageForce(vector) : "Damage Force" : "0 0 0" : "The force to apply when the damage is applied."
 	DamagePosition(vector) : "Damage Position" : "0 0 0" : "What position the damage took place."
