@@ -3879,7 +3879,7 @@
 	// Outputs
 	output OnBreak(void) : "Fires when this rope breaks."
 
-	UseWind(choices) : "Use Wind" : 0 : "When set to Yes, the rope will act as though it's being affected by wind." =
+	NoWind(choices) : "Disable Wind" : 0 : "When set to Yes, the rope will no longer act as though it's being affected by wind." =
 	[
 		0 : "No"
 		1 : "Yes"
@@ -4606,7 +4606,7 @@
 @PointClass base(Targetname) = point_posecontroller : 
 	"An entity that controls a pose parameter of a prop and cycles the pose clientside." 
 [
-	PropName(target_destination) : "Prop Name" : : "Name of the prop to control."
+	PropName(target_destination) : "Target" : : "Name of the prop to control. Can be any animating entity."
 	PoseParameterName(string) : "Pose Parameter Name" : : "Name of the pose parameter to control."
 	PoseValue(float) : "Pose Parameter Value" : "0.0" : "Normalized value for the pose parameter from 0.0 and 1.0 (maps to min and max range)."
 	InterpolationTime(float) : "Interpolation Time" : "0.0" : "Number of seconds (0.0 to 10.0) for client to match absolue pose values."
@@ -4630,6 +4630,7 @@
 	FModAmplitude(float) : "Frequency Modulation Amplitude" : "0.0" : "Modulation extents from 0.0f to 10.0."
 	
 	// Inputs
+	input SetTarget(target_destination) : "Sets the prop to control."
 	input SetPoseParameterName(string) : "Sets the pose parameter to control."
 	input SetPoseValue(float) : "Set the pose parameter to a normalized value between 0.0 and 1.0 (maps to min and max range)."
 	input SetInterpolationTime(float) : "Set the interpolation time to a number of seconds between 0.0 and 10.0."
@@ -5055,6 +5056,8 @@
 		"WARNING: setting this to zero (or a value > 1024) when the microphone is in Speaker mode can be very bad for performance!!"
 		
 	landmark(target_destination) : "Local Destination Landmark" : : "If specified, then sounds offset from the speaker by their initial offset from this landmark. Only applicable in Speaker mode."
+	
+	PitchScale(float) : "Pitch Scale" : "1.0" : "Scales the pitch of transmitted sounds."
 
 	// Inputs
 	input SetSpeakerName(target_destination) : "Set the microphone to output through a different speaker entity."
@@ -7483,7 +7486,53 @@
 	health(integer) : "Health" : 0 : "Number of points of damage to take before breaking.  0 means don't break."	
 ]
 
-@BaseClass base(Targetname, Global, Angles, Studiomodel, BreakableProp, DXLevelChoice, BaseFadeProp) = BasePropPhysics
+@PointClass base(prop_dynamic_base) studioprop() = prop_interactable :
+	"A prop designed to be interacted with like a button. It has all of the properties of prop_dynamic without having to use an accompanying func_door or func_button."
+[
+	spawnflags(flags) =
+	[
+		512 : "[512] +USE interactable" : 1
+		1024 : "[1024] Touch interactable" : 0
+		2048 : "[2048] Disable interaction commands when locked" : 0
+		4096 : "[4096] Radius use" : 0
+	]
+
+	Locked(choices) : "Start locked" : 0 : "If set, this prop_interactable will start locked, making it uninteractable." =
+	[
+		0: "No"
+		1: "Yes"
+	]
+	
+	SetCooldown(float) : "Cooldown" : "1.0" : "The amount of time after this prop_interactable is used before it can be interacted with again. This is always based on when the prop_interactable was pressed, disregarding any active In Sequence, but an optional Out Sequence will play after the cooldown is over. It is also used when the prop_interactable is locked."
+	
+	PressedSound(sound) : "Pressed Sound" : "" : "The sound to play when the button is successfully pressed."
+	LockedSound(sound) : "Locked Sound" : "" : "The sound to play when the button is interacted with while locked."
+	InSequence(string) : "In Sequence" : "" : "Optional sequence to play when the button is pressed, representing a button going 'in'."
+	OutSequence(string) : "Out Sequence" : "" : "Optional sequence to play after the button was interacted with and the cooldown is finished, representing a button coming back 'out' after an 'in' animation."
+	LockedSequence(string) : "Locked Sequence" : "" : "Optional sequence to play when the prop_interactable is interacted with while locked."
+	
+	// Inputs
+	input Lock(void) : "Locks this prop_interactable, making it uninteractable."
+	input Unlock(void) : "Unlocks this prop_interactable, making it interactable."
+	input Press(void) : "Presses this prop_interactable as if someone interacted with it."
+	
+	input EnableUseInteraction(void) : "Enables use interaction if it was disabled before."
+	input DisableUseInteraction(void) : "Disables use interaction if it was enabled before."
+	input EnableTouchInteraction(void) : "Enables touch interaction if it was disabled before."
+	input DisableTouchInteraction(void) : "Disables touch interaction if it was enabled before."
+	input StartIgnoringCommandsWhenLocked(void) : "Starts ignoring commands when this prop_interactable is locked."
+	input StopIgnoringCommandsWhenLocked(void) : "Stops ignoring commands when this prop_interactable is locked."
+	input EnableRadiusInteract(void) : "Enables radius use."
+	input DisableRadiusInteract(void) : "Disables radius use."
+
+	// Outputs
+	output OnPressed(void) : "Fired whenever the prop is interacted with."
+	output OnLockedUse(void) : "Fired whenever the button is interacted with while locked."
+	output OnIn(void) : "Fired whenever the prop completes its 'In' animation."
+	output OnOut(void) : "Fired whenever the prop completes its 'Out' animation."
+]
+
+@BaseClass base(Targetname, Global, Angles, Studiomodel, BreakableProp, RenderFields, DXLevelChoice, BaseFadeProp) = BasePropPhysics
 [ 
 	spawnflags(flags) = 
 	[
@@ -7647,11 +7696,11 @@
 		0: "Not Solid"
 	]	
 
-	InitialOwner(string) : "Target Entity" : : "Name of the entity that this ornament should attach to, at startup."
+	InitialOwner(target_destination) : "Target Entity" : : "Name of the entity that this ornament should attach to, at startup."
 	
 	// Inputs
-	input SetAttached(string) : "Attach the ornament to a different entity. Parameter should be the name of entity to attach to."
-	input Detach(string) : "Detach from the Target Entity and become invisible. The ornament can be re-attached with the SetAttached input."
+	input SetAttached(target_destination) : "Attach the ornament to a different entity. Parameter should be the name of entity to attach to."
+	input Detach(void) : "Detach from the Target Entity and become invisible. The ornament can be re-attached with the SetAttached input."
 ]
 
 @PointClass base(Targetname, Angles, Studiomodel) studioprop() = simple_physics_prop :
