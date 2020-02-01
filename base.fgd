@@ -144,6 +144,8 @@
 	
 	input SetMaxHealth(integer) : "Sets this entity's max health."
 	
+	input SetEntityName(target_destination) : "Sets this entity's name that other entities should refer to it by."
+	
 	input SetTarget(target_destination) : "Sets this entity's target. This is specific to certain entities, particularly logic entities that involve a target."
 	input SetOwnerEntity(target_destination) : "Sets this entity's owner entity. This has nothing to do with parenting and has more to do with collision and kill credits."
 	
@@ -1080,6 +1082,9 @@
 		0 : "No"
 		1 : "Yes"
 	]
+	
+	// Inputs
+	input SetChapterTitle(string) : "Sets the chapter title this map should identify with."
 ]
 
 
@@ -1189,6 +1194,8 @@
 	// Inputs
 	input Zoom(void) : "Start controlling the player's FOV."
 	input UnZoom(void) : "Stop controlling the player's FOV."
+	input UnZoomWithRate(void) : "Stop controlling the player's FOV and returns to the original FOV with the same rate it used to reach it."
+	input SetZoomRate(float) : "Sets the amount of time it should take to reach the specified FOV."
 
 	spawnflags(flags) =
 	[
@@ -5613,6 +5620,7 @@
 	"Gets and outputs some model information from an entity."
 [
 	target(target_destination) : "Target" : "" : "The entity whose model will be evaluated."
+	PoseParameterName(string) : "Pose Parameter Name" : "" : "(Optional) The pose parameter to use for pose parameter-related I/O."
 
 	// Inputs
 	input SetTarget(target_destination) : "Sets this entity's target."
@@ -8548,6 +8556,7 @@
 		4 : "[4] Ignore Z" : 0
 		8 : "[8] Use 'Ignore' flags for origin instead of angles" : 0
 		16 : "[16] Use new teleportation rules (smoother movement)" : 1
+		32 : "[32] Don't change target's angles" : 0
 	]
 	
 	MeasureAttachment(string) : "Measurement Attachment" : "" : "Only useful for the ''Attachment point'' measurement type. This attachment should be on the Entity to Measure and measurements will correspond to its position and angles."

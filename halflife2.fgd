@@ -3926,6 +3926,12 @@
 	heavy_shot_interval(float) : "Heavy shot interval" : "0.2" : "The interval between each 'heavy' shot, which carries higher knockback and, by default, perfect accuracy. The vast majority of bullets that hit the enemy are these 'heavy' shots."
 	
 	airboat_gun_model(target_destination) : "Airboat gun model (Obsolete)" : : "You can do everything and more with the parent now, so you'd be better off using regular func_tank parent behavior than this. It is still functional for legacy support."
+	
+	use_damage_kv(choices) : "Use Damage KV" : 0 : "Allows this func_tankairboatgun to use the Bullet Damage keyvalues instead of the airboat gun's default damage." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
 ]
 
 @SolidClass base(BaseTank) = func_tankapcrocket : "APC Rocket Turret"
