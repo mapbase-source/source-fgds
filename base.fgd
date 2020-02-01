@@ -1099,7 +1099,7 @@
 [
 ]
 
-@PointClass base(Targetname, Parentname) iconsprite("editor/ambient_generic.vmt") sphere() = ambient_generic : "Universal ambient sound. Use it to play and control a single sound."
+@PointClass base(Targetname, Parentname) iconsprite("editor/ambient_generic.vmt") sphere(radius) = ambient_generic : "Universal ambient sound. Use it to play and control a single sound."
 [
 	message(sound) : "Sound Name" : "" : "Name of the GameSound entry for the sound to play. Also supports direct .wav filenames."
 	health(integer) : "Volume" : 10 : "Sound volume, expressed as a range from 0 to 10, where 10 is the loudest."
@@ -1947,7 +1947,7 @@
 	smokesprite(sprite) : "Smoke Puff" : "sprites/whitepuff.spr"
 ]
 
-@PointClass base(Targetname, Parentname) sphere() sphere(inner_radius) iconsprite("editor/env_physexplosion.vmt") = env_physexplosion : 
+@PointClass base(Targetname, Parentname) sphere(radius) sphere(inner_radius) sphere(radius) iconsprite("editor/env_physexplosion.vmt") = env_physexplosion : 
 	"An entity that creates an explosion at its origin. If the no-damage spawnflag is set, the explosion won't be visible, but will apply force to any physics objects within its radius."
 [
 	magnitude(string) : "Magnitude" : "100" : "Amount of physics force applied by the explosion."
@@ -2279,7 +2279,7 @@
 	input SetHudHint(string) : "Sets the hint message."
 ]
 
-@PointClass sphere() iconsprite("editor/env_shake.vmt") base(Targetname, Parentname) = env_shake : 
+@PointClass sphere(radius) iconsprite("editor/env_shake.vmt") base(Targetname, Parentname) = env_shake : 
 	"An entity to control screen shake on players." 
 [
 	spawnflags(flags) =
@@ -2305,7 +2305,7 @@
 	input StopShake(void) : "Stop the shake."
 ]
 
-@PointClass sphere() size(-4 -4 -4, 4 4 4) base(Targetname, Parentname) = env_viewpunch :
+@PointClass sphere(radius) size(-4 -4 -4, 4 4 4) base(Targetname, Parentname) = env_viewpunch :
 	"Causes a view punch on players." 
 [
 	spawnflags(flags) =
@@ -2446,7 +2446,7 @@
 	input SetGibFlags(integer) : "Sets the flags for each gib."
 ]
 
-@PointClass base(Targetname,Parentname) sphere() iconsprite("editor/env_soundscape.vmt") = env_soundscape_proxy : 
+@PointClass base(Targetname,Parentname) sphere(radius) iconsprite("editor/env_soundscape.vmt") = env_soundscape_proxy : 
 	"An entity that acts like a soundscape but gets all of its sound parameters from another env_soundscape entity."
 [
 	MainSoundscapeName(target_destination) : "Soundscape Entity" : "" : "The soundscape to get all sound parameters from."
@@ -2454,7 +2454,7 @@
 	radius(integer) : "Radius" : 128					// NEEDHELP: The datadesc doesn't include this entry. Probably not used.
 ]
 
-@PointClass base(Targetname,Parentname,EnableDisable) sphere() iconsprite("editor/env_soundscape.vmt") line(255 255 255, targetname, position0) line(255 255 255, targetname, position1) line(255 255 255, targetname, position2) line(255 255 255, targetname, position3) line(255 255 255, targetname, position4) line(255 255 255, targetname, position5) line(255 255 255, targetname, position6) line(255 255 255, targetname, position7) = env_soundscape : 
+@PointClass base(Targetname,Parentname,EnableDisable) sphere(radius) iconsprite("editor/env_soundscape.vmt") line(255 255 255, targetname, position0) line(255 255 255, targetname, position1) line(255 255 255, targetname, position2) line(255 255 255, targetname, position3) line(255 255 255, targetname, position4) line(255 255 255, targetname, position5) line(255 255 255, targetname, position6) line(255 255 255, targetname, position7) = env_soundscape : 
 	"An entity to control sound in an area. The active soundscape at any time is the last one that had line-of-sight to the player, and was within the radius."
 [
 	radius(integer) : "Radius" : 128 : "If set to -1, then the player can hear the soundscape as long as he can see it (regardless of distance to it)."
@@ -2484,7 +2484,7 @@
 	output OnPlay(void) : "Fired when this soundscape becomes the active one."
 ]
 
-@PointClass base(env_soundscape) sphere() iconsprite("editor/env_soundscape.vmt") = env_soundscape_triggerable : 
+@PointClass base(env_soundscape) sphere(radius) iconsprite("editor/env_soundscape.vmt") = env_soundscape_triggerable : 
 	"An entity that works like env_soundscape except that it works in conjunction with trigger_soundscape to determine when a player hears it."
 [
 ]
@@ -4274,7 +4274,7 @@
 	]
 ]
 
-@PointClass base(Targetname, Parentname, Angles, Global, Studiomodel) studioprop() = prop_door_rotating : 
+@PointClass base(Targetname, Parentname, Angles, Global, Studiomodel, RenderFields) studioprop() = prop_door_rotating : 
 	"An entity used to place a door in the world."
 [
 	disableshadows(choices) : "Disable Shadows" : 1 : "Used to disable dynamic shadows on this entity." =
@@ -7635,7 +7635,7 @@
 	input IgniteHitboxFireScale(float) : "Ignite, with a parameter hitbox fire scale."
 ]
 
-@PointClass base(BasePropPhysics, RenderFields) studioprop() sphere(fademindist) sphere(fademaxdist) = prop_physics :
+@PointClass base(BasePropPhysics) studioprop() sphere(fademindist) sphere(fademaxdist) = prop_physics :
 	"A prop that physically simulates as a single rigid body. It can be constrained to other physics objects using hinges "+
 	"or other constraints. It can also be configured to break when it takes enough damage. "+
 	"Note that the health of the object will be overridden by the health inside the model, to ensure consistent health game-wide. "+

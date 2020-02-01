@@ -575,7 +575,7 @@
 	EffectRadius(integer) : "Effect Radius" : 1000 : "Radius of the thumper's sound. EPISODIC ONLY."
 ]
 
-@NPCClass base(BaseNPC) studio("models/antlion.mdl") sphere() = npc_antlion :
+@NPCClass base(BaseNPC) studio("models/antlion.mdl") sphere(radius) = npc_antlion :
 	"Antlions will run away from ai_sound, type: Thumper."
 [
 	startburrowed(choices) : "Start Burrowed" : "No" =
@@ -2462,7 +2462,7 @@
 ]
 
 // color(255 0 255)
-@PointClass sphere() iconsprite("editor/scripted_sentence.vmt") base(Targetname) = scripted_sentence : "Scripted Sentence"
+@PointClass sphere(radius) iconsprite("editor/scripted_sentence.vmt") base(Targetname) = scripted_sentence : "Scripted Sentence"
 [
 	spawnflags(Flags) = 
 	[
@@ -2540,7 +2540,7 @@
 	input SetSound(string) : "Sets the sound."
 ]
 
-@PointClass base(Targetname) iconsprite("editor/ai_relationship.vmt") sphere() = ai_relationship : 
+@PointClass base(Targetname) iconsprite("editor/ai_relationship.vmt") sphere(radius) = ai_relationship : 
 	"AI Relationship - Sets relationships between groups of NPCs in the AI."
 [
 	subject(target_name_or_class) : "Subject(s)" : "" : "This is the NPC(s) whose disposition will change. May be a targetname or a classname."
@@ -2583,7 +2583,7 @@
 	input RevertToDefaultRelationship(void) : "Revert relationship changes to the default relationship, which may have changed since this ai_relationship was applied. This returns control of the entity relationship to the code."
 ]
 
-@PointClass base(Targetname) iconsprite("editor/ai_relationship.vmt") sphere() = ai_relationship_classify : 
+@PointClass base(Targetname) iconsprite("editor/ai_relationship.vmt") sphere(radius) = ai_relationship_classify : 
 	"AI Relationship - Sets relationships between entire classify classes in the AI."
 [
 	subject(choices) : "Subject(s)" : 0 : "This is the NPC class whose disposition will change." =
@@ -4377,7 +4377,7 @@
 	input	Toggle(void) : "Toggle enable/disable."
 ]
 
-@PointClass base(Targetname, Parentname) size( 16 16 16) sphere() color( 255 255 0 ) = point_bugbait : "Bugbait sensor point"
+@PointClass base(Targetname, Parentname) size( 16 16 16) sphere(radius) color( 255 255 0 ) = point_bugbait : "Bugbait sensor point"
 [
 	Enabled(choices) : "Start Enabled" : 1 =
 	[
