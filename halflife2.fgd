@@ -4699,13 +4699,19 @@
 		5 : "Physgun Launch (no bounce, explode on touch)"
 	]
 	
+	CheapWarnSound(choices) : "Cheap Warn Sound" : 0 : "Makes the mine's warn sound use generic sound methods instead of a sound patch, which is cheaper and doesn't continuously take up audio channels. Use this for areas with tons of active mines." =
+	[
+		0: "No"
+		1: "Yes"
+	]
+	
 	Modification(choices): "Citizen modified" : 0 : "'Normal' is default Combine behavior. 'Cavern' detonates earlier in its jump, and has a different default skin." = 
 	[
 		0 : "Normal"
 		1 : "Cavern"
 	]
 	
-	Friendly(choices): "Start Friendly" : 0 : "Makes this combine_mine friendly, as if it was placed by the player." = 
+	Friendly(choices): "Start Friendly" : 0 : "Makes this mine friendly, as if it was placed by the player." = 
 	[
 		0 : "No"
 		1 : "Yes"
@@ -5589,6 +5595,17 @@
 	output OnAgitated( void ) : "Fired when the grub is stepped on or damaged."
 	output OnDeath( void ) : "Fired when the grub is killed."
 	output OnDeathByPlayer( void ) : "Fired when the grub is killed (only by the player)."
+]
+
+@NPCClass base(Item) studio() = item_grubnugget :
+	"Antlion grub nugget"
+[
+	model(choices) : "Denomination" : "models/grub_nugget_small.mdl" : "Sets the nugget's size." =
+	[
+		"models/grub_nugget_small.mdl" : "Small"
+		"models/grub_nugget_medium.mdl" : "Medium"
+		"models/grub_nugget_large.mdl" : "Large"
+	]
 ]
 
 
