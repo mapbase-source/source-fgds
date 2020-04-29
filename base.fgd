@@ -1178,6 +1178,8 @@
 	input FadeIn(integer) : "Fades the sound up to full volume over a specified number of seconds, with a range from 0 to 100 seconds."
 	input FadeOut(integer) : "Fades the sound to silence over a specified number of seconds, with a range from 0 to 100 seconds."
 	input SetSound(string) : "Sets the sound this ambient_generic should play."
+	
+	output OnSoundFinished(void) : "Fires when the sound finishes playing. NOTE: This sound should be set to pause when the game is paused."
 ]
 
 @SolidClass base(Targetname, Parentname, RenderFields) sphere(DisappearDist) sphere(DisappearMaxDist) = func_lod : 
@@ -7807,6 +7809,7 @@
 	[
 		1 : "[1] Physics damage decals" : 0
 		2 : "[2] Take damage from held objects" : 0
+		4 : "[4] Play break sound" : 0
 	]
 	health(integer) : "Health" : 5 : "The amount of damage the surface takes before breaking."
 	fragility(integer) : "Fragility" : 100 : "If the 'Surface Type' is set to Glass, this value sets how fragile the glass pieces are after the surface has been broken."
@@ -8322,6 +8325,12 @@
 	Timeout(float) : "Timeout" : "0" : "The time, in seconds, to wait after player enters the trigger before firing the OnTimeout output, 0 = never."
 	
 	UseLOS(choices) : "Require LOS" : 0 : "If enabled, the player must have full LOS to the target entity in order to count as ''looking''." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+	
+	LookEntityCaller(choices) : "Use look entity as caller" : 0 : "When firing OnTrigger, use the triggered look entity as the output's caller. Useful for when multiple look targets exist." =
 	[
 		0 : "No"
 		1 : "Yes"
