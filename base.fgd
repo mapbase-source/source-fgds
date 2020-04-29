@@ -651,6 +651,8 @@
 		0 : "No"
 		1 : "Yes"
 	]
+	
+	BaseSpeedModifier(float) : "Speed Modifier" : "1.0" : "Multiplies how far a NPC travels while moving. Does not affect the animation itself."
 
 	// Outputs
 	output OnDamaged(void) : "Fired when this NPC takes damage."
@@ -719,6 +721,11 @@
 	input SetForceServerRagdoll(bool) : "Sets whether we should be a serverside ragdoll when we die."
 	
 	input SetThinkNPC(float) : "Sets this entity's general think function to CallNPCThink. This is only necessary if it was disabled by SetThinkNull before."
+	
+	input SetDistLook(float) : "Manually sets this NPC's sight distance. Pass '0' to reset."
+	input SetDistTooFar(float) : "Manually sets the distance in which NPCs will consider a target too far to attack. Pass '0' to reset."
+	
+	input SetSpeedModifier(float) : "Set a float value to multiply movement animation speed."
 	
 	input SetHintGroup(string) : "Sets this NPC's hint group."
 ]
