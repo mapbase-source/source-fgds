@@ -52,15 +52,9 @@
 	output OnOutOfGrenades(ehandle) : "Fires when we run out of grenades. Passes our last grenade, if there is one."
 ]
 
-@BaseClass base(GrenadeUser) = PlayerCompanion
+// For classes which didn't support grenades before, but now do
+@BaseClass base(GrenadeUser) = NewGrenadeUser
 [
-	input OutsideTransition(void) : "Use this input to teleport the NPC to a hintnode with the Player Squad Transition Point hint type."
-	input EnableAlwaysTransition(void) : "Enable the 'always transition' behavior"
-	input DisableAlwaysTransition(void) : "Disable the 'always transition' behavior"
-	
-	input EnableSpeakWhileScripting(void) : "Allow this NPC to speak responses while in a scripted sequence or while StartScripting is active."
-	input DisableSpeakWhileScripting(void) : "Cancels this NPC's ability to speak responses while in a scripted sequence or while StartScripting is active if it was previously enabled by EnableSpeakWhileScripting."
-	
 	input SetGrenadeCapabilities(integer) : "Sets this NPC's grenade capabilities."
 	SetGrenadeCapabilities(choices) : "Grenade capabilities" : "None" : "Controls this NPC's capability to throw grenades or use their weapon's secondary ability (energy balls/SMG grenades)." =
 	[
@@ -69,6 +63,16 @@
 		2 : "Alt-firing"
 		3 : "Grenades + Alt-firing"
 	]
+]
+
+@BaseClass base(NewGrenadeUser) = PlayerCompanion
+[
+	input OutsideTransition(void) : "Use this input to teleport the NPC to a hintnode with the Player Squad Transition Point hint type."
+	input EnableAlwaysTransition(void) : "Enable the 'always transition' behavior"
+	input DisableAlwaysTransition(void) : "Disable the 'always transition' behavior"
+	
+	input EnableSpeakWhileScripting(void) : "Allow this NPC to speak responses while in a scripted sequence or while StartScripting is active."
+	input DisableSpeakWhileScripting(void) : "Cancels this NPC's ability to speak responses while in a scripted sequence or while StartScripting is active if it was previously enabled by EnableSpeakWhileScripting."
 	
 	AlwaysTransition(choices) : "Always transition" : "No" : "If yes, this NPC will always teleport to a Player Squad Transition Point if they're not within the trigger_transition volume." =
 	[
@@ -1996,7 +2000,7 @@
 ]
 
 
-@NPCClass base(BaseNPC,RappelNPC,GrenadeUser) studio() = npc_metropolice : "MetroPolice"
+@NPCClass base(BaseNPC,RappelNPC,NewGrenadeUser) studio() = npc_metropolice : "MetroPolice"
 [
 	model(studio) : "Model" : "models/police.mdl" : "The model of this npc_metropolice. Keep in mind this overrides the 'Efficient' spawnflag which sets the model to police_cheaple.mdl."
 
