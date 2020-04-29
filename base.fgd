@@ -8950,7 +8950,7 @@
 		1 : "Yes"
 	]
 
-	texturename(material) : "Texture Name" : "effects/flashlight001"
+	texturename(material) : "Texture Name" : "effects/flashlight001" : "The texture which should be used. Please note that env_projectedtexture uses .vtf files directly and does not use .vmt files. The material browser is only available here to assist with finding textures since materials typically have the same name as their textures."
 	textureframe(integer) : "Texture Frame" : 0 : "Sets the frame of the projected texture. Only relevant if the texture is animated/has multiple frames."
 	
 	alwaysdraw(Choices)		: "Always Draw" : 0 : "Always draws the projected texture, regardless of whether the player can see its frustum. Use this for projected textures that can be seen on monitors or in the skybox." =
