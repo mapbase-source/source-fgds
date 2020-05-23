@@ -100,6 +100,14 @@
 [ 
 	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
 	
+	vscripts(string) : "Entity Scripts" : "" : "Name(s) of script files that are executed after all entities have spawned."
+	thinkfunction(string) : "Script think function" : "" : "Name of a function in this entity's script scope which will be called automatically."
+
+	input RunScriptFile(string) : "Execute a game script file from disk"
+	input RunScriptCode(string) : "Execute a string of script source code"
+	input CallScriptFunction(string) : "Call a named function from this entity's Activation Script"
+	
+	
 	// Inputs
 	input Kill(void) : "Removes this entity from the world."
 	input KillHierarchy(void) : "Removes this entity and all its children from the world."
@@ -4926,6 +4934,26 @@
 	// Outputs
 	output OnTrigger(void) : "Fired when the relay is triggered."
 	output OnTriggerParameter(string) : "Fired when the relay is triggered with a parameter."
+]
+
+@PointClass base(Targetname) iconsprite("editor/logic_script.vmt") = logic_script : "An entity that acts as a container for scripts"
+[
+	Group00(target_destination) : "EntityGroup[0]"
+	Group01(target_destination) : "EntityGroup[1]"
+	Group02(target_destination) : "EntityGroup[2]"
+	Group03(target_destination) : "EntityGroup[3]"
+	Group04(target_destination) : "EntityGroup[4]"
+	Group05(target_destination) : "EntityGroup[5]"
+	Group06(target_destination) : "EntityGroup[6]"
+	Group07(target_destination) : "EntityGroup[7]"
+	Group08(target_destination) : "EntityGroup[8]"
+	Group09(target_destination) : "EntityGroup[9]"
+	Group10(target_destination) : "EntityGroup[10]"
+	Group11(target_destination) : "EntityGroup[11]"
+	Group12(target_destination) : "EntityGroup[12]"
+	Group13(target_destination) : "EntityGroup[13]"
+	Group14(target_destination) : "EntityGroup[14]"
+	Group15(target_destination) : "EntityGroup[15]"
 ]
 
 @PointClass base(Targetname, EnableDisable) iconsprite("editor/logic_timer.vmt") = logic_timer :
