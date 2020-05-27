@@ -107,6 +107,7 @@
 	input RunScriptCode(string) : "Execute a string of script source code"
 	input RunScriptCodeQuotable(string) : "Execute a string of script source code which converts double apostrophes ('') to quotation marks for strings"
 	input CallScriptFunction(string) : "Call a named function from this entity's Activation Script"
+	input ClearScriptScope(void) : "Clears this entity's script scope"
 	
 	
 	// Inputs
@@ -1083,6 +1084,14 @@
 	minpropscreenwidth(float) : "End Fade Pixels" : 0 : "Minimum number of pixels wide at which the prop is visible (0 = don't fade out). This number is ignored if the prop has a specific fade distance specified."
 	detailvbsp(string) : "Detail.vbsp file" : "detail.vbsp" : "Detail.vbsp file to use for emitting detail props (found in directory <root>/modname)"
 	detailmaterial(string) : "Detail material file" : "detail/detailsprites" : "Material for detail sprites to use for drawing detail props"
+	vscriptlanguage(choices) : "VScript language" : 0 : "Sets the script language this map should use for entity scripts." =
+	[	
+		0 : "Default (Squirrel)"
+		//1 : "GameMonkey (Unsupported)"
+		2 : "Squirrel"
+		//3 : "Lua (Unsupported)"
+		//4 : "Python (Unsupported)"
+	]
 	startdark(choices) : "Level Fade In" : 0 =
 	[	
 		0 : "No"
