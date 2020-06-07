@@ -1136,6 +1136,7 @@
 		"models/combine_super_soldier.mdl" : "Elite Soldier"
 		"models/combine_soldirt.mdl" : "Dirty Soldier/EP2 Soldier"
 		"models/combine_super_soldirt.mdl" : "Dirty Elite Soldier/EP2 Elite"
+		"models/combine_soldirt_prisonguard.mdl" : "Dirty Nova Prospekt Soldier"
 	]
 
 	tacticalvariant(choices) : "Tactical Variant" : "0" =
