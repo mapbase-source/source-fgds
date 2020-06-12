@@ -720,6 +720,8 @@
 	[
 		65536  :  "[65536] Start hidden" : 0
 		131072 :  "[131072] Start hanging from ceiling" : 0
+		262144 :  "[262144] Don't drown" : 0
+		524288 :  "[524288] No melee insta-kill" : 0
 	]
 
 
