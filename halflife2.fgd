@@ -720,6 +720,8 @@
 	[
 		65536  :  "[65536] Start hidden" : 0
 		131072 :  "[131072] Start hanging from ceiling" : 0
+		262144 :  "[262144] Don't drown" : 0
+		524288 :  "[524288] No melee insta-kill" : 0
 	]
 
 
@@ -1136,6 +1138,7 @@
 		"models/combine_super_soldier.mdl" : "Elite Soldier"
 		"models/combine_soldirt.mdl" : "Dirty Soldier/EP2 Soldier"
 		"models/combine_super_soldirt.mdl" : "Dirty Elite Soldier/EP2 Elite"
+		"models/combine_soldirt_prisonguard.mdl" : "Dirty Nova Prospekt Soldier"
 	]
 
 	tacticalvariant(choices) : "Tactical Variant" : "0" =
