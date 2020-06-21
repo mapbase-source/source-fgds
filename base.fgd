@@ -2620,11 +2620,25 @@
 
 	gustdirchange(integer) : "Max gust dir change (degrees)" : 20 : "Maximum amount that the wind's direction changes due to a gust."
 	
+	treeswayscale(float) : "Tree sway scale" : "1.0" : "The scale at which this env_wind affects $treeSway. Set to 0 to not affect $treeSway. (Only one env_wind should affect $treeSway)"
+	
 	windradius(float) : "Radius" : "-1" : "The radius in which this env_wind should simulate wind. -1 = everywhere"
 	windradiusinner(float) : "Inner Radius" : "0" : "The inner-radius for the env_wind, which enables varying intensities at certain distances. 0 = no inner radius"
 	
 	output OnGustStart(void) : "Fired when a wind gust begins."
 	output OnGustEnd(void) : "Fired when a wind gust ends."
+	
+	input SetMinWind(float) : "Sets the minimum speed of the wind while idling."
+	input SetMaxWind(float) : "Sets the maximum speed of the wind while idling."
+	input SetMinGust(float) : "Sets the minimum speed of wind gusts."
+	input SetMaxGust(float) : "Sets the maximum speed of wind gusts."
+	input SetMinGustDelay(float) : "Sets the minimum time delay between random gusts."
+	input SetMaxGustDelay(float) : "Sets the maximum time delay between random gusts."
+	input SetGustDirChange(float) : "Sets the maximum amount that the wind's direction changes due to a gust."
+	input SetGustDuration(float) : "Sets how long the wind will gust for."
+	input SetWindRadius(float) : "Sets the radius in which this env_wind should simulate wind. -1 = everywhere"
+	input SetWindRadiusInner(float) : "Sets the inner-radius for the env_wind, which enables varying intensities at certain distances. 0 = no inner radius"
+	input SetTreeSwayScale(float) : "Sets the scale at which this env_wind affects $treeSway. Set to 0 to not affect $treeSway."
 ]
 
 // We can't add a new sprite because the "scale" keyvalue makes it huge
