@@ -7582,7 +7582,7 @@
 	health(integer) : "Health" : 0 : "Number of points of damage to take before breaking.  0 means don't break."	
 ]
 
-@PointClass base(prop_dynamic_base) studioprop() = prop_interactable :
+@PointClass wirebox(use_mins, use_maxs) base(prop_dynamic_base) studioprop() = prop_interactable :
 	"A prop designed to be interacted with like a button. It has all of the properties of prop_dynamic without having to use an accompanying func_door or func_button."
 [
 	spawnflags(flags) =
@@ -7606,6 +7606,9 @@
 	InSequence(string) : "In Sequence" : "" : "Optional sequence to play when the button is pressed, representing a button going 'in'."
 	OutSequence(string) : "Out Sequence" : "" : "Optional sequence to play after the button was interacted with and the cooldown is finished, representing a button coming back 'out' after an 'in' animation."
 	LockedSequence(string) : "Locked Sequence" : "" : "Optional sequence to play when the prop_interactable is interacted with while locked."
+	
+	use_mins(vector) : "+USE Mins" : "-0 -0 -0" : "Optional box for only permitting +USE interactions within. The prop_interactable should not change its angles while this is used."
+	use_maxs(vector) : "+USE Maxs" : "0 0 0" : "Optional box for only permitting +USE interactions within. The prop_interactable should not change its angles while this is used."
 	
 	// Inputs
 	input Lock(void) : "Locks this prop_interactable, making it uninteractable."
