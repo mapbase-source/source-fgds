@@ -4711,8 +4711,8 @@
 	
 	CheapWarnSound(choices) : "Cheap Warn Sound" : 0 : "Makes the mine's warn sound use generic sound methods instead of a sound patch, which is cheaper and doesn't continuously take up audio channels. Use this for areas with tons of active mines." =
 	[
-		0: "No"
-		1: "Yes"
+		0 : "No"
+		1 : "Yes"
 	]
 	
 	Modification(choices): "Citizen modified" : 0 : "'Normal' is default Combine behavior. 'Cavern' detonates earlier in its jump, and has a different default skin." = 
@@ -4733,6 +4733,12 @@
 	[
 		0 : "No"
 		1 : "Yes"
+	]
+	
+	LOSMask(choices) : "LOS method" : 1 : "Controls what the mine can't see through when looking for enemies. Useful for when you want mines to see through grates and fences." =
+	[
+		16395 : "Default - Solid entities (MASK_SOLID_BRUSHONLY)"
+		16449 : "NPC LOS (MASK_BLOCKLOS)"
 	]
 
 	// Inputs
