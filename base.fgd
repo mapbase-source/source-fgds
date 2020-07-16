@@ -1086,6 +1086,7 @@
 	detailmaterial(string) : "Detail material file" : "detail/detailsprites" : "Material for detail sprites to use for drawing detail props"
 	vscriptlanguage(choices) : "VScript language" : 0 : "Sets the script language this map should use for entity scripts." =
 	[	
+		-1 : "None (Disable VScript)"
 		0 : "Default (Squirrel)"
 		//1 : "GameMonkey (Unsupported)"
 		2 : "Squirrel"
