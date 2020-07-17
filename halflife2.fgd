@@ -4735,7 +4735,7 @@
 		1 : "Yes"
 	]
 	
-	LOSMask(choices) : "LOS method" : 1 : "Controls what the mine can't see through when looking for enemies. Useful for when you want mines to see through grates and fences." =
+	LOSMask(choices) : "LOS method" : 16395 : "Controls what the mine can't see through when looking for enemies. Useful for when you want mines to see through grates and fences." =
 	[
 		16395 : "Default - Solid entities (MASK_SOLID_BRUSHONLY)"
 		16449 : "NPC LOS (MASK_BLOCKLOS)"

@@ -7125,7 +7125,7 @@
 @PointClass base(Targetname, Angles, Studiomodel) sphere(expradius) studioprop() = physics_cannister : 
 	"A physically simulated gas cannister that can have its cap shot off, at which point gas will start escaping and cause the cannister to fly around. If it takes enough damage, it will explode."
 [
-	model(studio) : "World model" : "models\props_c17\canister01a.mdl"
+	model(studio) : "World model" : "models/props_c17/canister01a.mdl"
 	spawnflags(flags) = 
 	[
 		1 : "[1] Start Asleep" : 0
