@@ -2831,10 +2831,12 @@
 	fxtime(string) : "Scan time (scan effect only)" : "0.25" : "If the 'Text Effect' is set to Scan Out, this is the time it should take to scan out all the letters in the text."
 	channel(choices) : "Text Channel" : 1 : "You can have up to four individual game_text messages onscreen at once, stored in channels. Select which channel this text should be placed in, which will overwrite any active message already in that channel." =
 	[
+		0 : "Channel 0 (warning: may be used by some HUD elements)"
 		1 : "Channel 1"
 		2 : "Channel 2"
 		3 : "Channel 3" 
 		4 : "Channel 4"
+		5 : "Channel 5 (warning: may be used by some HUD elements)"
 	]
 	master(target_destination) : "Master" : : "Legacy support: The name of a master entity. If the master hasn't been activated, this entity will not activate."
 
