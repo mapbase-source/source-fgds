@@ -284,6 +284,14 @@
 		0 : "No"
 		1 : "Yes"
 	]
+	
+	EFlags(choices) : "EFlags" : 0 : "Special internal entity flags normally only set by the code. Be careful with this keyvalue." =
+	[
+		33554432 : "[33554432] Don't block NPC LOS"
+		134217728 : "[134217728] No dissolve"
+		268435456 : "[268435456] No supercharged gravity gun ragdoll"
+		1073741824 : "[1073741824] No gravity gun interaction at all"
+	]
 
 	input Alpha(integer) : "Sets the sprite's alpha (0 - 255)."
 	input Color(color255) : "Sets the sprite's color (R G B)."
@@ -2703,6 +2711,11 @@
 	input SetFarZ(integer): "Sets the far clip plane distance."
 	
 	input SetSkyColor(color255) : "Sets the sky color."
+	
+	input CopyFogController(target_destination) : "Copies the target fog controller's exact fog parameters."
+	input CopyFogControllerWithScale(target_destination) : "Copies the target fog controller's exact fog parameters."
+	
+	input SetScale(integer) : "Sets the skybox scale."
 ]
 
 @BaseClass base(Targetname, ResponseContext) = BaseSpeaker
