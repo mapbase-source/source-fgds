@@ -8968,6 +8968,7 @@
 	
 	input SetMaxInputArmor(integer)			: "Sets the maximum armor value that could be set by armor inputs."
 	
+	output OnPlayerSpawn(void) 				: "Fired when the player spawns or respawns, using the spawn point as the caller."
 ]
 
 @PointClass base(Targetname) iconsprite("editor/logic_playerinfo.vmt") = logic_playerinfo : 
