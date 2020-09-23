@@ -796,7 +796,7 @@
 	input SetSpawnFrequency(float) : "Sets how often (in seconds) a new NPC will be spawned."
 ]
 
-@PointClass base(BaseNPCMaker) iconsprite("editor/npc_maker.vmt") = npc_template_maker : 
+@PointClass base(BaseNPCMaker) iconsprite("editor/npc_maker.vmt") sphere(Radius) sphere(MinSpawnDistance) = npc_template_maker : 
 	"An entity that creates NPCs. The NPCs it creates are clones of a template NPC. NPCs are spawned around this maker's origin, or at specified destination points."
 [
 	spawnflags(Flags) = 
