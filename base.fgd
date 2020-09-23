@@ -1093,8 +1093,18 @@
 	minpropscreenwidth(float) : "End Fade Pixels" : 0 : "Minimum number of pixels wide at which the prop is visible (0 = don't fade out). This number is ignored if the prop has a specific fade distance specified."
 	detailvbsp(string) : "Detail.vbsp file" : "detail.vbsp" : "Detail.vbsp file to use for emitting detail props (found in directory <root>/modname)"
 	detailmaterial(string) : "Detail material file" : "detail/detailsprites" : "Material for detail sprites to use for drawing detail props"
-	vscriptlanguage(choices) : "VScript language" : 0 : "Sets the script language this map should use for entity scripts." =
+	vscriptlanguage(choices) : "VScript language (Server)" : 0 : "Sets the script language this map should use for entity scripts on the server." =
 	[	
+		-1 : "None (Disable VScript)"
+		0 : "Default (Squirrel)"
+		//1 : "GameMonkey (Unsupported)"
+		2 : "Squirrel"
+		//3 : "Lua (Unsupported)"
+		//4 : "Python (Unsupported)"
+	]
+	vscriptlanguage_client(choices) : "VScript language (Client)" : -2 : "Sets the script language this map should use for entity scripts on the client." =
+	[	
+		-2 : "Use Server language"
 		-1 : "None (Disable VScript)"
 		0 : "Default (Squirrel)"
 		//1 : "GameMonkey (Unsupported)"
