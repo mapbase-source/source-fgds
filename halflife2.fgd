@@ -1351,7 +1351,7 @@
 	output OnFire(void) : "Fires for each bullet fired by this entity."
 ]
 
-@PointClass base(Targetname,Parentname,Angles) sphere(DamageRadius) studio("models/props_combine/headcrabcannister01b.mdl") = env_headcrabcanister : "Headcrab canister"
+@PointClass base(Targetname,Parentname,Angles,Shadow) sphere(DamageRadius) studio("models/props_combine/headcrabcannister01b.mdl") = env_headcrabcanister : "Headcrab canister"
 [
 	spawnflags(Flags) = 
 	[
