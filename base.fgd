@@ -9263,6 +9263,12 @@
 		1 : "Postfix"
 		2 : "None"
 	]
+	
+	remap_vecline(choices) : "Remap Vector Lines" : 0 : "Remaps vecline keyvalues to the instance's origin. vecline is a type of vector which displays a line back to the entity's origin. This is often used on entities like phys_hinge for displaying an axis." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
 
 	replace01(instance_variable) : "Replace" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
 	replace02(instance_variable) : "Replace" : : "This is a replacement parameter.  It goes in the form of $variable value.  All entities inside of that instance that have $variable somewhere will be replaced with the value contents.  Example: $color 255 0 0"
