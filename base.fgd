@@ -1232,7 +1232,7 @@
 	]
 ]
 
-@PointClass base(Targetname) = env_zoom : 
+@PointClass base(Targetname) frustum(FOV,4,250,250 250 250,-1) = env_zoom : 
 	"An entity that can be used to control the player's FOV. Useful for scenes where the player's view is being controlled, or player-usable binoculars/telescopes, etc."
 [
 	Rate(float) : "Seconds to reach target" : "1.0" : "Amount of time it should take to reach the specified FOV."
@@ -4624,7 +4624,7 @@
 	output OnMultiNewRound(void) : "Fired only in multiplayer, when a new round is started. Only fired in multiplayer games that use round-based gameplay."
 ]
 
-@PointClass base(Targetname,Angles,Parentname) studioprop("models/editor/camera.mdl") = point_viewcontrol : 
+@PointClass base(Targetname,Angles,Parentname) studioprop("models/editor/camera.mdl") frustum(fov,4,250,250 250 250,-1) = point_viewcontrol : 
 	"A camera entity that controls the player's view. While it's active, the player will see out of the camera." 
 [
 	target(target_destination) : "Entity to Look At" : : "Name of the entity that the camera should point at and track while active."
@@ -4654,7 +4654,7 @@
 	acceleration(string) : "Acceleration units/sec^2" : "500" : "The speed at which the camera accelerates to path corner's desired speeds."
 	deceleration(string) : "Stop Deceleration units/sec^2" : "500" : "The speed at which the camera decelerates to path corner's desired speeds."
 	
-	fov(float) : "FOV" : "90" : "The player's FOV when using this camera. Be sure to have the 'Set FOV' spawnflag enabled if you want to use this."
+	fov(float) : "FOV" : "75" : "The player's FOV when using this camera. Be sure to have the 'Set FOV' spawnflag enabled if you want to use this."
 	fov_rate(float) : "FOV rate" : "0" : "How quickly the FOV should be set. Be sure to have the 'Set FOV' spawnflag enabled if you want to use this."
 	
 	DontSetPlayerView(choices) : "Don't set player view" : 0 : "Prevents this point_viewcontrol from actually controlling the player's view. FOV, player-affecting spawnflags, etc. may still happen." =
