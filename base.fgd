@@ -2850,6 +2850,12 @@
 		5 : "Channel 5 (warning: may be used by some HUD elements)"
 	]
 	master(target_destination) : "Master" : : "Legacy support: The name of a master entity. If the master hasn't been activated, this entity will not activate."
+	
+	autobreak(choices) : "Automatically break lines" : 0 : "Allows text to automatically shift to the next line whenever it can't fit on a player's screen. This accounts for a player's aspect ratio and adds hyphens when necessary." =
+	[
+		0: "No"
+		1: "Yes"
+	]
 
 	// Inputs
 	input Display(void) : "Display the message text."
@@ -2931,6 +2937,7 @@
 	// Inputs
 	input LightOn(void) : "Turn the spotlight on."
 	input LightOff(void) : "Turn the spotlight off"
+	input LightToggle(void) : "Toggles the spotlight on or off"
 	
 	// outputs
 	output OnLightOn(void) : "Fires when light turns on."
@@ -7978,7 +7985,7 @@
 @SolidClass base(Targetname, Parentname) = func_precipitation : 
 	"A brush entity that creates rain and snow inside its volume."
 [
-	renderamt(integer) : "Density (0-100%)" : 5	
+	renderamt(integer) : "Density (0-100%)" : 5	: "How dense the precipitation should be. This can be changed later with the 'Alpha' input."
 	rendercolor(color255) : "Color (R G B)" : "100 100 100"
 	preciptype(choices) : "Precipitation Type" : 0 =	
 	[
@@ -7986,6 +7993,16 @@
 		1 : "Snow"
 		2 : "Ash"
 		3 : "Snowfall"
+		4 : "Particle Rain"
+		5 : "Particle Ash"
+		6 : "Particle Rainstorm"
+		7 : "Particle Snow"
+	]
+	
+	spawnflags(flags) =
+	[
+		1 : "[1] Particle types only: Clamp precipitation to brush bounds" : 1
+		2 : "[2] Particle types only: Suppress outer particle (recommended if clamping)" : 1
 	]
 ]
 
@@ -8031,11 +8048,24 @@
 	output OnDeath(void) : "Fires when the target is killed."
 ]
 
-@PointClass = func_fish_pool : "Creates a school of interactive fish that swim near this entity."
+@PointClass sphere(max_range) sphere(LoudPanicRange) sphere(QuietPanicRange) = func_fish_pool : "Creates a school of interactive fish that swim near this entity."
 [
 	model(studio) : "World model" : "models/Junkola.mdl"
+	skin(integer) : "Skin" : 0 : "Some models have multiple versions of their textures, called skins. Set this to a number other than 0 to make each fish use that skin instead of the default."
 	fish_count(integer) : "Fish Count" : 10 : "Number of Fish in this Pool"
 	max_range(float) : "Max Range" : 150 : "How far away a Fish can wander (max 255)"
+	
+	LoudPanicRange(float) : "Loud Panic Range" : 500 : "How far away an event has to be to make the fish in this pool panic."
+	QuietPanicRange(float) : "Quiet Panic Range" : 75 : "How far away a quiet event (a footstep) has to be to make the fish in this pool panic."
+	
+	// Inputs
+	input SpawnFish(void) : "Spawns an additonal fish. This ignores the fish count keyvalue."
+	input PanicLoudFromPoint(vector) : "Causes a loud panic event at the specified location vector."
+	input PanicQuietFromPoint(vector) : "Causes a quiet panic event at the specified location vector."
+	input Skin(integer) : "Changes the fish skin to the specified number."
+	
+	// Outputs
+	output OnSpawnFish(ehandle) : "Fires when a fish is spawned, passing the fish as the activator."
 ]
 
 
@@ -8469,8 +8499,12 @@
 		256: "[256] Affects Ladders (Half-Life 2)" : 0 
 	]
 
-	speed(integer) : "Speed of Push" : 40 : "The speed at which to push entities away, in inches / second."
+	speed(integer) : "Speed of Push" : 40 : "The speed at which to push entities away, in units / second."
 	alternateticksfix(float) : "Scale force for alternate ticks" : "0" : "If nonzero, scale the force by this amount when running with alternate ticks. This fixes problems with an overly large force due to the longer frametime on when running with sv_alternateticks 1."
+	
+	// Inputs
+	input SetSpeed(float) : "Set the speed at which to push entities away."
+	input SetPushDir(vector) : "Set the angles indicating the direction to push touched entities."
 ]
 
 @SolidClass base(Trigger, Angles) = trigger_wind : 

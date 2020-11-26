@@ -65,6 +65,12 @@
 	]
 ]
 
+@BaseClass = PolicingNPC
+[
+	// Inputs
+	input SetPoliceGoal(target_destination) : "Causes the NPC to be assigned to the specified ai_goal_police. Pass no parameter to clear the goal."
+]
+
 @BaseClass base(NewGrenadeUser) = PlayerCompanion
 [
 	input OutsideTransition(void) : "Use this input to teleport the NPC to a hintnode with the Player Squad Transition Point hint type."
@@ -282,8 +288,10 @@
 	input SetAngry(void) : "Causes the camera to become angry as if it has seen something upsetting."
 	input SetIdle(void) : "Causes the camera to calm down if it is angry."
 	
-	output OnFoundPlayer(string) : "Fired when the player is spotted within the inner radius"
+	output OnFoundPlayer(string) : "Fired when the player is spotted within the inner radius."
 	output OnFoundEnemy(void) : "Fired when a non-player enemy is spotted within the inner radius."
+	output OnLostPlayer(void) : "Fired when the tracked player spotted within the inner radius has been lost. Usually due to the player leaving the inner radius, or because the player was killed."
+	output OnLostEnemy(void) : "Fired when a non-player enemy spotted within the inner radius has been lost. Usually due to the enemy leaving the inner radius, or because the enemy was killed/removed."
 ]
 
 
@@ -889,7 +897,7 @@
 
 
 
-@NPCClass base(TalkNPC, PlayerCompanion, RappelNPC) studio() = npc_citizen : "Citizen"
+@NPCClass base(TalkNPC, PlayerCompanion, RappelNPC, PolicingNPC) studio() = npc_citizen : "Citizen"
 [
 
 	spawnflags(Flags) =
@@ -1076,7 +1084,7 @@
 	output OnPlayerUse(void) : "Fires when a player +USEs Barney"
 ]
 
-@BaseClass base(BaseNPC, RappelNPC, GrenadeUser) = BaseCombine
+@BaseClass base(BaseNPC, RappelNPC, GrenadeUser, PolicingNPC) = BaseCombine
 [
 	additionalequipment(choices) : "Weapons" : "weapon_smg1" =
 	[
@@ -1149,7 +1157,7 @@
 		"3" : "Grenade Happy"
 	]
 	
-	usemarch(choices) : "Walk Easy" : "0" : "When true, will use a variety of more casual walking animations instead of the standard walk. For use in crowds. WARNING: this animation only has a north component. For use under very special circumstances only." =
+	usemarch(choices) : "Use March" : "0" : "When true, will use a special walking animation which blends itself between the idle walking animation and the regular walking animation, allowing for a variety of casual walking animations instead of the standard walk. Used in EP2 for the soldiers in the bridge convoy. WARNING: This animation only has a north component, so it can't sidestep or walk backwards. This keyvalue was previously named 'Walk Easy', but it was changed to avoid confusion with ACT_WALK_EASY, the main idle walking animation." =
 	[
 		"0" : "No"
 		"2" : "Yes"
@@ -2003,7 +2011,7 @@
 ]
 
 
-@NPCClass base(BaseNPC,RappelNPC,NewGrenadeUser) studio() = npc_metropolice : "MetroPolice"
+@NPCClass base(BaseNPC,RappelNPC,NewGrenadeUser,PolicingNPC) studio() = npc_metropolice : "MetroPolice"
 [
 	model(studio) : "Model" : "models/police.mdl" : "The model of this npc_metropolice. Keep in mind this overrides the 'Efficient' spawnflag which sets the model to police_cheaple.mdl."
 
@@ -2049,7 +2057,6 @@
 	// Inputs
 	input DisableManhackToss(void) : "Disables manhack toss"
 	input EnableManhackToss(void) : "Enables manhack toss (which had been disabled by the spawnflag or input)"
-	input SetPoliceGoal(target_destination) : "Causes the NPC to be assigned to the specified ai_goal_police. Pass no parameter to clear the goal."
 	input ActivateBaton(void) : "Set the baton to active"
 	input AdministerJustice(void) : "Orders this NPC to administer justice to the player as if they hit this NPC with a can or something. If this NPC cannot respond, it will look for another npc_metropolice to do it."
 	input SetWarnings(integer) : "Sets the number of warnings this NPC has given to the player."
@@ -4318,6 +4325,16 @@
 @PointClass base(Weapon) studio("models/weapons/W_Alyx_Gun.mdl") sphere(fademindist) sphere(fademaxdist) = weapon_alyxgun: "Alyx Gun" []
 @PointClass base(Weapon) studio("models/weapons/W_annabelle.mdl") sphere(fademindist) sphere(fademaxdist) = weapon_annabelle: "Annabelle (Grigori)" []
 @PointClass base(Weapon) studio("models/weapons/w_slam.mdl") sphere(fademindist) sphere(fademaxdist) = weapon_slam: "A tripmine/satchel hybrid from HL2:MP.\n\nCome on and slam, and welcome to the jam!\nCome on and slam, if you wanna jam!" []
+
+// TODO: Move to its own FGD? Needs to access Weapon base class somehow
+@BaseClass color(0 0 220) base(Weapon, Studiomodel) sphere(fademindist) sphere(fademaxdist) = CustomScriptedWeapon
+[
+	vscripts_client(string) : "Client-side Entity Scripts" : "" : "Name(s) of script files that are executed on the client. Weapons need to have a clientside counterpart for prediction in multiplayer, but this is not needed in singleplayer mapping."
+	
+	weapondatascript_name(string) : "Weapon Script Name" : "" : "Name of the weapon script this entity should use. Uses the classname (weapon_custom_scripted1) by default."
+]
+
+@PointClass base(CustomScriptedWeapon) studioprop() sphere(fademindist) sphere(fademaxdist) = weapon_custom_scripted1: "Scripted Weapon 1" []
 
 @PointClass base(Targetname, Parentname, Angles, RenderFields, DamageFilter) studio( "models/weapons/w_slam.mdl" ) sphere(DmgRadius) = npc_tripmine : "S.L.A.M. Tripmine"
 [
