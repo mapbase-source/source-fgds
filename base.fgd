@@ -4718,8 +4718,8 @@
 	"If the input value is greater than the compare value, the OnGreaterThan output is fired with the input value."
 [
 	// Keys
-	InitialValue(string) : "Initial value" : : "Initial value for the input value."
-	CompareValue(string) : "Compare value" : : "The value to compare against."
+	InitialValue(string) : "Initial value" : : "Initial value for the input value. This keyvalue supports matchers (<, >, !=, etc.)."
+	CompareValue(string) : "Compare value" : : "The value to compare against. This keyvalue supports matchers (<, >, !=, etc.)."
 	
 	// Inputs
 	input SetValue(string) : "Sets the value that will be compared against the compare value."
@@ -4801,22 +4801,22 @@
 		1 : "Yes"
 	]
 	
-	Case01(string) : "Case 01"
-	Case02(string) : "Case 02"
-	Case03(string) : "Case 03"
-	Case04(string) : "Case 04"
-	Case05(string) : "Case 05"
-	Case06(string) : "Case 06"
-	Case07(string) : "Case 07"
-	Case08(string) : "Case 08"
-	Case09(string) : "Case 09"
-	Case10(string) : "Case 10"
-	Case11(string) : "Case 11"
-	Case12(string) : "Case 12"
-	Case13(string) : "Case 13"
-	Case14(string) : "Case 14"
-	Case15(string) : "Case 15"
-	Case16(string) : "Case 16"
+	Case01(string) : "Case 01" : : "Fires OnCase01 if the InValue parameter matches this value. This keyvalue supports matchers (<, >, !=, etc.). Not needed for PickRandom or PickRandomShuffle."
+	Case02(string) : "Case 02" : : "Fires OnCase02 if the InValue parameter matches this value. This keyvalue supports matchers (<, >, !=, etc.). Not needed for PickRandom or PickRandomShuffle."
+	Case03(string) : "Case 03" : : "Fires OnCase03 if the InValue parameter matches this value. This keyvalue supports matchers (<, >, !=, etc.). Not needed for PickRandom or PickRandomShuffle."
+	Case04(string) : "Case 04" : : "Fires OnCase04 if the InValue parameter matches this value. This keyvalue supports matchers (<, >, !=, etc.). Not needed for PickRandom or PickRandomShuffle."
+	Case05(string) : "Case 05" : : "Fires OnCase05 if the InValue parameter matches this value. This keyvalue supports matchers (<, >, !=, etc.). Not needed for PickRandom or PickRandomShuffle."
+	Case06(string) : "Case 06" : : "Fires OnCase06 if the InValue parameter matches this value. This keyvalue supports matchers (<, >, !=, etc.). Not needed for PickRandom or PickRandomShuffle."
+	Case07(string) : "Case 07" : : "Fires OnCase07 if the InValue parameter matches this value. This keyvalue supports matchers (<, >, !=, etc.). Not needed for PickRandom or PickRandomShuffle."
+	Case08(string) : "Case 08" : : "Fires OnCase08 if the InValue parameter matches this value. This keyvalue supports matchers (<, >, !=, etc.). Not needed for PickRandom or PickRandomShuffle."
+	Case09(string) : "Case 09" : : "Fires OnCase09 if the InValue parameter matches this value. This keyvalue supports matchers (<, >, !=, etc.). Not needed for PickRandom or PickRandomShuffle."
+	Case10(string) : "Case 10" : : "Fires OnCase10 if the InValue parameter matches this value. This keyvalue supports matchers (<, >, !=, etc.). Not needed for PickRandom or PickRandomShuffle."
+	Case11(string) : "Case 11" : : "Fires OnCase11 if the InValue parameter matches this value. This keyvalue supports matchers (<, >, !=, etc.). Not needed for PickRandom or PickRandomShuffle."
+	Case12(string) : "Case 12" : : "Fires OnCase12 if the InValue parameter matches this value. This keyvalue supports matchers (<, >, !=, etc.). Not needed for PickRandom or PickRandomShuffle."
+	Case13(string) : "Case 13" : : "Fires OnCase13 if the InValue parameter matches this value. This keyvalue supports matchers (<, >, !=, etc.). Not needed for PickRandom or PickRandomShuffle."
+	Case14(string) : "Case 14" : : "Fires OnCase14 if the InValue parameter matches this value. This keyvalue supports matchers (<, >, !=, etc.). Not needed for PickRandom or PickRandomShuffle."
+	Case15(string) : "Case 15" : : "Fires OnCase15 if the InValue parameter matches this value. This keyvalue supports matchers (<, >, !=, etc.). Not needed for PickRandom or PickRandomShuffle."
+	Case16(string) : "Case 16" : : "Fires OnCase16 if the InValue parameter matches this value. This keyvalue supports matchers (<, >, !=, etc.). Not needed for PickRandom or PickRandomShuffle."
 
 	// Inputs
 	input InValue(string) : "Compares the Input value to the case values, and fires the appropriate output, if any."
@@ -5506,7 +5506,7 @@
 [
 	// Keys
 	SetConVar(string) : "ConVar" : : "The ConVar to read. Can be serverside or clientside(?)"
-	SetTestValue(string) : "Compare value" : : "The value to compare with the ConVar's value during comparisons. You could use <, !=, etc. at the beginning similar to a Response System criterion."
+	SetTestValue(string) : "Compare value" : : "The value to compare with the ConVar's value during comparisons. This keyvalue supports matchers (<, >, !=, etc.)."
 	
 	// Inputs
 	input SetConVar(string) : "Sets the ConVar whose variable will be retrieved."
@@ -5876,23 +5876,23 @@
 		0 : "No"
 		1 : "Yes"
 	]
-
-	Case01(string) : "Case 01"
-	Case02(string) : "Case 02"
-	Case03(string) : "Case 03"
-	Case04(string) : "Case 04"
-	Case05(string) : "Case 05"
-	Case06(string) : "Case 06"
-	Case07(string) : "Case 07"
-	Case08(string) : "Case 08"
-	Case09(string) : "Case 09"
-	Case10(string) : "Case 10"
-	Case11(string) : "Case 11"
-	Case12(string) : "Case 12"
-	Case13(string) : "Case 13"
-	Case14(string) : "Case 14"
-	Case15(string) : "Case 15"
-	Case16(string) : "Case 16"
+	
+	Case01(string) : "Case 01" : : "If the sequence's current case is 01, fires OnCasePass or OnCaseFail based on whether this value matches the InValue parameter. This keyvalue supports matchers (<, >, !=, etc.)."
+	Case02(string) : "Case 02" : : "If the sequence's current case is 02, fires OnCasePass or OnCaseFail based on whether this value matches the InValue parameter. This keyvalue supports matchers (<, >, !=, etc.)."
+	Case03(string) : "Case 03" : : "If the sequence's current case is 03, fires OnCasePass or OnCaseFail based on whether this value matches the InValue parameter. This keyvalue supports matchers (<, >, !=, etc.)."
+	Case04(string) : "Case 04" : : "If the sequence's current case is 04, fires OnCasePass or OnCaseFail based on whether this value matches the InValue parameter. This keyvalue supports matchers (<, >, !=, etc.)."
+	Case05(string) : "Case 05" : : "If the sequence's current case is 05, fires OnCasePass or OnCaseFail based on whether this value matches the InValue parameter. This keyvalue supports matchers (<, >, !=, etc.)."
+	Case06(string) : "Case 06" : : "If the sequence's current case is 06, fires OnCasePass or OnCaseFail based on whether this value matches the InValue parameter. This keyvalue supports matchers (<, >, !=, etc.)."
+	Case07(string) : "Case 07" : : "If the sequence's current case is 07, fires OnCasePass or OnCaseFail based on whether this value matches the InValue parameter. This keyvalue supports matchers (<, >, !=, etc.)."
+	Case08(string) : "Case 08" : : "If the sequence's current case is 08, fires OnCasePass or OnCaseFail based on whether this value matches the InValue parameter. This keyvalue supports matchers (<, >, !=, etc.)."
+	Case09(string) : "Case 09" : : "If the sequence's current case is 09, fires OnCasePass or OnCaseFail based on whether this value matches the InValue parameter. This keyvalue supports matchers (<, >, !=, etc.)."
+	Case10(string) : "Case 10" : : "If the sequence's current case is 10, fires OnCasePass or OnCaseFail based on whether this value matches the InValue parameter. This keyvalue supports matchers (<, >, !=, etc.)."
+	Case11(string) : "Case 11" : : "If the sequence's current case is 11, fires OnCasePass or OnCaseFail based on whether this value matches the InValue parameter. This keyvalue supports matchers (<, >, !=, etc.)."
+	Case12(string) : "Case 12" : : "If the sequence's current case is 12, fires OnCasePass or OnCaseFail based on whether this value matches the InValue parameter. This keyvalue supports matchers (<, >, !=, etc.)."
+	Case13(string) : "Case 13" : : "If the sequence's current case is 13, fires OnCasePass or OnCaseFail based on whether this value matches the InValue parameter. This keyvalue supports matchers (<, >, !=, etc.)."
+	Case14(string) : "Case 14" : : "If the sequence's current case is 14, fires OnCasePass or OnCaseFail based on whether this value matches the InValue parameter. This keyvalue supports matchers (<, >, !=, etc.)."
+	Case15(string) : "Case 15" : : "If the sequence's current case is 15, fires OnCasePass or OnCaseFail based on whether this value matches the InValue parameter. This keyvalue supports matchers (<, >, !=, etc.)."
+	Case16(string) : "Case 16" : : "If the sequence's current case is 16, fires OnCasePass or OnCaseFail based on whether this value matches the InValue parameter. This keyvalue supports matchers (<, >, !=, etc.)."
 	
 	DontIncrementOnPass(choices) : "Suppress auto increment" : 0 : "Prevents automatically incrementing the sequence each time a case passes." =
 	[
@@ -6545,7 +6545,7 @@
 		"model matches the given string will pass the filter. If the filter mode is Disallow, "+
 		"all entities EXCEPT those whose model matches the given string will pass the filter."
 		
-	skin(string) : "Skin" : -1 : "Some models have multiple versions of their textures, called skins. Use this if you want to filter by skins as well. If you want any skin to be allowed, be sure to leave this at -1! It might automatically change when you choose a model."
+	skin(string) : "Skin" : -1 : "Some models have multiple versions of their textures, called skins. Use this if you want to filter by skins as well. If you want any skin to be allowed, be sure to leave this at -1! It might automatically change when you choose a model. This keyvalue supports matchers (<, >, !=, etc.)."
 ]
 
 @FilterClass base(BaseFilter) iconsprite("editor/filter_context.vmt") = filter_activator_context :
