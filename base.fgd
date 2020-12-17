@@ -9513,3 +9513,67 @@
 	input SetGlowColor(color255) : "<r> <g> <b> <a> 0-255"
 	input Toggle(void) : "Toggles this entity."
 ]
+
+@PointClass base(Targetname) iconsprite("editor/postprocess_controller.vmt") color(255 255 255) = postprocess_controller : 
+    "An entity that controls the postprocess settings in the map."
+[
+    // Inputs
+    input SetFadeTime(float) : "Set the fade time between post process settings."
+    input SetLocalContrastStrength(float) : "Set the local contrast strength."
+    input SetLocalContrastEdgeStrength(float) : "Set the local contrast strength at the edge of the screen (controlled by vignette)."
+    input SetVignetteStart(float) : "Set the vignette start distance (from screen center)."
+    input SetVignetteEnd(float) : "Set the vignette end distance."
+    input SetVignetteBlurStrength(float) : "Set the strength of the desaturated blur on the vignette."
+    input SetFadeToBlackStrength(float) : "Set the fadeout strength."
+    input SetDepthBlurFocalDistance(float) : "Set the focal distance of the depth blur effect (in the range [0,1])."
+    input SetDepthBlurStrength(float) : "Set the depth blur effect strength."
+    input SetScreenBlurStrength(float) : "Set the screen blur effect strength."
+    input SetFilmGrainStrength(float) : "Set the film grain effect strength."
+
+    fadetime(float) : "Fade time" : "2"
+    localcontraststrength(float) : "Local contrast strength [-1..x]" : "0"
+    localcontrastedgestrength(float) : "Local contrast edge strength [0..1]" : "0"
+    vignettestart(float) : "Vignette start distance [0..1]" : "0.8"
+    vignetteend(float) : "Vignette end distance [0..x]" : "1.1"
+    vignetteblurstrength(float) : "Vignette blur strength [0..1]" : "0"
+    fadetoblackstrength(float) : "Fade to black strength [0..1]" : "0"
+    depthblurfocaldistance(float) : "Depth-blur focal plane distance [0..1]" : "0"
+    depthblurstrength(float) : "Depth-blur effect strength [0..x]" : "0"
+    screenblurstrength(float) : "Full-screen blur strength [0..1]" : "0"
+    filmgrainstrength(float) : "Film grain strength [0..x]" : "0"
+
+    spawnflags(flags) =
+    [
+        1 : "Master (Has priority if multiple postprocess_controllers exist)" : 0
+    ]
+]
+
+@PointClass base(Targetname) sphere(near_blur) sphere(near_focus) sphere(far_blur) sphere(far_focus) sphere(focus_range) iconsprite("editor/env_dof_controller.vmt") = env_dof_controller : 
+    "An entity that controls the depth of field settings for the player. Depth of field simulates camera blur of out-of-focus regions of the scene."
+[
+    enabled(choices) : "Enabled" : 0 : "Whether the effect should be active" =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+
+    near_blur(float) : "Near blur depth" : 20 : "Distance that the blurriness is at its peak near the viewpoint."
+    near_focus(float) : "Near focus depth" : 100 : "Distance that the focus is in full effect near the viewpoint."
+    near_radius(float) : "Near blur radius" : 0 : "Radius (in pixels) to blur the surrounding pixels."
+
+    far_blur(float) : "Far blur depth" : 1000 : "Distance where blurriness is at its peak far from the viewpoint."
+    far_focus(float) : "Far focus depth" : 250 : "Distance that the focus is in full effect far from the viewpoint."
+    far_radius(float) : "Far blur radius" : 10 : "Radius (in pixels) to blur the surrounding pixels."
+    focus_target(target_source) : "Focus target" : "" : "Entity to use as a focal point."
+    focus_range(float) : "Focus target range" : "200" : "Distance behind the focal plane to remain in focus."
+
+    // Inputs
+    input SetNearBlurDepth(float) : "Set the distance in front of the focus region at which the scene will be completely blurred using the near blur radius. Must be smaller than NearFocusDepth."
+    input SetNearFocusDepth(float) : "The area between the near focus and far focus distances is perfectly in focus. Must be smaller than FarFocusDepth."
+    input SetFarFocusDepth(float) : "The area between the near focus and far focus distances is perfectly in focus. Must be smaller than FarBlurDepth."
+    input SetFarBlurDepth(float) : "Set the distance beyond the focus region at which the scene will be completely blurred using the far blur radius. Must be larger than FarFocusDepth."
+    input SetNearBlurRadius(float) : "Set the blur radius (in pixels) to use at the near blur distance. Set to 0 to disable near blur."
+    input SetFarBlurRadius(float) : "Set the blur radius (in pixels) to use at the far blur distance. Set to 0 to disable far blur."
+    input SetFocusTarget(string) : "Set the focal target for the effect."
+    input SetFocusTargetRange(float) : "Set the distance behind the focal point that will remain in focus."
+]
