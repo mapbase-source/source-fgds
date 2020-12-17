@@ -9402,6 +9402,7 @@
 		"icon_squad_medic" : "(HL2) icon_squad_medic"
 		"icon_ammo" : "(HL2) icon_ammo"
 		"icon_flashlight" : "(HL2) icon_flashlight"
+		"icon_slam" : "(HL2) icon_slam"
 		"icon_pistol" : "(HL2) icon_pistol"
 	]
 	
@@ -9440,6 +9441,7 @@
 		"icon_squad_medic" : "(HL2) icon_squad_medic"
 		"icon_ammo" : "(HL2) icon_ammo"
 		"icon_flashlight" : "(HL2) icon_flashlight"
+		"icon_slam" : "(HL2) icon_slam"
 		"icon_pistol" : "(HL2) icon_pistol"
 	]
 	
