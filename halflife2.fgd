@@ -4195,6 +4195,10 @@
 	input AddHealth(integer) : "Adds health to the breakable. If the breakable's health reaches zero it will break."
 	input RemoveHealth(integer) : "Removes health from the breakable. If the breakable's health reaches zero it will break."
 	
+	input SetContents(string) : "Sets the crate's contents. (e.g. its specified item)"
+	input SetItemCount(string) : "Sets the item count."
+	input MergeContentsWithPlayer(target_destination) : "Gives whatever the crate contains to a player without doing anything to the crate itself. NOTE: This does not actually change the crate's contents on its own, if you want the crate to be empty after merging with a player, you must use SetItemCount or SetContents as well. (this input is also currently unsupported with template crates)"
+	
 	// Outputs
 	output OnBreak(void) : "Fires when broken."
 	output OnHealthChanged(float) : "Fires when the health of this breakable changes, passing the new value of health as a percentage of max health, from [0..1]."
