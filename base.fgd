@@ -7827,6 +7827,7 @@
 		16384 : "[16384] Motion Disabled" : 0
 		32768 : "[32768] Allow stretch" : 0
 		65536 : "[65536] Start asleep" : 0
+		131072 : "[131072] Fixed constraints (make statue)" : 0
 	]
 	angleOverride(string) : "Override Animation" : "" : "Filled in by the engine via wc_update_entity, do not edit by hand except to clear."
 
