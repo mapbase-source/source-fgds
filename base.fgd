@@ -5015,6 +5015,23 @@
 	Group15(target_destination) : "EntityGroup[15]"
 ]
 
+@PointClass base(Targetname) iconsprite("editor/logic_script_client.vmt") = logic_script_client : "An entity capable of running client-side scripts"
+[
+	ClientThink(choices) : "Client Think" : 0 : "Allows client-side VScript to run a think function in the form of a 'ClientThink' hook. (NOTE: The 'Script think function' keyvalue is not related to this!)" =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+	
+	RunOnServer(choices) : "Run on Server" : 0 : "Runs the entity scripts on the server as well as the client. Use IsServer() or IsClient() to determine which side is running from within the scripts." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+	
+	input CallScriptFunctionClient(string) : "Call a named function on the entity's client-side script scope."
+]
+
 @PointClass base(Targetname, EnableDisable) iconsprite("editor/logic_timer.vmt") = logic_timer :
 	"An entity that fires a timer event at regular, or random, intervals. It can also be set to oscillate between" + 
 	"a high and low end, in which case it will fire alternating high/low outputs each time it fires."
