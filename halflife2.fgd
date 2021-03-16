@@ -799,7 +799,7 @@
 ]
 
 
-@NPCClass base(Parentname, BaseNPC) size(-16 -16 -16, 16 16 16) color(255 150 0) = npc_enemyfinder : "EnemyFinder"
+@NPCClass base(Parentname, BaseNPC) size(-16 -16 -16, 16 16 16) color(255 150 0) sphere(MinSearchDist) sphere(MaxSearchDist) = npc_enemyfinder : "EnemyFinder"
 [
 	spawnflags(flags) =
 	[
