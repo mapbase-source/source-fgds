@@ -80,10 +80,18 @@
 		0 : "No"
 		1 : "Yes"
 	]
+	
+	disableflashlight(choices) : "Disable flashlight" : 0 : "Used to disable flashlight/env_projectedtexture lighting and shadows on this entity." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
 
 	// Inputs
 	input DisableShadow(void) : "Turns shadow off."
 	input EnableShadow(void) : "Turns shadow on."
+	input DisableReceivingFlashlight(void) : "This object will not recieve light or shadows from projected textures (flashlights)."
+	input EnableReceivingFlashlight(void) : "This object may recieve light or shadows from projected textures (flashlights)."
 	input AlternativeSorting(bool) : "Used to attempt to fix sorting problems when rendering. True activates, false deactivates"
 	input SetModelScale(string) : "Takes two values separated by a space. The first is the target model scale. The second value is the number of seconds the change in scale will be spread over."
 	input SetBodyGroup(integer) : "Sets this model's body group (from 0 - n). You'd better know what you are doing!"
