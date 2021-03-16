@@ -735,6 +735,9 @@
 
 	input StartHangingFromCeiling(void) : "Start hanging from ceiling."
 	input DropFromCeiling(void) : "Drop if hanging from ceiling."
+	input Unburrow(void) : "Unburrow from the ground"
+	input Burrow(void) : "Burrow into the ground"
+	input BurrowImmediate(void) : "Burrow into the ground immediately"
 	
 	output OnLeap(void) : "Fires when the headcrab leaps at an enemy."
 ]
