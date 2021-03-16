@@ -1522,6 +1522,7 @@
 	input StopShootingMinigunForSeconds(float) : "Stop shooting the minigun for a period of time (specify seconds as parameter)"
 
 	input DisableCrouch(void) : "Prevent the Strider from crouching"
+	input EnableCrouch(void) : "Allow the Strider to crouch again if it was prevented before"
 	input DisableMoveToLOS(void) : "Prevent the Strider from seeking Line of Sight to target. (Hold position)"
 	
 	input DisableCollisionWith(target_destination) : "Disable collision with a given object."
