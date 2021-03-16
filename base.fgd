@@ -847,7 +847,7 @@
 	InitialSpeed(string) : "Initial Speed" : "0" : "Sets the helicopter's desired speed that it should try to reach as soon as it's spawned."
 	target(target_destination) : "Target path_track" : : "(Optional) The name of a path_track entity that this NPC will fly to after spawning."
 	
-	AllowsAnyDamage(Choices) : "Allows any damage" : 0 : "Allows this NPC to take any amount of any type of damage, including bullet or melee damage. This is supposed to allow this NPC to be taken down in a previously impossible way and should be used with an actual damage filter." =
+	AllowAnyDamage(Choices) : "Allows any damage" : 0 : "Allows this NPC to take any amount of any type of damage, including bullet or melee damage. This is supposed to allow this NPC to be taken down in a previously impossible way and should be used with an actual damage filter." =
 	[
 		0 : "No"
 		1 : "Yes"
