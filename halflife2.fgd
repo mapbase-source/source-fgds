@@ -4769,6 +4769,12 @@
 		16395 : "Default - Solid entities (MASK_SOLID_BRUSHONLY)"
 		16449 : "NPC LOS (MASK_BLOCKLOS)"
 	]
+	
+	SetUnavoidable(choices) : "Unavoidable" : 0 : "If true, this mine will not be avoided by companion NPCs." =
+	[
+		0: "No"
+		1: "Yes"
+	]
 
 	// Inputs
 	input Disarm(void) : "Disarm this mine (open hooks and shut off) if not placed by player."
@@ -4776,6 +4782,7 @@
 	input BounceAtTarget(target_destination) : "Causes this mine to bounce at the specified entity, regardless of distance."
 	input SetEnemyFilter(target_destination) : "Changes this mine's enemy filter to the named filter."
 	input SetFriendFilter(target_destination) : "Changes this mine's friend filter to the named filter."
+	input SetUnavoidable(bool) : "Sets whether this mine will not be avoided by companion NPCs."
 
 	// Outputs
 	output OnPulledUp(void) : "Fires when this mine is uprooted with a physgun."
