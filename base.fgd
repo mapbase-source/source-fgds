@@ -1725,6 +1725,28 @@
 	input SetNoListRepeat(bool) : "Sets if lists can be randomly picked twice in a row."
 ]
 
+
+@PointClass base(Targetname, Angles, Parentname) studio("models/editor/axis_helper_thick.mdl") = vgui_movie_display : "Movie Display"
+[
+	displaytext(string) : "Display Text" : ""
+	moviefilename(string) : "Movie Filename" : "media/"
+	groupname(string) : "Group Name" : "default"
+
+	looping(choices) : "Loop Movie" : 0 =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+
+	width(integer) : "Panel width" : 256 : "Width of the panel in units."
+	height(integer) : "Panel height" : 128 : "Height of the panel in units."
+
+	input Enable(void) : "Make movie visible."
+	input Disable(void) : "Make movie invisible."
+
+	input SetDisplayText(string) : "Sets the display text."
+]
+
 //-------------------------------------------------------------------------
 //
 // Cyclers
