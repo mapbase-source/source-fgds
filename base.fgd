@@ -3002,6 +3002,10 @@
 	spotlightwidth(integer) : "Spotlight Width" : 50 : "Width of the spotlight beam."
 	rendercolor(color255) : "Color (R G B)" : "255 255 255"
 	HDRColorScale(float) : "HDR color scale." : "1.0" : "float value to multiply sprite color by when running in HDR mode."
+	HaloScale(float) : "Halo size scale." : "60" : "float value to determine the size of the halo."
+	
+	HaloMaterial(sprite) : "Halo material" : "sprites/light_glow03.vmt" : "Material to use for the halo."
+	SpotlightMaterial(sprite) : "Spotlight beam material" : "sprites/glow_test02.vmt" : "Material to use for the spotlight's beam."
 	
 	// Inputs
 	input LightOn(void) : "Turn the spotlight on."
