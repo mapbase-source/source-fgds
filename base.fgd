@@ -5253,6 +5253,7 @@
 	landmark(target_destination) : "Local Destination Landmark" : : "If specified, then sounds offset from the speaker by their initial offset from this landmark. Only applicable in Speaker mode."
 	
 	PitchScale(float) : "Pitch Scale" : "1.0" : "Scales the pitch of transmitted sounds. Only applicable in Speaker mode."
+	VolumeScale(float) : "Volume Scale" : "1.0" : "Scales the volume of transmitted sounds. Only applicable in Speaker mode."
 	
 	channel(choices) : "Channel" : 6 : "Sets the channel which sounds should transmit as. Only applicable in Speaker mode." =
 	[
@@ -5270,6 +5271,7 @@
 	input SetSpeakerName(target_destination) : "Set the microphone to output through a different speaker entity."
 	input SetDSPPreset(integer) : "Sets our DSP preset."
 	input SetPitchScale(float) : "Sets the pitch scale."
+	input SetVolumeScale(float) : "Sets the volume scale."
 	input SetChannel(integer) : "Sets the channel."
 
 	// Outputs
