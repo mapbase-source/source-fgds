@@ -9089,6 +9089,8 @@
 [
 	SetMaxInputArmor(integer) : "Max Input Armor" : 100 : "Sets the maximum armor a player can receive from the AddArmor, RemoveArmor, and SetArmor inputs. This does NOT override how much armor a player can receive overall!"
 	
+	SetSuitZoomFOV(integer) : "Suit Zoom FOV" : 25 : "Sets the FOV value the player's suit zoom function should use."
+	
 	ResponseContext(string) : "Response Contexts" : "" : "Response system context(s) for the player. Format should be: 'key:value,key2:value2,etc'. Using inputs like AddContext on this player proxy will not carry it over to the player and should be done on the '!player' entity instead."
 	
 	HideSquadHUD(choices) : "Hide squad HUD" : 0 : "Hides the player's squad status HUD above the ammo display." =
@@ -9137,6 +9139,7 @@
 	input SetLocatorTargetEntity(target_destination) : "Set the entity that the HUD locator should track. (Usually a vehicle)"
 	
 	input SetMaxInputArmor(integer)			: "Sets the maximum armor value that could be set by armor inputs."
+	input SetSuitZoomFOV(integer)				: "Sets the FOV used by suit zoom."
 	
 	output OnPlayerSpawn(void) 				: "Fired when the player spawns or respawns, using the spawn point as the caller."
 ]
