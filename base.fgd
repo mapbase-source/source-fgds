@@ -985,6 +985,8 @@
 		1003: "HL1 World: Alien Blood"
 	
 //		1100: "CS Hostage: Escape Point"
+
+		10000: "Mapbase - Custom Cover (Use hint activity)"
 	]
 
 	hintactivity(string) : "Hint Activity" : "" : "Activity associated with this hint node. Various parts of the NPC AI play this activity at times. i.e. Actbusy nodes will play this activity when an NPC acts busy on the node."
@@ -1009,6 +1011,10 @@
 
     TargetNode(node_dest) : "Target node" : -1 : "The node ID of an associated target node, if any. This can be used if the hint node acts as a path_corner, or for overriding jumping permission."
 
+	radius(integer) : "Radius" : 0 : "How close an NPC must be to consider this hint. 0 means infinite."
+	
+	hintweight(float) : "Hint Weight" : "1.0" : "Multiplies the hint's importance, giving it a specific priority over closer hints or nodes."
+	
 	IgnoreFacing(choices) : "Ignore Facing" : 2 : "Don't pay attention to the facing of the node. May not apply to a given hint type." =
 	[
 		0 : "No"
