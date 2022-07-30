@@ -3817,10 +3817,24 @@
 	filename(string)  : "Lookup Table Filename"			: ""	  : "This is the lookup table filename"
 	fadeInDuration(float)   : "Lookup Fade In Duration"		: "0.0"	  : "Duration of fade in on when enabled."
 	fadeOutDuration(float)   : "Lookup Fade out Duration"		: "0.0"	  : "Dration of fade out on when disabled."
+	exclusive(choices) : "Exlusive" : 0 : "An exclusive color_correction entity disables and fades out all other color corrections when it is enabled. There should only be one active exclusive color_correction ent at any time." = 
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+	
+	spawnflags(flags) =
+	[
+		1 : "[1] Master (Default color correction when used with L4D fog_volume)" : 0
+		2 : "[2] Client-side simulation (Must be set when used with L4D fog_volume)" : 0
+	]
 	
 	// Inputs
 	input SetFadeInDuration(float) : "Sets the 'fadeInDuration' variable, used to fade cc lookup usage when entity is enabled."
 	input SetFadeOutDuration(float) : "Sets the 'fadeOutDuration' variable, used to fade cc lookup usage when entity is disabled."
+	
+	input SetMinFalloff(float) : "Sets the Lookup Falloff Start Distance."
+	input SetMaxFalloff(float) : "Sets the Lookup Falloff End Distance."
 ]
 
 
@@ -9733,4 +9747,11 @@
     input SetFarBlurRadius(float) : "Set the blur radius (in pixels) to use at the far blur distance. Set to 0 to disable far blur."
     input SetFocusTarget(string) : "Set the focal target for the effect."
     input SetFocusTargetRange(float) : "Set the distance behind the focal point that will remain in focus."
+]
+
+@SolidClass base( Targetname, EnableDisable ) = fog_volume : "An entity to control the fog in the map."
+[
+	FogName(target_destination) : "Fog Name" : : "The name of the fog entity associated with this volume."
+	PostProcessName(target_destination) : "Postprocess Name" : : "The name of the postprocess entity associated with this volume."
+	ColorCorrectionName(target_destination) : "ColorCorrection Name" : : "The name of the color_correction entity associated with this volume."
 ]
