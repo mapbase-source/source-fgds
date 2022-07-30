@@ -1069,8 +1069,10 @@
 	input SetExpressionOverride(string) : "Set facial expression override"
 ]
 
-@NPCClass base(TalkNPC, PlayerCompanion) studio("models/Barney.mdl") = npc_barney : "Barney"
+@NPCClass base(TalkNPC, PlayerCompanion) studioprop() = npc_barney : "Barney"
 [
+	model(studio) : "Model" : "models/barney.mdl"
+
 	additionalequipment(choices) : "Weapons" : "weapon_pistol" =
 	[
 		"weapon_pistol" : "Pistol"
@@ -1235,10 +1237,18 @@
 ]
 
 
-@NPCClass base(BaseNPC) studio("models/hunter.mdl") = npc_hunter :
+@NPCClass base(BaseNPC) studio() = npc_hunter :
 	"A smaller, faster, strider that can pursue the player into buildings."
 [
+	model(studio) : "Model" : "models/hunter.mdl" : "The model of this npc_hunter."
+	
 	FollowTarget(target_destination) : "Strider to Follow" : "" : "The name of the strider that this hunter should follow."
+	
+	NoIdlePatrol(choices) : "Patrol while idle" : 0 = 
+	[
+		0: "Yes"
+		1: "No"
+	]
 	
     // Inputs
     input FollowStrider(target_destination) : "Sets the name of the strider that this hunter should follow."
