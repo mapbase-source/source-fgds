@@ -4071,6 +4071,9 @@
 	// Inputs
 	input SetScrollSpeed(float) : "Set the speed at which the texture scrolls."
 	input SetForce(string) : "Apply a force instantaneously to the rope. The parameter should be a vector containing the force to be applied (X Y Z)."
+	input SetSlack(integer) : "Set the rope's slack. (Wind may need to be enabled for changes to apply)"
+	input SetWidth(float) : "Set the rope's width."
+	input SetSubdivision(integer) : "Set the rope's subdivision. (Wind may need to be enabled for changes to apply)"
 	input Break(void) : "Break the rope, if it's marked to do so."
 	
 	// Outputs
