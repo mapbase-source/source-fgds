@@ -7748,9 +7748,23 @@
 		0: "No"
 		1: "Yes"
 	]
+
+	HoldAnimation(choices) : "Hold Animation" : 0 : "If set, the prop will not loop its animation, but hold the last frame." =
+	[
+		0: "No"
+		1: "Yes"
+	]
+	
+	updatechildren(choices) : "Update children" : 0 : "Update touches for any children that are attached to attachment points as this prop animates. "+
+		"This allows SetParentAttached triggers or func_brushes to touch properly." =
+	[
+		0: "No"
+		1: "Yes"
+	]
 	
 	// Inputs
 	input SetAnimation(string) : "Forces the prop to play an animation. The parameter should be the name of the animation."
+	input SetAnimationNoReset(string) : "Force the prop to play an animation unless the prop is already playing the animation. The parameter should be the name of the animation."
 	input SetDefaultAnimation(string) : "Sets the Default Animation to the one specified in the parameter."
 	input SetPlaybackRate(float) : "Sets the playback rate for the current animation."
 	input SetCycle(float) : "Sets the cycle the current animation."
