@@ -1761,6 +1761,12 @@
 		0 : "No"
 		1 : "Yes"
 	]
+	
+	muted(choices) : "Mute Movie" : 1 =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
 
 	width(integer) : "Panel width" : 256 : "Width of the panel in units."
 	height(integer) : "Panel height" : 128 : "Height of the panel in units."
