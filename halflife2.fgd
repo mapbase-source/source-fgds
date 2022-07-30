@@ -934,7 +934,7 @@
 		"weapon_smg1" : "SMG1"
 		"weapon_ar2" : "AR2"
 		"weapon_stunstick" : "Stun Stick"
-		"weapon_crowbar" : "Crow Bar"
+		"weapon_crowbar" : "Crowbar"
 		"weapon_shotgun" : "Shotgun"
 		"weapon_pistol" : "Pistol"
 		"weapon_357" : "357"
@@ -942,6 +942,8 @@
 		//"weapon_beerbottle" : "Beer Bottle"
 		//"weapon_beerbottle2" : "Beer Bottle2"
 		"weapon_rpg" : "RPG"
+		"weapon_citizenpackage" : "Citizen Package"
+		"weapon_citizensuitcase" : "Citizen Suitcase"
 		"0"  : "Nothing"
 	]
 
@@ -1107,9 +1109,13 @@
 	[
 		"weapon_ar2" : "AR2"
 		"weapon_shotgun" : "Shotgun"
-		//"weapon_stunstick" : "Stun Stick"
 		"weapon_smg1" : "SMG1"
 		"weapon_rpg" : "RPG"
+		"weapon_stunstick" : "Stun Stick"
+		"weapon_pistol" : "Pistol"
+		"weapon_357" : "357"
+		"weapon_citizenpackage" : "Citizen Package"
+		"weapon_citizensuitcase" : "Citizen Suitcase"
 		"0" : "Nothing"
 	]
 
@@ -2054,6 +2060,8 @@
 		"weapon_shotgun"  : "Shotgun"
 		"weapon_357" : "357"
 		"weapon_rpg"  : "RPG"
+		"weapon_citizenpackage" : "Citizen Package"
+		"weapon_citizensuitcase" : "Citizen Suitcase"
 		"0"  : "Nothing"
 	]
 
@@ -2115,9 +2123,14 @@
 		"weapon_stunstick" : "Stun Stick"
 		"weapon_crowbar" : "Crowbar"
 		"weapon_shotgun" : "Shotgun"
+		"weapon_pistol" : "Pistol"
+		"weapon_357" : "357"
+		"weapon_crossbow" : "Crossbow"
 		//"weapon_beerbottle" : "Beer Bottle"
 		//"weapon_beerbottle2" : "Beer Bottle2"
 		"weapon_rpg" : "RPG"
+		"weapon_citizenpackage" : "Citizen Package"
+		"weapon_citizensuitcase" : "Citizen Suitcase"
 		"0"  : "Nothing"
 	]
 
