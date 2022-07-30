@@ -3,7 +3,7 @@
 // Purpose: General game definition file (.fgd) 
 //
 // This is the Mapbase version of the base FGD.
-// Much of this conent only works in Mapbase.
+// Much of this content only works in Mapbase.
 //
 //=============================================================================
 
@@ -1991,7 +1991,7 @@
 	input Toggle(void) :  "Toggles the bubbles on and off."
 	input SetDensity(integer) : "Sets the bubble density."
 	input SetFrequency(integer) : "Sets bubble emission rate in bubbles per second."
-	input SetCurrent(integer) : "Sets current speed in inches per second."
+	input SetCurrent(integer) : "Sets current speed in units per second."
 ]
 
 @PointClass base(Targetname, Parentname) iconsprite("editor/env_explosion.vmt") sphere(iRadiusOverride) = env_explosion : 
@@ -3345,7 +3345,8 @@
 [
 	spawnflags( Flags ) =
 	[
-		1 : "Transmit to client" : 0
+		1 : "[1] Transmit to client" : 0
+		2 : "[2] Always transmit to client (ignore PVS)" : 0
 	]
 ]
 
@@ -3449,14 +3450,14 @@
 [
 	axis(vecline) : "Bar Magnet Axis"
 	radius(float) : "Effective Radius" : "512" : "Radius in which ragdolls are affected around this entity's origin."
-	force(float) : "Force" : "5000" : "Magnetic force to apply to ragdolls within the radius. Expressed as kilograms per inch per second. So a force of 1000 will add 10 inches/second to a 100kg man. It will add 100 inches per second to a 10kg headcrab."
+	force(float) : "Force" : "5000" : "Magnetic force to apply to ragdolls within the radius. Expressed as kilograms per inch per second. So a force of 1000 will add 10 units/second to a 100kg man. It will add 100 units per second to a 10kg headcrab."
 	BoneTarget(string) : "Bone Target" : : "Targets a specific bone to apply the force to. (e.g. ValveBiped.Bip01_R_Foot)"
 
 	target(target_destination) : "Entity to affect" : "" : "If specified, the phys_ragdollmagnet will only affect the target entity."
 
 	spawnflags( Flags ) =
 	[
-		2 : "Bar Magnet (use axis helper)" : 0
+		2 : "[2] Bar Magnet (use axis helper)" : 0
 	]
 	
 	// Outputs
@@ -3501,7 +3502,7 @@
 	]
 ]
 
-@PointClass base(Targetname, Angles, HintNode) studio("models/editor/ground_node_hint.mdl") color(232 219 8) = info_node_hint :
+@PointClass base(Targetname, Angles, HintNode) studio("models/editor/ground_node_hint.mdl") sphere(radius) color(232 219 8) = info_node_hint :
 	"A navigation node for ground moving NPCs that includes some context information for NPCs that are interested in it. The hint might " +
 	"indicate a window that could be looked out of, or an item of interest that could be commented on. Many hint nodes are NPC-specific, " +
 	"so it's helpful to use naming conventions like 'Crow: Fly to point' in the hint choices list. The angles of a hint node indicate what direction " +
@@ -3524,7 +3525,7 @@
 	nodeheight(integer) : "NodeHeight"  : 0
 ]
 
-@PointClass base(Angles, Targetname, HintNode) studio("models/editor/air_node_hint.mdl") color(232 171 8) line(255 255 255, nodeid, TargetNode) = info_node_air_hint :
+@PointClass base(Angles, Targetname, HintNode) studio("models/editor/air_node_hint.mdl") sphere(radius) color(232 171 8) line(255 255 255, nodeid, TargetNode) = info_node_air_hint :
 	"A navigation node for flying NPCs that includes some context information for NPCs that are interested in it. The hint might " +
 	"indicate a window that could be looked into, or an item of interest that could be commented on. Many hint nodes are NPC-specific, " +
 	"so it's helpful to use naming conventions like 'Crow: Fly to point' in the hint choices list. The angles of a hint node indicate what direction " +
@@ -3534,7 +3535,7 @@
 	nodeheight(integer) : "NodeHeight"  : 0
 ]
 
-@PointClass base(Targetname, Angles, HintNode) studio("models/editor/node_hint.mdl") color(255 255 255) frustum(nodeFOV,-1,128,250 250 250,-1) = info_hint :
+@PointClass base(Targetname, Angles, HintNode) studio("models/editor/node_hint.mdl") sphere(radius) color(255 255 255) frustum(nodeFOV,-1,128,250 250 250,-1) = info_hint :
 	"A hint that is not used for navigation. They don't go into the nodegraph, nor do they fall to the ground. Use these to provide " +
 	"some spatial context for NPCs, such as 'look here if you can't find the player' or 'throw rocks at this spot'."
 [
@@ -3570,16 +3571,16 @@
 
 	spawnflags( Flags ) =
 	[
-		1 : "Force human connect" : 0
-		2 : "Force small_centered connect" : 0
-		4 : "Force wide_human connect" : 0
-		8 : "Force tiny connect" : 0
-		16 : "Force wide_short connect" : 0
-		32 : "Force medium connect" : 0
-		64 : "Force tiny_centered connect" : 0
-		128 : "Force large connect" : 0
-		256 : "Force large_centered connect" : 0
-		512 : "Force medium_tall connect" : 0
+		1 : "[1] Force human connect" : 0
+		2 : "[2] Force small_centered connect" : 0
+		4 : "[4] Force wide_human connect" : 0
+		8 : "[8] Force tiny connect" : 0
+		16 : "[16] Force wide_short connect" : 0
+		32 : "[32] Force medium connect" : 0
+		64 : "[64] Force tiny_centered connect" : 0
+		128 : "[128] Force large connect" : 0
+		256 : "[256] Force large_centered connect" : 0
+		512 : "[512] Force medium_tall connect" : 0
 	]
 
 	// Inputs
@@ -3730,8 +3731,8 @@
 	_inner_cone(integer) : "Inner (bright) angle" : 30
 	_cone(integer) : "Outer (fading) angle" : 45
 	pitch(integer) : "Pitch" : -90
-	distance(float) : "Maximum distance" : 120 : "This is the distance that light is allowed to cast, in inches."
-	spotlight_radius(float) : "Spotlight end radius" : 80 : "This is the radius of the light, in inches, at the object that it is hitting."
+	distance(float) : "Maximum distance" : 120 : "This is the distance that light is allowed to cast, in units."
+	spotlight_radius(float) : "Spotlight end radius" : 80 : "This is the radius of the light, in units, at the object that it is hitting."
     style(Choices) : "Appearance" : 0 =
 	[
 		0 : "Normal"
@@ -3780,7 +3781,7 @@
 	angles(angle) : "Pitch Yaw Roll (Y Z X)" : "80 30 0" : "This is the shadow direction. Pitch is rotation around the Y axis, yaw is the rotation around the Z axis, and roll is the rotation around the X axis."
 
 	color(color255) : "Shadow Color" : "128 128 128" : "This is the color of the shadows."
-	distance(float) : "Maximum Distance" : 75 : "This is the maximum distance the shadow is allowed to cast, in inches."
+	distance(float) : "Maximum Distance" : 75 : "This is the maximum distance the shadow is allowed to cast, in units."
 	disableallshadows(Choices) : "All Shadows Disabled" : 0 = 
 	[
 		0 : "No"
@@ -3879,8 +3880,8 @@
 	]
 
 	startposition(float) : "Start Position" : 0 : "Position of brush when spawned. The range is a value between 0.0 and 1.0, where 0 is the starting position and 1 is the starting position + (move direction * move distance)."	
-	speed(integer) : "Speed" : 100 : "The speed that the brush moves, in inches per second."
-	movedistance(float) : "Move Distance" : 100 : "The distance from the starting point that the brush should move, in inches."
+	speed(integer) : "Speed" : 100 : "The speed that the brush moves, in units per second."
+	movedistance(float) : "Move Distance" : 100 : "The distance from the starting point that the brush should move, in units."
 	blockdamage(float) : "Block Damage" : 0 : "The amount of damage to do to any entity that blocks the brushes, per frame."
 	startsound(sound) : "Sound played when the brush starts moving."
 	stopsound(sound) : "Sound played when the brush stops moving."
@@ -3901,8 +3902,8 @@
 [
 	movedir(angle) : "Move Direction (Pitch Yaw Roll)" : "0 0 0" : "The direction the water will move, when told to 'Open'."
 	startposition(float) : "Start Position" : 0 : "Position of the water brush when spawned. The range is a value between 0.0 and 1.0, where 0 is the starting position and 1 is the starting position + (move direction * move distance)."	
-	speed(integer) : "Speed" : 100 : "The speed that the water brush moves, in inches per second."
-	movedistance(float) : "Move Distance" : 100 : "The distance from the starting point that the water brush should move, in inches."
+	speed(integer) : "Speed" : 100 : "The speed that the water brush moves, in units per second."
+	movedistance(float) : "Move Distance" : 100 : "The distance from the starting point that the water brush should move, in units."
 	startsound(sound) : "Sound played when the water brush starts moving."
 	stopsound(sound) : "Sound played when the water brush stops moving."
 	WaveHeight(string) : "Wave Height" : "3.0"
@@ -4113,9 +4114,9 @@
 	"A brush entity that's designed to be used for a player-useable button. When used by the player, it moves to a pressed position."
 [
 	movedir(angle) : "Move Direction (Pitch Yaw Roll)" : "0 0 0" : "Specifies the direction of motion to move when the button is used."
-	speed(integer) : "Speed" : 5 : "The speed that the button moves, in inches per second."
+	speed(integer) : "Speed" : 5 : "The speed that the button moves, in units per second."
 	//health(integer) : "Health (Obsolete)" : 0 : "Legacy method of specifying whether or not the button can be shot to activate it. Use the 'Damage Activates' spawnflag instead."
-	lip(integer) : "Lip" : 0 : "The amount, in inches, of the button to leave sticking out of the wall it recedes into when pressed. Negative values make the button recede even further into the wall."
+	lip(integer) : "Lip" : 0 : "The amount, in units, of the button to leave sticking out of the wall it recedes into when pressed. Negative values make the button recede even further into the wall."
 	//master(target_destination) : "Master (Obsolete)" : : "Legacy support: The name of a master entity. If the master hasn't been activated, this button cannot be pressed."
 	sounds(choices) : "Sounds" : 0 = 
 	[
@@ -4339,7 +4340,7 @@
 	startclosesound(sound) : "Start Close Sound" : : "(Optional) Sound to play when the door starts closing."
 	closesound(sound) : "Stop Close Sound" : : "(Optional) Sound to play when the door stops closing."
 	wait(integer) : "Delay Before Reset (-1 stay)" : 4 : "Amount of time, in seconds, after the door has opened before it closes. Once it has closed, it can be used again. If the value is set to -1, the door never closes itself."
-	lip(integer) : "Lip" : 0 : "The amount, in inches, of the button to leave sticking out of the wall it recedes into when pressed. Negative values make the button recede even further into the wall."
+	lip(integer) : "Lip" : 0 : "The amount, in units, of the button to leave sticking out of the wall it recedes into when pressed. Negative values make the button recede even further into the wall."
 	dmg(integer) : "Blocking Damage" : 0 : "Amount of damage done to entities that block the movement of this door, per frame."
 	forceclosed(choices) : "Force Closed" : 0 : "If set, this door will close no matter what. Useful for doors that have to close even if the player tries to block them with objects." =
 	[
@@ -4646,7 +4647,7 @@
 
 	// Inputs
 	input SetRotationSpeed(float) : "Set the particle rotation speed (in degrees per second)."
-	input SetMovementSpeed(float) : "Set the particle movement speed (in inches per second)."
+	input SetMovementSpeed(float) : "Set the particle movement speed (in units/inches per second)."
 	input SetDensity(float) : "Set the particle density. It should be a range from 0 to 1."
 ]
 
@@ -7656,7 +7657,7 @@
 		0 : "No"
 		1 : "Yes"
 	]
-	screenspacefade(choices) : "Screen Space Fade" : 0 : "The method by which the fading distance should be determined. If 'No', the fade distances is the distance from the player's view to the object, in inches. If 'Yes', the fade distance is the size of the object onscreen, in pixels." =
+	screenspacefade(choices) : "Screen Space Fade" : 0 : "The method by which the fading distance should be determined. If 'No', the fade distances is the distance from the player's view to the object, in units. If 'Yes', the fade distance is the size of the object onscreen, in pixels." =
 	[
 		0 : "No"
 		1 : "Yes"
@@ -8097,7 +8098,7 @@
 	]
 
 	// Inputs
-	input Shatter(vector) : "Shatter the window. Input a vector. First two coordinates are the X,Y center of the shattering (as values from from 0-1). The third coordinate is the radius of the shatter, in inches."
+	input Shatter(vector) : "Shatter the window. Input a vector. First two coordinates are the X,Y center of the shattering (as values from from 0-1). The third coordinate is the radius of the shatter, in units."
 ]
 
 @SolidClass base(Targetname, Parentname, RenderFields, Shadow) = func_conveyor : 
@@ -8332,7 +8333,7 @@
 	volume(integer) : "Volume (10 = loudest)" : 10
 	MoveSoundMinPitch(integer) : "Min pitch (1-255, > 100 = higher)" : 60 : "The sound pitch value that the train will approach as it comes to a stop."
 	MoveSoundMaxPitch(integer) : "Max pitch (1-255, > 100 = higher)" : 200 : "The sound pitch value that the train will approach as it approaches its "+
-		"max speed (or 1000 inches/second if the 'Use max speed for pitch shifting move sound' flag is not set)."
+		"max speed (or 1000 units/second if the 'Use max speed for pitch shifting move sound' flag is not set)."
 	MoveSoundMinTime(float) : "Min move sound interval" : 0 : "Minimum interval at which to play the move ping sound."
 	MoveSoundMaxTime(float) : "Max move sound interval" : 0 : "Maximum interval at which to play the move ping sound."
 
@@ -8785,8 +8786,8 @@
 @PointClass base(Targetname) iconsprite("editor/waterlodcontrol.vmt") = water_lod_control : 
 	"An entity used to control the LOD behavior of any water in the map. If your map has water, this entity is required."
 [
-	cheapwaterstartdistance(float) : "Start Transition to Cheap Water" : 1000 : "This is the distance from the camera that water will start transitioning to cheap water, in inches."
-	cheapwaterenddistance(float) : "End Transition to Cheap Water" : 2000 : "This is the distance from the camera that water will finish transitioning to cheap water, in inches."
+	cheapwaterstartdistance(float) : "Start Transition to Cheap Water" : 1000 : "This is the distance from the camera that water will start transitioning to cheap water, in units."
+	cheapwaterenddistance(float) : "End Transition to Cheap Water" : 2000 : "This is the distance from the camera that water will finish transitioning to cheap water, in units."
 
 	// Inputs
 	input SetCheapWaterStartDistance(float) : "Set the distance that water starts transitioning to cheap water."
@@ -9226,7 +9227,7 @@
 	]
 	
 	lightfov(float)				: "FOV" : "90.0" : "The field of view cone/pyramid at which the texture is projected. Can also be interpreted as 'size'."
-	lighthorfov(float)				: "Horizontal FOV" : "0" : "The horizontal FOV value. This allows the projected texture to use rectangular dimensions, but it causes shadow glitches and is usually not preferable unless shadows are disabled. Leave this at 0 if you want to keep this the same as the regular FOV value."
+	lighthorfov(float)				: "Horizontal FOV" : "0" : "The horizontal FOV value. This allows the projected texture to use rectangular dimensions. Leave this at 0 if you want to keep this the same as the regular FOV value."
 	nearz(float)				: "NearZ" : "4.0" : "Objects closer than this will not receive the light from the projection. (Warning: Hard falloff, model lighting inconsistent)"
 	farz(float)					: "FarZ" : "750.0" : "Objects beyond this distance will not receive the light from the projection. The projection fades out as it approaches this distance."	
 	
@@ -9361,7 +9362,7 @@
 		"_rt_WaterReflection" : "_rt_WaterReflection (default)"
 		"_rt_WaterRefraction" : "_rt_WaterRefraction (requires no nearby refract mirrors)"
 		"_rt_Camera" : "_rt_Camera (requires no active point_camera)"
-		"" : "None (disables reflection)"
+		"0" : "None (disables reflection)"
 	]
 	
 	RefractRenderTarget(choices) : "Refraction render target" : "_rt_WaterRefraction" : "Makes this mirror target a specific RT texture for its refraction instead of just _rt_WaterRefraction. You can manually type in any RT texture name if you know what you're doing or leave this blank to disable refraction entirely." =
@@ -9369,7 +9370,7 @@
 		"_rt_WaterRefraction" : "_rt_WaterRefraction (default)"
 		"_rt_WaterReflection" : "_rt_WaterReflection (requires no nearby reflect mirrors)"
 		"_rt_Camera" : "_rt_Camera (requires no active point_camera)"
-		"" : "None (disables refraction)"
+		"0" : "None (disables refraction)"
 	]
 	
 	// Inputs
@@ -9499,7 +9500,7 @@
 
 @PointClass base(Targetname) sphere(hint_range) iconsprite("editor/env_instructor_hint.vmt") = env_instructor_hint : "An entity that allows for creation and control of instructor lessons by map logic"
 [
-	hint_replace_key(string) : "Replace Key" : : "Unique name so that messages with the same key will replace each other."
+	hint_replace_key(string) : "Replace Key" : : "Hints with the same Replace Key will replace each other when displayed at the same time. Use different values for each hint if you would like to have multiple hints displaying at once."
 	hint_target(target_destination) : "Target Entity" : : "The entity to show this hint on top of. The entity used must exist on the client, info_target_instructor_hint can be parented to server only entities for this purpose."
 	hint_static(Choices) : "Positioning" : 0 : "Either show at the position of the Target Entity. Or show the hint directly on the hud at a fixed position." =
 	[
@@ -9632,7 +9633,7 @@
 		2 : "Wide Shake"
 	]
 
-	hint_local_player_only(choices) : "Only Local Player" : "No" : "The hint will only be shown to the local player." =
+	hint_local_player_only(choices) : "Only Local Player" : 0 : "The hint will only be shown to the local player." =
 	[
 		0 : "No"
 		1 : "Yes"
