@@ -7160,6 +7160,7 @@
 	
 	// Inputs
 	input Toggle(void) : "Toggle the sensor between enabled and disabled."
+	input SetTargetEntity(target_destination) : "Sets the entity whose angles will be sensed."
 	
 	// Outputs
 	output Distance(float) : "Distance of the target entity away from this entity."
@@ -9168,6 +9169,7 @@
 	
 	HandsVM(studio) : "Hands Viewmodel" : : "Custom hands viewmodel."
 	HandsVMSkin(string) : "Hands Viewmodel Skin" : : "Skin for the custom hands viewmodel."
+	HandsVMBody(string) : "Hands Viewmodel Bodygroup" : : "Bodygroup value for the custom hands viewmodel."
 
 	// Outputs
 	output OnFlashlightOn(float) 			: "Fired when the player turns on his flashlight. This output has the value of how much energy the player had when this happened [0..1]."
@@ -9448,6 +9450,7 @@
 	input SetSkyMode(integer) : "Sets the sky mode. NOTE: 2 = draw sky texture, 1 = draw 3D skybox!"
 	input SetRenderTarget(string) : "Sets the render target."
 	input SetFogController(target_destination) : "Sets the fog controller."
+	input SetScale(float) : "Sets the view scale."
 ]
 
 @PointClass base(Targetname) = env_particle_performance_monitor : 

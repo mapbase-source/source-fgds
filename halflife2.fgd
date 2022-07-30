@@ -44,6 +44,7 @@
 
 	// Inputs
 	input ThrowGrenadeAtTarget(target_destination) : "Throws a grenade at the specified target."
+	input ThrowGrenadeGestureAtTarget(target_destination) : "Throws a grenade at the specified target using a gesture animation."
 	
 	input SetGrenades(integer) : "Sets the number of grenades we have."
 	input AddGrenades(integer) : "Adds to the number of grenades we have. Use a negative number to remove grenades."
@@ -1812,6 +1813,8 @@
 		65536 :  "[65536] Avoid the sphere above and below" : 0
 	]
 	radius(float) : "Radius" : 128
+	
+	AvoidFilter(filterclass) : "Avoid Filter" : : "Filter to use to see if the helicopter avoids this sphere. See filter_activator_name for more explanation."
 ]
 
 @SolidClass base(Origin, Angles, Parentname) color(255 255 0) = npc_heli_avoidbox : "Helicopter avoidance box"
@@ -2470,6 +2473,8 @@
 	output OnPostIdleEndSequence(void) : "Fires when the post-idle animation completes."
 	output OnCancelSequence(void) : "Fires when the sequence is cancelled."
 	output OnCancelFailedSequence(void) : "Fires when the sequence is cancelled without ever playing (OnCancelSequence will also fire)."
+	output OnEntrySequence(void) : "Fires when the entry animation begins."
+	output OnActionSequence(void) : "Fires when the action animation begins."
 	output OnPreIdleSequence(void) : "Fires when the pre-idle animation begins."
 	output OnFoundNPC(void) : "Fires when a target NPC is found and begins moving to play the script."
 	output OnScriptEvent01(void) : "Fires when a 'trigger' anim event occurs while playing the script. Use { event 1003 framenum 1 } in the QC."
@@ -2868,6 +2873,12 @@
 		6 : "Sidekick"
 		7 : "Hunter"
 		8 : "Vortigaunt"
+	]
+
+	NormalMemoryDiscard(choices) : "Disable short memory discard" : 0 : "Actors currently following a target normally forget about enemies if they don't see them after 5 seconds. Use this to disable that behavior when memories are important." =
+	[
+		0 : "No"
+		1 : "Yes"
 	]
 
 	// Inputs
@@ -4570,6 +4581,8 @@
 [
 	// Keys
 	SceneFile(scene) : "Scene file"
+	
+	ResumeSceneFile(scene) : "Resume scene file/concept" : : "An optional scene file or response concept to play before resuming the scene when it's interrupted. (Response concepts must select a scene file!)"
 
 	// Links
 	target1(target_destination) : "Target 1"
@@ -4806,6 +4819,8 @@
 		0: "No"
 		1: "Yes"
 	]
+	
+	PlantOrientation(angle) : "Plant Orientation (Pitch Yaw Roll)" : "-90 0 0" : "Sets a custom angle for the mine to consider ''upright'' for planting itself."
 
 	// Inputs
 	input Disarm(void) : "Disarm this mine (open hooks and shut off) if not placed by player."
@@ -4814,6 +4829,9 @@
 	input SetEnemyFilter(target_destination) : "Changes this mine's enemy filter to the named filter."
 	input SetFriendFilter(target_destination) : "Changes this mine's friend filter to the named filter."
 	input SetUnavoidable(bool) : "Sets whether this mine will not be avoided by companion NPCs."
+	
+	input SetPlantOrientation(vector) : "Sets the mine's plant orientation as an angle."
+	input SetPlantOrientationRaw(vector) : "Sets the mine's plant orientation as a direction vector."
 
 	// Outputs
 	output OnPulledUp(void) : "Fires when this mine is uprooted with a physgun."
@@ -5640,6 +5658,8 @@
 @PointClass base(BasePropPhysics, Targetname, Angles, DamageFilter, BaseFadeProp) studioprop() = prop_flare : "Flare Prop"
 [
 	model(studio) : "Model" : "models/props_junk/flare.mdl" : "Any model entered here can use flares."
+	
+	FlareLifetime(float) : "Flare lifetime" : 30 : "The amount of time the flare should be ignited."
 
 	input StartFlare(void) : "Ignites the flare."
 	input StopFlare(void) : "Extinguishes the flare."
