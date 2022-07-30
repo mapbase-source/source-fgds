@@ -4513,6 +4513,10 @@
 	soundlockedoverride(sound) : "Locked Sound" : : "Sound played when the player tries to open the door, and fails because it's locked."
 	soundunlockedoverride(sound) : "Unlocked Sound" : : "Sound played when the door is unlocked."
 	
+	opendistoverride(integer) : "NPC Open Distance" : -1 : "How far away NPCs should move in order to open the door. (default = 64)"
+	openfrontactivityoverride(string) : "NPC Front Open Activity" : "" : "The gesture activity NPCs should play when opening the door from the front."
+	openbackactivityoverride(string) : "NPC Back Open Activity" : "" : "The gesture activity NPCs should play when opening the door from the back."
+	
 	lightingorigin(target_destination) : "Lighting Origin" : "" : "Select an entity to specify a location to sample lighting from, instead of using this entity's origin."
 
 	forceclosed(choices) : "Force Closed" : 0 : "If set, this door will close no matter what. Useful for doors that have to close even if the player tries to block them with objects." =
