@@ -1525,9 +1525,25 @@
 	output OnSurfaceChangedFromTarget(void) : "Fired when the player moves off the specified game material."
 ]
 
+@SolidClass base(Trigger) = trigger_tonemap : "Changes tonemap controllers for players touching the trigger."
+[
+	TonemapName(target_destination) : "Tonemap Name" : : "The name of the tonemap controller entity associated with this trigger."
+]
+
 @PointClass base(Targetname) iconsprite("editor/env_tonemap_controller.vmt") = env_tonemap_controller : 
 	"An entity that controls the HDR tonemapping for the player. Think of it as a method of controlling the exposure of the player's eyes."
 [
+	TonemapScale(float) : "Tonemap Scale" : "-1" : "The tonemap scale. This should be a value between 0 and 2, where 0 is the eyes fully closed, 1 is use the unchanged autoexposure (default), and 2 is the eye fully wide open. -1 = use default" // 1.0
+	TonemapRate(float) : "Tonemap Rate" : "-1" : "The rate for auto exposure adjustment. -1 = use default" // 1.0
+	AutoExposureMin(float) : "Auto Exposure Minimum" : "-1" : "Sets a custom tonemap auto exposure minimum. -1 = use default" // 0.5
+	AutoExposureMax(float) : "Auto Exposure Maximum" : "-1" : "Sets a custom tonemap auto exposure maximum. -1 = use default" // 2.0
+	BloomScale(float) : "Bloom Scale" : "-1" : "Sets a custom bloom scale. -1 = use default" // 1.0
+	
+	spawnflags(flags) =
+	[
+		1 : "Master (Has priority if multiple env_tonemap_controllers exist)" : 0
+	]
+
 	// Inputs
 	input SetTonemapScale(float) : "Set the player's tonemap scale. It should be a value between 0 and 2, where 0 is the eyes fully closed, 1 is use the unchanged autoexposure (default), and 2 is the eye fully wide open."
 	input BlendTonemapScale(string) : "Blend from the player's current tonemap scale to a new one. The parameter syntax is as follows: <target tonemap scale> <blend duration>. For example: '0.5 10' would blend from the current tonemap scale to 0.5 over a period of 10 seconds. Tonemap scale is a value between 0 and 2, where 0 is the eyes fully closed, 1 is use the unchanged autoexposure (default), and 2 is the eye fully wide open."
