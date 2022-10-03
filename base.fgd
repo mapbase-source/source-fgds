@@ -1541,7 +1541,7 @@
 	
 	spawnflags(flags) =
 	[
-		1 : "Master (Has priority if multiple env_tonemap_controllers exist)" : 0
+		1 : "[1] Master (Has priority if multiple env_tonemap_controllers exist)" : 0
 	]
 
 	// Inputs
@@ -2985,7 +2985,7 @@
 [
 	spawnflags(flags) =
 	[
-		1: "Start Disabled" : 0
+		1: "[1] Start Disabled" : 0
 	]
 
 	message(string) : "Entity Message"
@@ -3719,7 +3719,7 @@
 	_exponent(integer) : "Focus" : 1
 	_distance(integer) : "Maximum distance" : 0 : "This is the distance that light is allowed to cast."
 	pitch(angle_negative_pitch) : "Pitch" : -90
-	spawnflags(Flags) = [ 1 : "Initially dark" : 0 ]
+	spawnflags(Flags) = [ 1 : "[1] Initially dark" : 0 ]
 ]
 
 @PointClass base(Targetname, Parentname, Angles) iconsprite("editor/light.vmt") sphere(distance) lightcone() size(-4 -4 -4, 4 4 4) = light_dynamic : 
@@ -6568,7 +6568,8 @@
 	output OnFire(ehandle) : "Fires each time a projectile is fired, passing the projectile as the activator. The owner entity is the caller if it exists." 
 ]
 
-@PointClass base(Targetname) iconsprite("editor/logic_substring.vmt") = logic_substring : "Returns substring of a string parameter"
+@PointClass base(Targetname) iconsprite("editor/logic_substring.vmt") = logic_substring : "Returns substring of a string parameter\n\n"+
+	"In memory of Holly Liberatore (moofemp)"
 [
 	spawnflags(Flags) =
 	[
@@ -9271,8 +9272,8 @@
 [
 	spawnflags(flags) =
 	[
-		1  : "Enabled"				: 1
-		2  : "Always Update (moving light)"	: 0
+		1  : "[1] Enabled"				: 1
+		2  : "[2] Always Update (moving light)"	: 0
 	]
 
 	target(target_destination)	: "Target" : : "The entity will rotate to point at this target. Make sure you check the 'Always Update' flag if you set this."	
@@ -9759,7 +9760,7 @@
 
     spawnflags(flags) =
     [
-        1 : "Master (Has priority if multiple postprocess_controllers exist)" : 0
+        1 : "[1] Master (Has priority if multiple postprocess_controllers exist)" : 0
     ]
 ]
 
