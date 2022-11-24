@@ -9392,6 +9392,7 @@
 		1 : "High"
 	]
 	shadowatten(float)			: "Shadow Atten" : "0.0" : "The attenuation of the shadows, or how much the shadows should fade into the light of the projected texture, if at all. The player's flashlight uses 0.35 by default, although higher values may be needed for a visible effect."
+	shadowfilter(float)			: "Shadow Filter Size" : "0.5" : "The amount to filter the shadows. This blurs shadows to make them appear less pixelated, but higher values may have more visible noise."
 	
 	lightonlytarget(Choices) : "Light Only Target" : 0 : "Limit flashlight effect to only effect target entity." =
 	[
@@ -9447,6 +9448,7 @@
 	input SetLinear(float)		: "Sets the linear attenuation."
 	input SetQuadratic(float)		: "Sets the quadratic attenuation."
 	input SetShadowAtten(float)		: "Sets the shadow attenuation."
+	input SetFilter(float)		: "Sets the shadow filter."
 	input SetNearZ(float)		: "Sets NearZ."
 	input SetFarZ(float)		: "Sets FarZ."
 	input AlwaysDrawOn(void)	: "Turns off BBox culling (for skybox or monitor lights)"
