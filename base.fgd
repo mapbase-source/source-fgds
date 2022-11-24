@@ -2988,7 +2988,7 @@
 		1: "[1] Start Disabled" : 0
 	]
 
-	message(string) : "Entity Message"
+	message(string) : "Entity Message" : : "The text to appear on the panel. Has a maximum of 256 characters. If you need more space, use a localization token."
 	alignment(choices) : "Text Alignment" : 7 : "The text's alignment in relation to the panel size. With 'South', the text will be centered between the origin and the sphere's left bound relative to the angles the text is facing." =
 	[
 		0 : "[0] Northwest"
