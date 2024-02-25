@@ -4498,7 +4498,7 @@
 	input	Toggle(void) : "Toggle enable/disable."
 ]
 
-@PointClass base(Targetname, Parentname) size( 16 16 16) sphere(radius) color( 255 255 0 ) = point_bugbait : "Bugbait sensor point"
+@PointClass base(Targetname, Parentname) size(16 16 16) wirebox(bmins, bmaxs) sphere(radius) color( 255 255 0 ) = point_bugbait : "Bugbait sensor point"
 [
 	Enabled(choices) : "Start Enabled" : 1 =
 	[
@@ -4512,13 +4512,27 @@
 		2: "[2] Don't activate on thrown bugbait splashes" : 0
 		4: "[4] Don't activate on squeezed bugbait" : 0
 	]
-
+	
+	useradius(choices) : "Use Radius Keyvalue" : 1 : "If disabled, use mins and maxs." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+	
 	radius(integer) : "Sensor Radius" : 512
+	
+	bmins(vector) : "Mins" : "-0 -0 -0"
+	bmaxs(vector) : "Maxs" : "0 0 0"
 
 	// Inputs
 	input	Enable(void) : "Enable the sensor."
 	input	Disable(void): "Disable the sensor."
 	input	Toggle(void) : "Toggle the sensor."
+	input	EnableRadius(void) : "Use the Radius keyvalue of the sensor."
+	input	DisableRadius(void) : "Use the mins/maxs keyvalues of the sensor."
+	input	SetRadius(integer) : "Sets the radius of the sensor."
+	input	SetMins(vector) : "Sets the mins of the sensor."
+	input	SetMaxs(vector) : "Sets the maxs of the sensor."
 
 	// Outputs
 	output OnBaited(void) : "Fires when bugbait lands within a radius of the sensor"
