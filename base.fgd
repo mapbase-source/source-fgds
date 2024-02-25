@@ -2911,6 +2911,8 @@
 	]
 	master(target_destination) : "Master" : : "Legacy support: The name of a master entity. If the master hasn't been activated, this entity will not activate."
 	
+	font(string) : "Custom Font" : "" : "Makes the message use a specific client scheme font. The font must be additive for the fade effects to function. Also supports custom fonts defined through clientside VScript functions."
+	
 	autobreak(choices) : "Automatically break lines" : 0 : "Allows text to automatically shift to the next line whenever it can't fit on a player's screen. This accounts for a player's aspect ratio and adds hyphens when necessary." =
 	[
 		0: "No"
@@ -2920,6 +2922,7 @@
 	// Inputs
 	input Display(void) : "Display the message text."
 	input SetText(string) : "Sets the message text."
+	input SetFont(string) : "Sets the message font."
 ]
 
 @PointClass base(Targetname) iconsprite("editor/game_metadata.vmt") = game_metadata : 
@@ -3001,7 +3004,7 @@
 		7 : "[7] South"
 		8 : "[8] Southeast"
 	]
-	font(string) : "Font" : : "The font to use from resource/ClientScheme.res. A blank value is equivalent to the default font. Not all fonts may function. Commonly defined fonts include 'DefaultSmall' and 'Trebuchet18'/'Trebuchet24'."
+	font(string) : "Font" : : "Makes the text use a specific client scheme font. The font must not be additive or proportional. Commonly defined fonts include 'DefaultSmall' and 'Trebuchet18'/'Trebuchet24'. Also supports custom fonts defined through clientside VScript functions."
 	resolution(integer) : "Panel Resolution" : 200 : "The number of pixels available to the text. The higher the resolution is, the smaller the text will be. (NOTE: Changing the resolution with inputs later will scale the screen itself)"
 	textsize(float) : "Panel Size" : 100 : "The size of the text panel in the world. This is previewed with a sphere, but it actually extends 'north-west' relative to the direction it's facing. Due to the limited in-editor previewing abilities, it's recommended to use the 'SetPanelSize' input in-game with the 'ent_fire' command to fine-tune this value. Use 'r_vguitext_bg' to display the panel in-game."
 	
