@@ -1,4 +1,4 @@
-//====== Copyright © 1996-2005, Valve Corporation, All rights reserved. =======
+//====== Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. =======
 //
 // Purpose: General game definition file (.fgd) 
 //
@@ -3293,6 +3293,21 @@
 	[
 		1: "[1] Master (Has priority if multiple info_player_starts exist)" : 0
 	]
+]
+
+@PointClass base(Targetname) tags( Info ) iconsprite("editor/info_notepad")  = info_notepad : 
+	"A place to leave notes"
+[
+	message(string) : "Message"
+	target1(target_destination) : "Entity 1"
+	target2(target_destination) : "Entity 2"
+	target3(target_destination) : "Entity 3"
+	target4(target_destination) : "Entity 4"
+	target5(target_destination) : "Entity 5"
+	target6(target_destination) : "Entity 6"
+	target7(target_destination) : "Entity 7"
+	target8(target_destination) : "Entity 8"
+	target9(target_destination) : "Entity 9"
 ]
 
 @PointClass base(Targetname) size(-1 -1 0, 1 1 1) color(80 150 225) studio("models/editor/overlay_helper.mdl") sphere(fademindist) sphere(fademaxdist) overlay() = info_overlay : 
