@@ -1,0 +1,385 @@
+//===================== Copyright (c) Valve Corporation. All Rights Reserved. ======================
+//
+//  Defines Props classes and entities for games. 
+//
+//==================================================================================================
+
+@BaseClass = prop_detail_base
+[
+	model(studio) : "World model"
+]
+
+@BaseClass base(Angles, DXLevelChoice) = prop_static_base
+[
+	model(studio) : "World Model"
+	skin(integer) : "Skin" : 0 : "Some models have multiple versions of their textures, called skins. Set this to a number other than 0 to use that skin instead of the default."
+	solid(choices) : "Collisions" : 6 =
+	[
+		0: "Not Solid"
+		2: "Use Bounding Box"
+		6: "Use VPhysics"
+	]
+	disableshadows(choices) : "Disable Shadows" : 0 =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+	screenspacefade(choices) : "Screen Space Fade" : 0 : "The method by which the fading distance should be determined. If 'No', the fade distances is the distance from the player's view to the object, in units. If 'Yes', the fade distance is the size of the object onscreen, in pixels." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+	fademindist(float) : "Start Fade Dist/Pixels" : -1 : "Distance at which the prop starts to fade (<0 = use fademaxdist). If 'Screen Space Fade' is selected, this represents the number of pixels wide covered by the prop when it starts to fade."
+	fademaxdist(float) : "End Fade Dist/Pixels" : 0 : "Maximum distance at which the prop is visible (0 = don't fade out). If 'Screen Space Fade' is selected, this represents the *minimum* number of pixels wide covered by the prop when it fades."
+	fadescale(float) : "Fade Scale" : 1 : "If you specify a fade in the worldspawn, or if the engine is running under dx7 [hl2/ep1/portal] or dx8 [ep2/tf], then the engine will forcibly fade out props even if fademindist/fademaxdist isn't specified." +
+												 " This scale factor gives you some control over the fade. Using 0 here turns off the forcible fades." +
+												 " Numbers smaller than 1 cause the prop to fade out at further distances, and greater than 1 cause it to fade out at closer distances."
+	lightingorigin(target_destination) : "Lighting Origin" : "" : "Select an info_lighting to specify a location to sample lighting from, instead of using this entity's origin."
+	disablevertexlighting(choices) : "Disable Vertex lighting" : 0 =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+	disableselfshadowing(choices) : "Disable Self-Shadowing with vertex lighting" : 0 =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+	ignorenormals(choices) : "Ignore surface normal for computing vertex lighting" : 0 =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+]
+
+@BaseClass = BaseFadeProp
+[
+	fademindist(float) : "Start Fade Dist" : -1 : "Distance at which the prop starts to fade (<0 = use fademaxdist)."
+	fademaxdist(float) : "End Fade Dist" : 0 : "Max fade distance at which the prop is visible (0 = don't fade out)"
+	fadescale(float) : "Fade Scale" : 1 : "If you specify a fade in the worldspawn, or if the engine is running under dx7, then the engine will forcibly fade out props even if fademindist/fademaxdist isn't specified." +
+												 " This scale factor gives you some control over the fade. Using 0 here turns off the forcible fades." +
+												 " Numbers smaller than 1 cause the prop to fade out at further distances, and greater than 1 cause it to fade out at closer distances."
+]
+
+@BaseClass base(Parentname, Global, Angles, Studiomodel, BreakableProp, DXLevelChoice, BaseFadeProp, RenderFields) = prop_dynamic_base
+[
+	solid(choices) : "Collisions" : 6 =
+	[
+		0: "Not Solid"
+		2: "Use Bounding Box"
+		6: "Use VPhysics"
+	]
+
+	spawnflags(flags) =
+	[
+		64 : "[64] Use Hitboxes for Renderbox" : 0
+		128 : "[128] No VPhysics (must start with collisions disabled)" : 0
+		256 : "[256] Start with collision disabled" : 0
+	]
+
+	DefaultAnim(string) : "Default Animation" : "" : "The name of the idle animation that this prop will revert to whenever it finishes a random or forced animation."
+
+	RandomAnimation(choices) : "Randomly Animate" : 0 : "If set, this prop will randomly choose and play animations, based upon the times specified in 'Min/Max Random Anim Time'. Inbetween the random animations, it will revert to playing the 'Default Animation'." =
+	[
+		0: "No"
+		1: "Yes"
+	]
+	MinAnimTime(float) : "Min Random Anim Time" : "5" : "Minimum time between random animations."
+	MaxAnimTime(float) : "Max Random Anim Time" : "10" : "Maximum time between random animations."
+	SetBodyGroup(integer) : "Body Group" : 0	// NEEDHELP
+	
+	DisableBoneFollowers(choices) : "Disable Bone Followers" : 0 : "If set, this prop won't generate bone followers, even if they're listed in the model's .qc" =
+	[
+		0: "No"
+		1: "Yes"
+	]
+
+	HoldAnimation(choices) : "Hold Animation" : 0 : "If set, the prop will not loop its animation, but hold the last frame." =
+	[
+		0: "No"
+		1: "Yes"
+	]
+	
+	updatechildren(choices) : "Update children" : 0 : "Update touches for any children that are attached to attachment points as this prop animates. "+
+		"This allows SetParentAttached triggers or func_brushes to touch properly." =
+	[
+		0: "No"
+		1: "Yes"
+	]
+	
+	// Inputs
+	input SetAnimation(string) : "Forces the prop to play an animation. The parameter should be the name of the animation."
+	input SetAnimationNoReset(string) : "Force the prop to play an animation unless the prop is already playing the animation. The parameter should be the name of the animation."
+	input SetDefaultAnimation(string) : "Sets the Default Animation to the one specified in the parameter."
+	input SetPlaybackRate(float) : "Sets the playback rate for the current animation."
+	input SetCycle(float) : "Sets the cycle the current animation."
+	input SetBodyGroup(integer) : "Sets the visible bodygroup, by index."
+	input TurnOn(void) : "Makes the prop visible."
+	input TurnOff(void) : "Makes the prop invisible."
+	input EnableCollision(void) : "Enables collision on the prop."
+	input DisableCollision(void) : "Disables collision on the prop."
+
+	// Outputs
+	output OnAnimationBegun(void) : "Fired whenever a new animation has begun playing."
+	output OnAnimationDone(void) : "Fired whenever an animation is complete."
+]
+
+@PointClass base(prop_detail_base) studioprop() = prop_detail : 
+	"Detail Prop"
+[
+	model(studio) : "World model"
+]
+
+@PointClass base(prop_dynamic_base,EnableDisable) sphere(fademindist) sphere(fademaxdist) studioprop() = prop_dynamic :
+	"A prop that can be placed in hierarchy and can play animations. It can also be configured to break when it takes enough damage. "+
+	"Note that the health of the object will be overridden by the health inside the model, to ensure consistent health game-wide. "+
+	"If the model used by the prop is configured to be used as a prop_physics (i.e. it should be physically simulated) then it CANNOT be "+
+	"used as a prop_dynamic. Upon level load it will display a warning in the console and remove itself. Use a prop_physics instead."
+[
+]
+
+@PointClass base(prop_dynamic_base) studioprop() = prop_dynamic_override :
+	"A prop that can be placed in hierarchy and can play animations. It can also be configured to break when it takes enough damage.\n"+
+	"prop_dynamic_override is a prototyping entity only. It will allow the use of models designed to be used as prop_physics."
+[
+	health(integer) : "Health" : 0 : "Number of points of damage to take before breaking.  0 means don't break."	
+]
+
+@PointClass wirebox(use_mins, use_maxs) base(prop_dynamic_base) studioprop() = prop_interactable :
+	"A prop designed to be interacted with like a button. It has all of the properties of prop_dynamic without having to use an accompanying func_door or func_button."
+[
+	spawnflags(flags) =
+	[
+		512 : "[512] +USE interactable" : 1
+		1024 : "[1024] Touch interactable" : 0
+		2048 : "[2048] Disable interaction commands when locked" : 0
+		4096 : "[4096] Radius use" : 0
+	]
+
+	Locked(choices) : "Start locked" : 0 : "If set, this prop_interactable will start locked, making it uninteractable." =
+	[
+		0: "No"
+		1: "Yes"
+	]
+	
+	SetCooldown(float) : "Cooldown" : "1.0" : "The amount of time after this prop_interactable is used before it can be interacted with again. This is always based on when the prop_interactable was pressed, disregarding any active In Sequence, but an optional Out Sequence will play after the cooldown is over. It is also used when the prop_interactable is locked. Set to -1 to have an infinite cooldown when pressed while unlocked."
+	
+	PressedSound(sound) : "Pressed Sound" : "" : "The sound to play when the button is successfully pressed."
+	LockedSound(sound) : "Locked Sound" : "" : "The sound to play when the button is interacted with while locked."
+	InSequence(string) : "In Sequence" : "" : "Optional sequence to play when the button is pressed, representing a button going 'in'."
+	OutSequence(string) : "Out Sequence" : "" : "Optional sequence to play after the button was interacted with and the cooldown is finished, representing a button coming back 'out' after an 'in' animation."
+	LockedSequence(string) : "Locked Sequence" : "" : "Optional sequence to play when the prop_interactable is interacted with while locked."
+	
+	use_mins(vector) : "+USE Mins" : "-0 -0 -0" : "Optional box for only permitting +USE interactions within. The prop_interactable should not change its angles while this is used."
+	use_maxs(vector) : "+USE Maxs" : "0 0 0" : "Optional box for only permitting +USE interactions within. The prop_interactable should not change its angles while this is used."
+	
+	// Inputs
+	input Lock(void) : "Locks this prop_interactable, making it uninteractable."
+	input Unlock(void) : "Unlocks this prop_interactable, making it interactable."
+	input Press(void) : "Presses this prop_interactable as if someone interacted with it."
+	
+	input EnableUseInteraction(void) : "Enables use interaction if it was disabled before."
+	input DisableUseInteraction(void) : "Disables use interaction if it was enabled before."
+	input EnableTouchInteraction(void) : "Enables touch interaction if it was disabled before."
+	input DisableTouchInteraction(void) : "Disables touch interaction if it was enabled before."
+	input StartIgnoringCommandsWhenLocked(void) : "Starts ignoring commands when this prop_interactable is locked."
+	input StopIgnoringCommandsWhenLocked(void) : "Stops ignoring commands when this prop_interactable is locked."
+	input EnableRadiusInteract(void) : "Enables radius use."
+	input DisableRadiusInteract(void) : "Disables radius use."
+
+	// Outputs
+	output OnPressed(void) : "Fired whenever the prop is interacted with."
+	output OnLockedUse(void) : "Fired whenever the button is interacted with while locked."
+	output OnIn(void) : "Fired whenever the prop completes its 'In' animation."
+	output OnOut(void) : "Fired whenever the prop completes its 'Out' animation."
+]
+
+@BaseClass base(Targetname, Global, Angles, Studiomodel, BreakableProp, RenderFields, DXLevelChoice, BaseFadeProp) = BasePropPhysics
+[ 
+	spawnflags(flags) = 
+	[
+		1 : "[1] Start Asleep" : 0
+		2 : "[2] Don't take physics damage" : 0
+		4 : "[4] Debris - Don't collide with the player or other debris" : 0
+		8 : "[8] Motion Disabled" : 0
+		64 : "[64] Enable motion on Physcannon grab" : 0
+		128 : "[128] Not affected by rotor wash" : 0
+		256 : "[256] Generate output on +USE " : 1
+		512 : "[512] Prevent pickup" : 0
+		1024: "[1024] Prevent motion enable on player bump" : 0
+		4096: "[4096] Debris with trigger interaction" : 0
+		8192: "[8192] Force server-side (Multiplayer only)" : 0
+		16384: "[16384] Radius pickup (easier to pickup)" : 0
+		1048576: "[1048576] Physgun can ALWAYS pick up. No matter what." : 0
+		2097152: "[2097152] No collisions" : 0
+		8388608: "[8388608] Zombies can't swat" : 0
+	]
+	
+	minhealthdmg(integer) : "Min Damage to Hurt" : 0 : "The prop will ignore any damage events if the damage is less than this amount."
+	shadowcastdist(integer) : "Shadow Cast Distance" : 0 : "Use this to override how far this object casts shadows. 0 = default distance."
+	physdamagescale(float) : "Physics Impact Damage Scale" : "0.1" : "Scales damage energy when this object is hit by a physics object. NOTE: 0 means this feature is disabled for backwards compatibility.\nSet to 1.0 for materials as strong as flesh, smaller numbers indicate stronger materials."
+	Damagetype(choices) : "Impact damage type" : 0 =
+	[
+		0: "Blunt"
+		1: "Sharp"
+	]
+
+	nodamageforces(choices) : "Damaging it Doesn't Push It" : 0 : "Used to determine whether or not damage should cause the brush to move." =
+	[
+		0: "No"
+		1: "Yes"
+	]
+
+	inertiaScale(float) : "Scale Factor For Inertia" : "1.0" : "Scales the angular mass of an object. Used to hack angular damage and collision response."
+	massScale(float) : "Mass Scale" : "0" : "A scale multiplier for the object's mass."
+	overridescript(string) : "Override Parameters" : "" : "A list of physics key/value pairs that are usually in a physics prop .qc file. Format is 'key,value,key,value,etc'."
+	damagetoenablemotion(integer) : "Health Level to Override Motion" : 0 : "If specified, this object will start motion disabled. Once its health has dropped below this specified amount, it will enable motion."
+	forcetoenablemotion(float) : "Physics Impact Force to Override Motion" : 0 : "If specified, this object will start motion disabled. Any impact that imparts a force greater than this value on the physbox will enable motion."
+	
+	puntsound(sound) : "Sound to make when punted"
+
+	// Inputs
+	input Wake(void) : "Wake up this physics object, if it is sleeping."
+	input Sleep(void) : "Put this physics object to sleep. It will wake if given the Wake input, or if force is applied to it. Note that physics objects go to sleep automatically after coming to rest for a while, so you don't really need to use this."
+	input EnableMotion(void) : "Enable physics motion/collision response."
+	input DisableMotion(void) : "Disable physics motion/collision response."
+	input DisableFloating(void) : "Disable fluid/floating simulation to reduce cost."
+	input SetBodyGroup(integer) : "Set this prop's body group (from 0 - n)."
+	input physdamagescale(float) : "Set the Physics Impact Damage Scale for this character. NOTE: 0 means this feature is disabled for backwards compatibility."
+	input EnableDamageForces(void) : "Damaging the entity applies physics forces to it."
+	input DisableDamageForces(void) : "Damaging the entity does *not* apply physics forces to it."
+	input EnablePuntSound(void) : "Allow this prop to play its own sound when punted"
+	input DisablePuntSound(void) : "Prevent this prop from playing its own sound when punted"
+	input SetDebris(bool) : "Sets whether this prop is debris."
+
+	// Outputs
+	output OnMotionEnabled(void) : "Fired when motion is enabled on this prop, either via 'Health Level to Override Motion' or from the EnableMotion input."
+	output OnAwakened(void) : "Fired when this entity becomes awake (collision/force is applied to it while it's asleep)."
+	output OnPhysGunPickup(void) : "Fired when the player picks up the prop with the physcannon or +USE."
+	output OnPhysGunPunt(void) : "Fired when a player punts this object with the physgun."
+	output OnPhysGunOnlyPickup(void) : "Fired when a player picks this object up WITH THE PHYSGUN. +USE pickups do not fire this output."
+	output OnPhysGunDrop(void) : "Fired when the player drops the prop with the physcannon or USE."
+	output OnPlayerUse(void) : "Fired when the player tries to +USE the prop. This output will fire only if the Generate output on +USE spawnflag is set."
+	output OnPlayerPickup(void) : "Fired whenever the player picks up this prop (with the physcannon or with +USE)."
+	output OnOutOfWorld(void) : "Fired whenever the prop is out of the allowed world bounds."
+]
+
+@PointClass base(BasePropPhysics) studioprop() sphere(fademindist) sphere(fademaxdist) = prop_physics_override :
+	"A prop that physically simulates as a single rigid body. It can be constrained to other physics objects using hinges "+
+	"or other constraints. It can also be configured to break when it takes enough damage. Props not meant to be used with prop_physics (dynamic or static props) can be used with this and it can also override health or interactions."
+[
+	health(integer) : "Health" : 0 : "Number of points of damage to take before breaking.  0 means don't break. Use -1 to use default health, which could be 0 depending on the model."
+	
+	InitialInteractions(choices) : "Interaction Override" : "" : "Overrides this prop's default interactions. If you want to combine them, enter each number with a space or comma in between. (e.g. '1 5 7')" =
+	[
+		"": "None"
+		"0": "0 : When punted: Stick to world (sawblades)"
+		"1": "1 : When punted: Break on impact (explosive barrels)"
+		"2": "2 : When punted: Paint surfaces (paint cans)"
+		"3": "3 : When punted: Impale (harpoons)"
+		"4": "4 : When punted: Don't spin"
+		"5": "5 : When punted: Spin on Z axis (sawblades, propellers)"
+		"6": "6 : When broken: Gas explosion (propane tanks, gas cans)"
+		"7": "7 : When punted: No damage on impact"
+		"8": "8 : Fire: Flammable"
+		"9": "9 : Fire: Explosive resistant (doesn't take damage from nearby explosions, only ignites, used in explosive barrels)"
+		"10": "10 : Fire: Ignite on half health (explosive barrels)"
+		//"11": "11 : Flare" // This is what prop_flare is for
+		"12": "12 : Allow player to hold directly overhead"
+	]
+	
+	preferredcarryangles(angle) : "Preferred Player-carry Angles" : "0" : "The angle which the object should orient to when the player picks it up with the physgun or +USE. Overrides the prop's own QC carry angles if it has any. '0' doesn't override the carry angles."
+	
+	// Inputs
+	input Ignite(void) : "Ignite, burst into flames."
+	input IgniteLifetime(float) : "Ignite, with a parameter lifetime."
+	input IgniteNumHitboxFires(integer) : "Ignite, with a parameternumber of hitbox fires."
+	input IgniteHitboxFireScale(float) : "Ignite, with a parameter hitbox fire scale."
+]
+
+@PointClass base(BasePropPhysics) studioprop() sphere(fademindist) sphere(fademaxdist) = prop_physics :
+	"A prop that physically simulates as a single rigid body. It can be constrained to other physics objects using hinges "+
+	"or other constraints. It can also be configured to break when it takes enough damage. "+
+	"Note that the health of the object will be overridden by the health inside the model, to ensure consistent health game-wide. "+
+	"If the model used by the prop is configured to be used as a prop_dynamic (i.e. it should not be physically simulated) then it CANNOT be "+
+	"used as a prop_physics. Upon level load it will display a warning in the console and remove itself. Use a prop_dynamic instead."
+[
+	// Inputs
+	input Ignite(void) : "Ignite, burst into flames."
+	input IgniteLifetime(float) : "Ignite, with a parameter lifetime."
+	input IgniteNumHitboxFires(integer) : "Ignite, with a parameternumber of hitbox fires."
+	input IgniteHitboxFireScale(float) : "Ignite, with a parameter hitbox fire scale."
+]
+
+@PointClass base(prop_physics) studioprop() sphere(fademindist) sphere(fademaxdist) = prop_physics_multiplayer :
+	"This class is the same as prop_physics, except the runtime collisions use a more bouncy method that avoids " +
+	"the prediction errors normal physics objects get."
+[
+	physicsmode(choices) : "Physics Mode" : 0 =
+	[
+		0: "Auto Detect"
+		1: "Solid, Server-side"
+		2: "Non-Solid, Server-side"
+		3: "Non-Solid, Client-side"
+	]
+]
+
+@PointClass base(Angles, Targetname, Studiomodel, DXLevelChoice, BaseFadeProp, EnableDisable, RenderFields) sphere(fademindist) sphere(fademaxdist) studioprop() = prop_ragdoll :
+	"A prop that physically simulates and can be articulated with internal joints. The joint constraints are part of the physics model."
+[
+	spawnflags(flags) = 
+	[
+		4 : "[4] Debris - Don't collide with the player or other debris" : 1
+		8192 : "[8192] Allow Dissolve" : 0
+		16384 : "[16384] Motion Disabled" : 0
+		32768 : "[32768] Allow stretch" : 0
+		65536 : "[65536] Start asleep" : 0
+		131072 : "[131072] Fixed constraints (make statue)" : 0
+		262144 : "[262144] Allow +USE" : 0
+		524288 : "[524288] Prevent pickup (if +USE is enabled)" : 0
+	]
+	angleOverride(string) : "Override Animation" : "" : "Filled in by the engine via wc_update_entity, do not edit by hand except to clear."
+
+	input StartRagdollBoogie(float) : "Begins ragdoll boogie effect. Parameter override = number of seconds to boogie."
+	input Wake(void) : "Wakes up this physics object, if it is sleeping."
+	input Sleep(void) : "Puts this physics object to sleep. It will wake if given the Wake input, or if force is applied to it. Note that physics objects go to sleep automatically after coming to rest for a while, so you don't really need to use this."
+	input EnableMotion(void) : "Enable physics motion/collision response."
+	input DisableMotion(void) : "Disable physics motion/collision response."
+	input FadeAndRemove(float) : "Fade out then remove (kill) self. Parameter override = duration of fade"
+	input AddToLRU(void) : "Adds the ragdoll to the cleanup list (ragdoll will fade out when it's the least recently used)"
+	input RemoveFromLRU(void) : "Removes the ragdoll from the cleanup list, allowing it to exist indefinitely"
+
+	output OnPlayerUse(void) : "Fires when the ragdoll is used, if +USE is enabled."
+]
+
+@PointClass base(Targetname, Studiomodel, Angles, RenderFields) studioprop() = prop_scalable : "Scalable Prop" 
+[
+	input SetScaleX(vector) : "Scales the prop in one Axis. Params: <New Size> <Time>"
+	input SetScaleY(vector) : "Scales the prop in one Axis. Params: <New Size> <Time>"
+	input SetScaleZ(vector) : "Scales the prop in one Axis. Params: <New Size> <Time>"
+]
+
+@PointClass base(BasePropPhysics, RenderFields) studioprop() sphere(radius) = prop_sphere : "Creates a perfect sphere."
+[
+	radius(float) : "Radius" : 12 : ""
+]
+
+@PointClass base(prop_dynamic_base) studioprop() = prop_dynamic_ornament :
+	"A way to attach one studio model to another as an ornament. It will render in the way that player/NPC weapons render."
+[
+	solid(choices) : "Collisions" : 0 =
+	[
+		0: "Not Solid"
+	]	
+
+	InitialOwner(target_destination) : "Target Entity" : : "Name of the entity that this ornament should attach to, at startup."
+	
+	// Inputs
+	input SetAttached(target_destination) : "Attach the ornament to a different entity. Parameter should be the name of entity to attach to."
+	input Detach(void) : "Detach from the Target Entity and become invisible. The ornament can be re-attached with the SetAttached input."
+]
+
+@PointClass base(prop_static_base) color(255 255 0) sphere(fademindist) sphere(fademaxdist) studioprop() = prop_static :
+	"A prop that doesn't move and doesn't animate."
+[
+]

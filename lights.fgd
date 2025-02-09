@@ -1,0 +1,255 @@
+//===================== Copyright (c) Valve Corporation. All Rights Reserved. ======================
+//
+// Defines entity classes to control lighting and shadows.
+//
+//==================================================================================================
+
+@PointClass light() iconsprite("editor/light.vmt") base(Targetname, Light) sphere(_fifty_percent_distance) sphere(_zero_percent_distance) sphere(_hardfalloff) sphere(_distance) = light :
+	"An invisible omnidirectional lightsource."
+[
+	target(target_destination) : "Entity To Point At" : : "The name of an entity in the map that the spotlight will point at. This will override the spotlight's angles."
+	spawnflags(Flags) = [ 1 : "[1] Initially dark" : 0 ]
+	_distance(integer) : "Maximum Distance" : 0 : "This is the distance that light is allowed to cast."
+]
+
+@PointClass base(Angles) iconsprite("editor/light_env.vmt") = light_environment : 
+	"Sets the color and angle of the light from the sun and sky."
+[
+	pitch(integer) : "Pitch" : 0 : "The downward pitch of the light from the sun. 0 is horizontal, -90 is straight down."
+	_light(color255) : "Brightness" : "255 255 255 200"
+	_ambient(color255) : "Ambient" : "255 255 255 20"
+	_lightHDR(color255) : "BrightnessHDR" : "-1 -1 -1 1"
+	_lightscaleHDR(float) : "BrightnessScaleHDR" : "1" : "Amount to scale the light by when compiling for HDR."
+	_ambientHDR(color255) : "AmbientHDR" : "-1 -1 -1 1"
+	_AmbientScaleHDR(float) : "AmbientScaleHDR" : "1" : "Amount to scale the ambient light by when compiling for hdr."
+	pitch(integer) : "Pitch" : 0 : "The downward pitch of the light from the sun. 0 is horizontal, -90 is straight down."
+	SunSpreadAngle(float) : "SunSpreadAngle" : 0 : "The angular extent of the sun for casting soft shadows. Higher numbers are more diffuse. 5 is a good starting value."
+]
+
+@PointClass base(Targetname, Angles, Light) lightprop("models/editor/spot.mdl") lightcone() sphere(_fifty_percent_distance) sphere(_zero_percent_distance) sphere(_hardfalloff) sphere(_distance) = light_spot :
+	"An invisible and directional spotlight."
+[
+	target(target_destination) : "Entity to point at" : : "The name of an entity in the map that the spotlight will point at. This will override the spotlight's angles."
+	_inner_cone(integer) : "Inner (bright) angle" : 30
+	_cone(integer) : "Outer (fading) angle" : 45
+	_exponent(integer) : "Focus" : 1
+	_distance(integer) : "Maximum distance" : 0 : "This is the distance that light is allowed to cast."
+	pitch(angle_negative_pitch) : "Pitch" : -90
+	spawnflags(Flags) = [ 1 : "[1] Initially dark" : 0 ]
+]
+
+@PointClass base(Targetname, Parentname, Angles) iconsprite("editor/light.vmt") sphere(distance) lightcone() size(-4 -4 -4, 4 4 4) = light_dynamic : 
+	"An invisible lightsource that changes in some way over time." 
+[
+	target(target_destination) : "Entity to point at" : : "The name of an entity in the map that the dynamic light will point at."
+	_light(color255) : "Light color" : "255 255 255 200"
+	brightness(integer) : "Light brightness" : 0
+	_inner_cone(integer) : "Inner (bright) angle" : 30
+	_cone(integer) : "Outer (fading) angle" : 45
+	pitch(integer) : "Pitch" : -90
+	distance(float) : "Maximum distance" : 120 : "This is the distance that light is allowed to cast, in units."
+	spotlight_radius(float) : "Spotlight end radius" : 80 : "This is the radius of the light, in units, at the object that it is hitting."
+    style(Choices) : "Appearance" : 0 =
+	[
+		0 : "Normal"
+		10: "Fluorescent flicker"
+		2 : "Slow, strong pulse"
+		11: "Slow pulse, noblack"
+		5 : "Gentle pulse"
+		1 : "Flicker A"
+		6 : "Flicker B"
+		3 : "Candle A"
+		7 : "Candle B"
+		8 : "Candle C"
+		4 : "Fast strobe"
+		9 : "Slow strobe"
+	]
+	spawnflags(Flags) = 
+	[ 
+		1 : "[1] Do not light world (better perf)" : 0 
+		2 : "[2] Do not light models" : 0
+		4 : "[4] Add Displacement Alpha" : 0
+		8 : "[8] Subtract Displacement Alpha" : 0
+	]
+
+	// Inputs
+	input Color(color255) : "Set the light's render color (R G B)."
+	input brightness(integer) : "Set the light brightness."
+	input distance(float) : "Set the maximum light distance."
+	input _inner_cone(integer) : "Set the inner (bright) angle."
+	input _cone(integer) : "Set the outer (fading) angle."
+	input spotlight_radius(float) : "Set the radius of the spotlight at the end point."
+	input style(integer) : "Change the lightstyle (see Appearance field for possible values)."
+
+	input TurnOn(void) : "Turn the light off."
+	input TurnOff(void) : "Turn the light on."
+	input Toggle(void) : "Toggle the light on/off."
+]
+
+
+@PointClass base(Targetname, Parentname, RenderFields, Angles, DXLevelChoice) studio("models/editor/cone_helper.mdl") = point_spotlight : 
+	"An entity to draw a spotlight. Will draw a beam when the player views it side on, and a halo when it's facing towards the player. "+
+	"Unless the 'No Dynamic Light' spawnflag is checked, it will also create a dynamic light wherever the end of the spotlight rests."
+[
+	spawnflags(Flags) = 
+	[
+		1 :  "[1] Start On" : 1
+		2 :  "[2] No Dynamic Light" : 1
+	]
+
+	IgnoreSolid(choices) : "Ignore Solid" : 0 : "If set, this spotlight won't trace for solids." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+
+	spotlightlength(integer) : "Spotlight Length" : 500 : "Length of the spotlight beam."
+	spotlightwidth(integer) : "Spotlight Width" : 50 : "Width of the spotlight beam."
+	rendercolor(color255) : "Color (R G B)" : "255 255 255"
+	HDRColorScale(float) : "HDR color scale." : "1.0" : "float value to multiply sprite color by when running in HDR mode."
+	HaloScale(float) : "Halo size scale." : "60" : "float value to determine the size of the halo."
+	
+	HaloMaterial(sprite) : "Halo material" : "sprites/light_glow03.vmt" : "Material to use for the halo."
+	SpotlightMaterial(sprite) : "Spotlight beam material" : "sprites/glow_test02.vmt" : "Material to use for the spotlight's beam."
+	
+	// Inputs
+	input LightOn(void) : "Turn the spotlight on."
+	input LightOff(void) : "Turn the spotlight off"
+	input LightToggle(void) : "Toggles the spotlight on or off"
+	
+	// outputs
+	output OnLightOn(void) : "Fires when light turns on."
+	output OnLightOff(void) : "Fires when light turns off."
+
+]
+
+// ASW-based Projected Texture
+@PointClass base(Targetname, Parentname, Angles) studio("models/editor/cone_projected_helper.mdl") frustum(lightfov,nearz,farz,lightcolor,-1) = env_projectedtexture : 
+	"Projected texture entity."
+[
+	spawnflags(flags) =
+	[
+		1  : "[1] Enabled"				: 1
+		2  : "[2] Always Update (moving light)"	: 0
+	]
+
+	target(target_destination)	: "Target" : : "The entity will rotate to point at this target. Make sure you check the 'Always Update' flag if you set this."	
+	
+	dontfollowtarget(Choices) : "Don't Follow Target" : 0 : "Prevents this entity from trying to point at its target, if it has one. Intended for when you want to use 'Light Only Target' without the entity trying to point to it." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+	
+	lightfov(float)				: "FOV" : "90.0" : "The field of view cone/pyramid at which the texture is projected. Can also be interpreted as 'size'."
+	lighthorfov(float)				: "Horizontal FOV" : "0" : "The horizontal FOV value. This allows the projected texture to use rectangular dimensions. Leave this at 0 if you want to keep this the same as the regular FOV value."
+	nearz(float)				: "NearZ" : "4.0" : "Objects closer than this will not receive the light from the projection. (Warning: Hard falloff, model lighting inconsistent)"
+	farz(float)					: "FarZ" : "750.0" : "Objects beyond this distance will not receive the light from the projection. The projection fades out as it approaches this distance."	
+	
+	enableshadows(Choices) : "Enable Shadows" : 1 : "Enables/disables shadows from this projected texture." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+	shadowquality(Choices) : "Shadow Quality" : 1 : "Quality of shadows." =
+	[
+		0 : "Low"
+		1 : "High"
+	]
+	shadowatten(float)			: "Shadow Atten" : "0.0" : "The attenuation of the shadows, or how much the shadows should fade into the light of the projected texture, if at all. The player's flashlight uses 0.35 by default, although higher values may be needed for a visible effect."
+	shadowfilter(float)			: "Shadow Filter Size" : "0.5" : "The amount to filter the shadows. This blurs shadows to make them appear less pixelated, but higher values may have more visible noise."
+	
+	lightonlytarget(Choices) : "Light Only Target" : 0 : "Limit flashlight effect to only effect target entity." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+	lightworld(Choices) : "Light World" : 1 : "Control whether flashlight effects static world geometry." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+	
+	brightnessscale(float)		: "Brightness Scale" : "1.0" : "The light color's brightness scale."	
+
+	lightcolor(color255)		: "Light Color" : "255 255 255 200" : "The color of the projected texture. Format is RGB-Intensity, like a light entity. Intensity can only range from 0 to 255, so use the Brightness Scale keyvalue to make the projected texture brighter than 255."
+	colortransitiontime(float)	: "Color Transition Time" : "0" : "Amount of time it takes for a color or brightness change to occur. 0 = instant"
+	constant_attn(string)	: "Constant" : "0" : "The light's constant attenuation, giving the light no falloff. (This value is internally corrected with x*0.5)"
+	linear_attn(string)	: "Linear" : "1" : "The light's linear attenuation, giving the light linear decline. This is the most common attenuation for projected textures. (This value is internally corrected with x*100)"
+	quadratic_attn(string)	: "Quadratic" : "0" : "The light's quadratic attenuation, giving the light exponentially decreasing falloff. (This value is internally corrected with x*10000)"
+	
+	cameraspace(Choices)		: "Camera Space" : 0 : "Angles are interpreted as being relative to camera." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+
+	texturename(material) : "Texture Name" : "effects/flashlight001" : "The texture which should be used. Please note that env_projectedtexture uses .vtf files directly and does not use .vmt files. The material browser is only available here to assist with finding textures since materials typically have the same name as their textures."
+	textureframe(integer) : "Texture Frame" : 0 : "Sets the frame of the projected texture. Only relevant if the texture is animated/has multiple frames."
+	
+	alwaysdraw(Choices)		: "Always Draw" : 0 : "Always draws the projected texture, regardless of whether the player can see its frustum. Use this for projected textures that can be seen on monitors or in the skybox." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+	
+	ProjectedTextureVersion(integer)	readonly	: "Projected Texture Version"      : 1  : "(Don't change). Differentiates between projected textures built before/outside of Mapbase and projected textures using new features."
+
+	// Inputs
+	input TurnOn(void)		: "Turns on the texture"
+	input TurnOff(void)		: "Turns off the texture"
+	input AlwaysUpdateOn(void)	: "Turns on per frame updating (for moving lights)"
+	input AlwaysUpdateOff(void)	: "Turns off per frame updating (for moving lights)"
+	input FOV(float)		: "Sets the FOV."
+	input VerFOV(float)		: "Sets the vertical FOV."
+	input HorFOV(float)		: "Sets the horizontal FOV."
+	input SpotlightTexture(string)		: "Sets the spotlight texture"
+	input SetSpotlightFrame(string)		: "Sets the spotlight texture frame"
+	input EnableShadows(bool)		: "Set the if shadows are enabled"
+	input LightColor(color255)		: "Change the light color"
+	input SetBrightness(float)		: "Sets brightness."
+	input SetColorTransitionTime(float)		: "Sets the color transition time."
+	input SetConstant(float)		: "Sets the constant attenuation."
+	input SetLinear(float)		: "Sets the linear attenuation."
+	input SetQuadratic(float)		: "Sets the quadratic attenuation."
+	input SetShadowAtten(float)		: "Sets the shadow attenuation."
+	input SetFilter(float)		: "Sets the shadow filter."
+	input SetNearZ(float)		: "Sets NearZ."
+	input SetFarZ(float)		: "Sets FarZ."
+	input AlwaysDrawOn(void)	: "Turns off BBox culling (for skybox or monitor lights)"
+	input AlwaysDrawOff(void)	: "Turns on BBox culling if it was off before"
+	input StopFollowingTarget(void)	: "Causes this entity to stop following the target, if it has one"
+	input StartFollowingTarget(void)	: "Causes this entity to start following the target if it was set to not follow it before"
+]
+
+//-------------------------------------------------------------------------
+// Shadow control
+//-------------------------------------------------------------------------
+
+@PointClass base(Targetname, Angles) iconsprite("editor/shadow_control.vmt") = shadow_control : 
+	"An entity to control the shadows in the map."
+[
+	angles(angle) : "Pitch Yaw Roll (Y Z X)" : "80 30 0" : "This is the shadow direction. Pitch is rotation around the Y axis, yaw is the rotation around the Z axis, and roll is the rotation around the X axis."
+
+	color(color255) : "Shadow Color" : "128 128 128" : "This is the color of the shadows."
+	distance(float) : "Maximum Distance" : 75 : "This is the maximum distance the shadow is allowed to cast, in units."
+	disableallshadows(Choices) : "All Shadows Disabled" : 0 = 
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+	
+	enableshadowsfromlocallights(Choices) : "Enable Local Light Shadows" : 0 : "Enables RTT dynamic shadow angles, which cause shadows to face away from the nearest light source instead of always using this entity's direction. This is a new feature and the original Half-Life 2 had no dynamic shadow angles. Leave this off if they are not desired." = 
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+
+	// Inputs
+	input color(color255) : "Set the shadow color."
+	input direction(vector) : "Set the shadow direction."
+	input SetDistance(float) : "Set the maximum shadow cast distance."
+	input SetAngles(string) : "Set the shadow direction."
+	input SetShadowsDisabled(bool) : "Set shadows disabled state."
+	input SetShadowsFromLocalLightsEnabled(bool) : "Toggles shadows from local lights."
+]
