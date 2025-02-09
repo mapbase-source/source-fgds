@@ -16,10 +16,18 @@
 
 //For steam release remember to uncomment this code and comment the code above, we want to have the base engine .fgd inside the platform folder which acts as "core" folder in s1.
 //The halflife2.fgd will be needed to be in the hl2 or mod folder to work properly.
+
+//	Hammer++ users. 
 //@include "..\platform\lights.fgd" 
 //@include "..\platform\models_base.fgd" 
 //@include "..\platform\ai_basenpc.fgd"
 //@include "..\platform\postprocessing.fgd"
+
+//  (standard) Hammer users.
+//@include "../platform/lights.fgd" 
+//@include "../platform/models_base.fgd" 
+//@include "../platform/ai_basenpc.fgd"
+//@include "../platform/postprocessing.fgd"
 
 //-------------------------------------------------------------------------
 //
