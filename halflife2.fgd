@@ -4258,6 +4258,16 @@
 	input SetHealthAmount(float) : "Sets the amount of health this item gives."
 ]
 
+@PointClass base(Item, Studiomodel) studioprop() = item_battery_custom : "Custom Battery"
+[
+	model(studio) : "Model" : "models/items/battery.mdl" : "The battery's model."
+	PowerAmount(float) : "Power Amount" : "15" : "The amount of power this item gives."
+	//TouchSound(sound) : "Touch Sound" : "ItemBattery.Touch" : "The sound to make when this item is picked up and used."
+	
+	// Inputs
+	input SetPowerAmount(float) : "Sets the amount of power this item gives."
+]
+
 @PointClass base(Targetname, Parentname, Angles, RenderFields, BaseFadeProp) studio("models/items/ammocrate_empty.mdl") = item_ammo_crate : "Ammo Crate"
 [
 	AmmoType(choices) : "Ammo Type" : 0 =
