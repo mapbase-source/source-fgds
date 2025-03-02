@@ -1653,14 +1653,21 @@
 	]
 ]
 
-@PointClass base(Targetname, Parentname) iconsprite("editor/info_target.vmt")  = info_target_helicopter_crash : "Helicopter Crash Target"
-[
-]
-
-@PointClass base(Targetname, Parentname) iconsprite("editor/info_target.vmt")  = info_target_gunshipcrash : "Gunship Crash Target"
+@BaseClass = CrashPoint
 [
 	input Enable(void) : "Enable the crash target."
 	input Disable(void) : "Disable the crash target."
+
+	output OnCrashed(void)  : "Fires when the aircraft crashes on this point."
+	output OnBeginCrash(void)  : "Fires when the aircraft begins navigating to this point."
+]
+
+@PointClass base(Targetname, Parentname, CrashPoint) iconsprite("editor/info_target.vmt")  = info_target_helicopter_crash : "Helicopter Crash Target"
+[
+]
+
+@PointClass base(Targetname, Parentname, CrashPoint) iconsprite("editor/info_target.vmt")  = info_target_gunshipcrash : "Gunship Crash Target"
+[
 ]
 
 @NPCClass base(BaseHelicopter) studio("models/combine_dropship.mdl" ) = npc_combinedropship : "Combine Dropship"
@@ -1776,6 +1783,30 @@
 		1 : "Yes"
 	]
 
+	IdleAimAround(choices) : "Aim around while idle" : "No" : "If enabled, this helicopter will aim its gun in random locations while searching for enemies without changing the helicopter's overall facing direction. If there are any visually interesting info_hints nearby, the helicopter will aim at them. Intended for use with a spotlight." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+
+	DisableSmokeTrails(choices) : "Disable Smoke Trails" : "No" : "Stops smoke trails from appearing while the helicopter is damaged." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+
+	DisableCorpses(choices) : "Disable Corpses" : "No" : "Stops corpses from falling when the helicopter is damaged." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+
+	DisableExplosions(choices) : "Disable Explosions" : "No" : "Stops explosions from occuring when the helicopter is damaged." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+
 	// Inputs
 	input GunOn(void) : "GunOn"
 	input GunOff(void) : "GunOff"
@@ -1815,6 +1846,8 @@
 
 	input StartCarpetBombing(void) : "Starts the helicopter constantly dropping megabombs until StopCarpetBombing input"
 	input StopCarpetBombing(void) : "Stop the carpet bombing behavior"
+
+	input SelfDestructNoFX(void) : "Identical to SelfDestruct, except the helicopter won't throw out chunks while flying to a crash point. If there are no crash points, the helicopter will explode in place as normal. Intended for when the pilot is killed and there's not supposed to be anything wrong with the helicopter itself."
 
 	// Outputs
 	output OnHealthChanged(integer) : "Fires when the helicopter health changes. The integer is the percentage of health the chopper has from 0-100."
