@@ -35,6 +35,19 @@
 //
 //-------------------------------------------------------------------------
 
+@BaseClass = Script
+[
+	vscripts(scriptlist) : "Entity Scripts" : : "Name(s) of script files that are executed after all entities have spawned."
+	thinkfunction(string) : "Script think function" : : "Name of a function in this entity's script scope which will be called automatically."
+
+	input RunScriptFile(string) : "Execute a game script file from disk."
+	input RunScriptCode(script) : "Execute a string of script source code. Backtick ( ` ) characters will be converted to quotes in-game for strings."
+	input CallScriptFunction(string) : "Execute the given function name."
+	input TerminateScriptScope(void) : "Terminates the script scope of the entity."
+	//input RunScriptCodeQuotable(string) : "Execute a string of script source code which converts double apostrophes ('') to quotation marks for strings" // Deprecated by RunScriptCode backticks
+	//input ClearScriptScope(void) : "Clears this entity's script scope" // Deprecated by TerminateScriptScope
+]
+
 @BaseClass = Angles
 [ 
 	angles(angle) : "Pitch Yaw Roll (Y Z X)" : "0 0 0" : "This entity's orientation in the world. Pitch is rotation around the Y axis, " +
@@ -56,7 +69,7 @@
 
 	// Inputs
 	input Skin(integer) : "Changes the model skin to the specified number."
-	input SetModel(string) : "Sets this entity's model. Must include 'models/' as well as the extension."
+	input SetModel(string) : "Changes the model to the specified path.\nForm of 'models/ammo/ammo_us.mdl'.\nIMPORTANT:\nAbsolutely NO quotes!\nMake sure you use this slash '/'.\nMerasmus says to heed this advice thou shalt corrupt the VMF."
 	input BecomeRagdoll(void) : "This entity will instantly become a ragdoll with ZERO force (just go limp). OnDeath, OnHalfHealth, etc. outputs will **NOT** BE FIRED."
 	input CreateSeparateRagdoll(void) : "Creates a separate serverside ragdoll at this entity's origin."
 	input CreateSeparateRagdollClient(void) : "Creates a separate clientside ragdoll at this entity's origin."
@@ -95,6 +108,8 @@
 	input AlternativeSorting(bool) : "Used to attempt to fix sorting problems when rendering. True activates, false deactivates"
 	input SetModelScale(string) : "Takes two values separated by a space. The first is the target model scale. The second value is the number of seconds the change in scale will be spread over."
 	input SetBodyGroup(integer) : "Sets this model's body group (from 0 - n). You'd better know what you are doing!"
+	input SetCycle(float) : "Skip to a specific point in the current animation"
+	input SetPlaybackRate(float) : "Change the animation speed multiplier"
 ]
 
 @BaseClass = BasePlat
@@ -104,20 +119,10 @@
 	input GoDown(void) : "Tells the platform to go down."
 ]
 
-@BaseClass = Targetname 
+@BaseClass base(Script) = Targetname 
 [ 
 	targetname(target_source) : "Name" : : "The name that other entities refer to this entity by."
-	
-	vscripts(string) : "Entity Scripts" : "" : "Name(s) of script files that are executed after all entities have spawned."
-	thinkfunction(string) : "Script think function" : "" : "Name of a function in this entity's script scope which will be called automatically."
 
-	input RunScriptFile(string) : "Execute a game script file from disk"
-	input RunScriptCode(string) : "Execute a string of script source code"
-	input RunScriptCodeQuotable(string) : "Execute a string of script source code which converts double apostrophes ('') to quotation marks for strings"
-	input CallScriptFunction(string) : "Call a named function from this entity's Activation Script"
-	input ClearScriptScope(void) : "Clears this entity's script scope"
-	
-	
 	// Inputs
 	input Kill(void) : "Removes this entity from the world."
 	input KillHierarchy(void) : "Removes this entity and all its children from the world."
@@ -1083,6 +1088,9 @@
 	output OnStartTouchAll(void) : "Fired when an entity starts touching this trigger, and no other entities are touching it. Only entities that passed this trigger's filters are considered."
 	output OnEndTouch(void) : "Fired when an entity stops touching this trigger. Only entities that passed this trigger's filters will cause this output to fire."
 	output OnEndTouchAll(void) : "Fires when an entity stops touching this trigger, and no other entities are touching it. Only entities that passed this trigger's filters are considered."
+
+	// Inputs
+	input DisableAndEndTouch(void) : "Disables this trigger and calls EndTouch on all currently-touching entities."
 ]
 
 @BaseClass = worldbase
@@ -2235,6 +2243,8 @@
 	input SetEndDistLerpTo(float) : "Set the fog end distance."
 	input StartFogTransition(void) : "Start fog transition."
 
+	input SetRadial(bool) : "Set the frog to be radial or not."
+
 	// Starting fog parameters for the level. These are selectable per LOD.	
 	fogenable(choices) : "Fog Enable" : 1 : "Determines whether this controller should be enabled by default." =
 	[
@@ -2257,6 +2267,12 @@
 	fogstart(string) : "Fog Start" : "500.0"
 	fogend(string) : "Fog End" : "2000.0"
 	fogmaxdensity(float) : "Fog Max Density [0..1]" : "1"
+
+	fogradial(choices) : "Use Radial Fog?" : 0 =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
 
 	foglerptime(float) : "Interpolate time" : "0"
 	
@@ -2768,6 +2784,12 @@
 	
 	farz(float) : "Far Z Clip Plane" : "0" : "Clips the sky."
 	
+	fogradial(choices) : "Use Radial Fog?" : 0 =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+	
 	// Inputs
 	input ForceUpdate(void) : "Forces the 3D skybox to update with this sky_camera's position."
 	input StartUpdating(void) : "Begins per-tick skybox updating, which is needed if you want this sky_camera to move."
@@ -2987,14 +3009,12 @@
 	output OnTimeout(void) : "Fired when a player doesn't select an option in time."
 ]
 
-// Hidden for now due to not functioning in Source 2013
-//@PointClass base(Targetname) size(-8 -8 -8, 8 8 8) = skybox_swapper : 
-//	"An entity that swaps skybox textures." 
-//[
-//	SkyboxName(string) : "Sky Name" : "" : "The name of the sky texture to change to."
-//	
-//	input Trigger(void) : "Causes the current sky texture to change to the one specified in this entity."
-//]
+@PointClass base(Targetname) size(-8 -8 -8, 8 8 8) = skybox_swapper : 
+	"An entity that precaches skybox materials and swaps them on trigger." 
+[
+	SkyboxName(string) : "Skybox Material Name" : "sky_halloween_night_01"
+	input Trigger(void) : "Swap to this skybox."
+]
 
 @PointClass base(Parentname, Angles) size(-2 -2 -2, 2 2 2) = point_enable_motion_fixup : 
 	"An entity used to move a motion-disabled prop when it enables motion. Parent this entity to the prop, and when the prop has its motion enabled, it will immediately teleport to the origin of this entity."
@@ -4742,6 +4762,77 @@
 	input SetUnlockedSound(string) : "Sets the sound to use when the door is unlocked."
 ]
 
+//-------------------------------------------------------------------------
+// VScript
+//-------------------------------------------------------------------------
+
+@PointClass base(Targetname) iconsprite("editor/logic_script.vmt") = logic_script :
+	"An entity that acts as a container for scripts"
+[
+	Group00(target_destination) : "EntityGroup[0]" : : "Entity group 0"
+	Group01(target_destination) : "EntityGroup[1]" : : "Entity group 1"
+	Group02(target_destination) : "EntityGroup[2]" : : "Entity group 2"
+	Group03(target_destination) : "EntityGroup[3]" : : "Entity group 3"
+	Group04(target_destination) : "EntityGroup[4]" : : "Entity group 4"
+	Group05(target_destination) : "EntityGroup[5]" : : "Entity group 5"
+	Group06(target_destination) : "EntityGroup[6]" : : "Entity group 6"
+	Group07(target_destination) : "EntityGroup[7]" : : "Entity group 7"
+	Group08(target_destination) : "EntityGroup[8]" : : "Entity group 8"
+	Group09(target_destination) : "EntityGroup[9]" : : "Entity group 9"
+	Group10(target_destination) : "EntityGroup[10]" : : "Entity group 10"
+	Group11(target_destination) : "EntityGroup[11]" : : "Entity group 11"
+	Group12(target_destination) : "EntityGroup[12]" : : "Entity group 12"
+	Group13(target_destination) : "EntityGroup[13]" : : "Entity group 13"
+	Group14(target_destination) : "EntityGroup[14]" : : "Entity group 14"
+	Group15(target_destination) : "EntityGroup[15]" : : "Entity group 15"
+]
+
+@PointClass base(Targetname) iconsprite("editor/logic_script_client.vmt") = logic_script_client : "An entity capable of running client-side scripts"
+[
+	ClientThink(choices) : "Client Think" : 0 : "Allows client-side VScript to run a think function in the form of a 'ClientThink' hook. (NOTE: The 'Script think function' keyvalue is not related to this!)" =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+	
+	RunOnServer(choices) : "Run on Server" : 0 : "Runs the entity scripts on the server as well as the client. Use IsServer() or IsClient() to determine which side is running from within the scripts." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+	
+	input CallScriptFunctionClient(string) : "Call a named function on the entity's client-side script scope."
+]
+
+//-------------------------------------------------------------------------
+// Used to listen to events called from code
+//-------------------------------------------------------------------------
+
+@PointClass base(Targetname) iconsprite("editor/logic_eventlistener.vmt") = logic_eventlistener :
+	"An entity that can listen to events fired from code and fire " +
+	"and output when it happens."
+[
+	EventName(string) : "Event Name" : "" : "The name of the event that you want to listen for."
+	IsEnabled(choices) : "Start Enabled" : 1 =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+	TeamNum(choices) : "Team Number" : -1 : "If set, will only fire its output if the event is generated from someone of the specified team." =
+	[
+		-1 : "Don't care"
+		1 : "Team 1"
+		2 : "Team 2 (ORANGE)"
+		3 : "Team 3 (BLUE)"
+	]
+		
+	// Inputs
+	input Enable(void) : "Enable the logic_measure_movement."
+	input Disable(void) : "Disable the logic_measure_movement."
+	
+	// Outputs
+	output OnEventFired(void)  : "Fired when the event has been detected."
+]
 
 //-------------------------------------------------------------------------
 //
@@ -5284,43 +5375,6 @@
 	// Outputs
 	output OnTrigger(void) : "Fired when the relay is triggered."
 	output OnTriggerParameter(string) : "Fired when the relay is triggered with a parameter."
-]
-
-@PointClass base(Targetname) iconsprite("editor/logic_script.vmt") = logic_script : "An entity that acts as a container for scripts"
-[
-	Group00(target_destination) : "EntityGroup[0]"
-	Group01(target_destination) : "EntityGroup[1]"
-	Group02(target_destination) : "EntityGroup[2]"
-	Group03(target_destination) : "EntityGroup[3]"
-	Group04(target_destination) : "EntityGroup[4]"
-	Group05(target_destination) : "EntityGroup[5]"
-	Group06(target_destination) : "EntityGroup[6]"
-	Group07(target_destination) : "EntityGroup[7]"
-	Group08(target_destination) : "EntityGroup[8]"
-	Group09(target_destination) : "EntityGroup[9]"
-	Group10(target_destination) : "EntityGroup[10]"
-	Group11(target_destination) : "EntityGroup[11]"
-	Group12(target_destination) : "EntityGroup[12]"
-	Group13(target_destination) : "EntityGroup[13]"
-	Group14(target_destination) : "EntityGroup[14]"
-	Group15(target_destination) : "EntityGroup[15]"
-]
-
-@PointClass base(Targetname) iconsprite("editor/logic_script_client.vmt") = logic_script_client : "An entity capable of running client-side scripts"
-[
-	ClientThink(choices) : "Client Think" : 0 : "Allows client-side VScript to run a think function in the form of a 'ClientThink' hook. (NOTE: The 'Script think function' keyvalue is not related to this!)" =
-	[
-		0 : "No"
-		1 : "Yes"
-	]
-	
-	RunOnServer(choices) : "Run on Server" : 0 : "Runs the entity scripts on the server as well as the client. Use IsServer() or IsClient() to determine which side is running from within the scripts." =
-	[
-		0 : "No"
-		1 : "Yes"
-	]
-	
-	input CallScriptFunctionClient(string) : "Call a named function on the entity's client-side script scope."
 ]
 
 @PointClass base(Targetname, EnableDisable) iconsprite("editor/logic_timer.vmt") = logic_timer :
@@ -7890,6 +7944,13 @@
 		0 : "No"
 		1 : "Yes"
 	]
+	generatelightmaps(choices) : "Generate (and use) lightmaps for this static prop" : 0 =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+	lightmapresolutionx(integer) : "Lightmap Resolution X" : 32 : "The resolution of the generated lightmap in the X (or U) direction (only used if Generate Lightmaps is Yes) "
+	lightmapresolutiony(integer) : "Lightmap Resolution Y" : 32 : "The resolution of the generated lightmap in the Y (or V) direction (only used if Generate Lightmaps is Yes) "
 ]
 
 @BaseClass = BaseFadeProp
@@ -7951,7 +8012,6 @@
 	input SetAnimation(string) : "Forces the prop to play an animation. The parameter should be the name of the animation."
 	input SetAnimationNoReset(string) : "Force the prop to play an animation unless the prop is already playing the animation. The parameter should be the name of the animation."
 	input SetDefaultAnimation(string) : "Sets the Default Animation to the one specified in the parameter."
-	input SetPlaybackRate(float) : "Sets the playback rate for the current animation."
 	input SetCycle(float) : "Sets the cycle the current animation."
 	input SetBodyGroup(integer) : "Sets the visible bodygroup, by index."
 	input TurnOn(void) : "Makes the prop visible."
@@ -8952,12 +9012,12 @@
 ]
 
 @SolidClass base(Trigger) = trigger_teleport_relative : 
-	"A trigger volume that teleports entities that touch it to their current position relative to the given offset. "+
-	"Their angles stay the same, but velocity is reset. "+
-	"Use trigger_teleport for more complicated teleporting operations."
+	"A trigger volume that teleports entities that touch it. Entities are teleported by Offset from their current position. Useful to get " +
+	"objects out of situations where levels or entities suddenly appear interseting with them."
 [
-	teleportoffset(vector) : "Teleport Offset" : "0 0 0" : "The offset."
+	teleportoffset(vector) : "Offset (X Y Z)" : "0 0 0" : "The offset (in World-Space Coordinates X Y Z) to teleport the entity when the trigger is touched."
 ]
+
 
 @SolidClass base(Targetname) = trigger_transition : 
 	"A volume that's used to control which entities go through the level transition. Create one or more trigger_transitions and "+
@@ -9045,40 +9105,17 @@
 // Used to listen to events called from code
 //-------------------------------------------------------------------------
 
-@PointClass base(Targetname) = logic_eventlistener :
+@PointClass base(Targetname) = point_event :
 	"An entity that can listen to events fired from code and fire " +
 	"an output when it happens."
 [
-	EventName(string) : "Event Name" : "" : "The name of the event that you want to listen for."
+	EventName(string) : "Event Name" : "" : "The names of the events that you want to listen for. Separated by colon. (e.g. player_hurt:game_init)"
 	
 	StartDisabled(choices) : "Start Disabled" : 0 =
 	[
 		0 : "No"
 		1 : "Yes"
 	]
-	
-	//TeamNum(choices) : "Team Number" : -1 : "If set, will only fire its output if the event is generated from someone of the specified team." =
-	//[
-	//	-1 : "Don't care"
-	//	1 : "Team 1"
-	//	2 : "Team 2 (ORANGE)"
-	//	3 : "Team 3 (BLUE)"
-	//]
-		
-	// Inputs
-	input Enable(void) : "Enables this entity."
-	input Disable(void) : "Disables this entity."
-	input Toggle(void) : "Toggles this entity."
-	
-	// Outputs
-	output OnEventFired(void)  : "Fires when the event has been detected."
-]
-
-@PointClass base(logic_eventlistener) = point_event :
-	"An entity that can listen to events fired from code and fire " +
-	"an output when it happens."
-[
-	EventName(string) : "Event Name" : "" : "The names of the events that you want to listen for. Separated by colon. (e.g. player_hurt:game_init)"
 	
 	KeyName01(string) : "Key Name 01" : "" : "A keyvalue name to search for in detected events. If an event contains this key, then this entity will fire its respective OutValue output with the value."
 	KeyName02(string) : "Key Name 02" : "" : "A keyvalue name to search for in detected events. If an event contains this key, then this entity will fire its respective OutValue output with the value."
@@ -9104,10 +9141,15 @@
 	//]
 		
 	// Inputs
+	input Enable(void) : "Enables this entity."
+	input Disable(void) : "Disables this entity."
+	input Toggle(void) : "Toggles this entity."
+	
 	input SetAllEvents(string) : "Sets all events using the keyvalue's : format. Pass nothing to clear all events."
 	input AddEvent(string) : "Adds an event to this entity."
 	
 	// Outputs
+	output OnEventFired(void)  : "Fires when the event has been detected."
 	output OutEventName(string)  : "Outputs the detected event's name in case this entity is listening for multiple events."
 	output OutValue01(string)  : "Passes the value found in its respective keyname when an event is fired."
 	output OutValue02(string)  : "Passes the value found in its respective keyname when an event is fired."

@@ -1,4 +1,4 @@
-//====== Copyright © 1996-2005, Valve Corporation, All rights reserved. =======
+//====== Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. =======
 //
 // Purpose: Half-Life 2 game definition file (.fgd) 
 //
@@ -5207,6 +5207,11 @@
 	fogStart(float) : "Fog Start" : 2048 : "The near fog plane."
 	fogEnd(float) : "Fog End" : 4096 : "The far fog/clipping plane."
 	fogMaxDensity(float) : "Fog Max Density [0..1]" : 1 : "The maximum fog density. 0=no fog, 1=full fog."
+	fogRadial(choices) : "Use Radial Fog?" : 0 =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
 	
 	SkyMode(choices) : "Sky Mode" : 2 : "How to draw the sky through this point_camera." =
 	[
