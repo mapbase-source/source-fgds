@@ -4697,6 +4697,7 @@
 	// Inputs
 	input Start(void) : "Starts playback of the scene file"
 	input Pause(void) : "Pauses playback of the scene file"
+	input PauseAtLastInterrupt(void) : "Pauses playback of the scene and rewinds it to the last interrupt event in the scene."
 	input Resume(void) : "Resumes playback of the scene if it has been paused"
 	input Cancel(void) : "Cancels playback of the scene"
 	input CancelAtNextInterrupt(void) : "Cancels playback of the scene at the next interrupt event in the scene."
