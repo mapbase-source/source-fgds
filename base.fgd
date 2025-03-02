@@ -2944,13 +2944,57 @@
 	input SetRPCDetails(string) : "Sets the RPC details."
 ]
 
-@PointClass base(Targetname) size(-8 -8 -8, 8 8 8) = skybox_swapper : 
-	"An entity that swaps skybox textures." 
+@PointClass base(Targetname) iconsprite("editor/game_menu.vmt") = game_menu : 
+	"An entity that opens number menus." 
 [
-	SkyboxName(string) : "Sky Name" : "" : "The name of the sky texture to change to."
+	spawnflags(flags) =
+	[
+		1: "[1] All Players" : 0
+	]
 	
-	input Trigger(void) : "Causes the current sky texture to change to the one specified in this entity."
+	holdtime(float) : "Hold Time" : "5.0" : "The time the menu should stay onscreen if the player doesn't select an option. The OnTimeout output will be fired if this happens. Specify '-1' for infinite hold time."
+	
+	Title(string) : "Title" : : "If specified, this will be placed above all of the options. Localization is supported."
+	
+	Case01(string) : "Case 01" : : "If specified, this will be the 1st option in the menu. Localization is supported."
+	Case02(string) : "Case 02" : : "If specified, this will be the 2nd option in the menu. Localization is supported."
+	Case03(string) : "Case 03" : : "If specified, this will be the 3rd option in the menu. Localization is supported."
+	Case04(string) : "Case 04" : : "If specified, this will be the 4th option in the menu. Localization is supported."
+	Case05(string) : "Case 05" : : "If specified, this will be the 5th option in the menu. Localization is supported."
+	Case06(string) : "Case 06" : : "If specified, this will be the 6th option in the menu. Localization is supported."
+	Case07(string) : "Case 07" : : "If specified, this will be the 7th option in the menu. Localization is supported."
+	Case08(string) : "Case 08" : : "If specified, this will be the 8th option in the menu. Localization is supported."
+	Case09(string) : "Case 09" : : "If specified, this will be the 9th option in the menu. Localization is supported."
+	Case10(string) : "Case 10 (0)" : : "If specified, this will be the 0th option in the menu. Localization is supported."
+
+	// Inputs
+	input ShowMenu(void) : "Shows the menu to the player."
+	input HideMenu(void) : "Hides the menu from the player."
+	
+	// Outputs
+	output OnCase01(void) : "Fired when a player selects this option."
+	output OnCase02(void) : "Fired when a player selects this option."
+	output OnCase03(void) : "Fired when a player selects this option."
+	output OnCase04(void) : "Fired when a player selects this option."
+	output OnCase05(void) : "Fired when a player selects this option."
+	output OnCase06(void) : "Fired when a player selects this option."
+	output OnCase07(void) : "Fired when a player selects this option."
+	output OnCase08(void) : "Fired when a player selects this option."
+	output OnCase09(void) : "Fired when a player selects this option."
+	output OnCase10(void) : "Fired when a player selects this option."
+	output OutValue(integer) : "Fired when a player selects any option, using the selected option as a parameter."
+	
+	output OnTimeout(void) : "Fired when a player doesn't select an option in time."
 ]
+
+// Hidden for now due to not functioning in Source 2013
+//@PointClass base(Targetname) size(-8 -8 -8, 8 8 8) = skybox_swapper : 
+//	"An entity that swaps skybox textures." 
+//[
+//	SkyboxName(string) : "Sky Name" : "" : "The name of the sky texture to change to."
+//	
+//	input Trigger(void) : "Causes the current sky texture to change to the one specified in this entity."
+//]
 
 @PointClass base(Parentname, Angles) size(-2 -2 -2, 2 2 2) = point_enable_motion_fixup : 
 	"An entity used to move a motion-disabled prop when it enables motion. Parent this entity to the prop, and when the prop has its motion enabled, it will immediately teleport to the origin of this entity."
