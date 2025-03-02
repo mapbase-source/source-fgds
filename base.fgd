@@ -9361,6 +9361,8 @@
 	HandsVMSkin(string) : "Hands Viewmodel Skin" : : "Skin for the custom hands viewmodel."
 	HandsVMBody(string) : "Hands Viewmodel Bodygroup" : : "Bodygroup value for the custom hands viewmodel."
 
+	ProtagonistName(string) : "Protagonist Name" : : "Sets the player to a specific protagonist from scripts/protagonists/protagonists_manifest.txt. [Currently HL2 only]"
+
 	// Outputs
 	output OnFlashlightOn(float) 			: "Fired when the player turns on his flashlight. This output has the value of how much energy the player had when this happened [0..1]."
 	output OnFlashlightOff(float) 			: "Fired when the player turns off his flashlight. This output has the value of how much energy the player had when this happened [0..1]."
@@ -9399,6 +9401,8 @@
 	
 	input SetMaxInputArmor(integer)			: "Sets the maximum armor value that could be set by armor inputs."
 	input SetSuitZoomFOV(integer)				: "Sets the FOV used by suit zoom."
+
+	input SetProtagonist(string)			: "Sets the player's protagonist entry."
 	
 	output OnPlayerSpawn(void) 				: "Fired when the player spawns or respawns, using the spawn point as the caller."
 ]
