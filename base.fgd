@@ -1849,7 +1849,7 @@
 	input Shoot(void) : "Force the gibshooter to create and shoot a gib."
 ]
 
-@PointClass base(Targetname, RenderFxChoices) size(-4 -4 -4, 4 4 4) line(255 255 255, targetname, LightningStart, targetname, LightningEnd) = env_beam : 
+@PointClass base(Targetname, RenderFxChoices, Parentname) size(-4 -4 -4, 4 4 4) line(255 255 255, targetname, LightningStart, targetname, LightningEnd) = env_beam : 
 	"An entity that creates a visible beam between two points. The points can be attached to entities to make the beam move around."
 [
 	renderamt(integer) : "Brightness (1 - 255)" : 100
@@ -9225,7 +9225,7 @@
 // Used to allow entities to use point_cameras for their materials
 //-------------------------------------------------------------------------
 
-@PointClass base(Targetname)  line(255 255 0, targetname, target) line(255 255 0, targetname, target, targetname, Pointcamera) = info_camera_link :
+@PointClass base(Targetname, Parentname)  line(255 255 0, targetname, target) line(255 255 0, targetname, target, targetname, Pointcamera) = info_camera_link :
 	"An entity that can use point_cameras to render images for materials used by entities. "+
 	"To author the material, use the special identifier _rt_Camera " +
 	"for the $baseTexture (or whatever texture you want, like envmap, etc.) in the .vmt " +
