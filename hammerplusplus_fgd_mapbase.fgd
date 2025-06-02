@@ -1,0 +1,21 @@
+// This FGD is intended as a supplementary for Hammer++ users which applies Hammer++ enhancements to Mapbase entities and I/O/KV.
+// This is done separately from the main FGDs to retain compatibility with default Source 2013 Hammer.
+
+// In order to use this with Hammer++, you must add it manually as another FGD within your game configuration.
+
+// (Note that Mapbase is not associated with Hammer++ in any way and does not require its usage)
+
+@ExtendClass = Targetname : ""
+[
+	vscripts(scriptlist) : "Entity Scripts" : "" : "Name(s) of script files that are executed after all entities have spawned."
+	input RunScriptFile(script) : "Execute a game script file from disk"
+]
+
+//@ExtendClass worldtextvgui() = vgui_text_display : ""
+//[
+//]
+
+@ExtendClass particlesystem(effect_name) = info_particle_system_coordinate : ""
+[
+	effect_name(particlesystem) : "Particle System Name"
+]

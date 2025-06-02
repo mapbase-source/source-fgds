@@ -8,3 +8,5 @@ This repo contains two branches.
 This allows readers to see what Mapbase changed in the FGDs and makes it easier to merge a mod's own modified FGDs with Mapbase's FGDs, as they could create a new branch from "master" and merge from the "mapbase" branch.
 
 The original FGD files were created by Valve for the Source SDK.
+
+`hammerplusplus_fgd_mapbase.fgd` is an optional FGD provided for Hammer++ users which modifies Mapbase entities to take advantage of Hammer++ features. Open it to see instructions on how to use it.
