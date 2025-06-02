@@ -277,7 +277,7 @@
 	sightdist(float) : "Sight radius" : 1024 : "Radius distance at which the cannon is able to aquire enemies."
 ]
 
-@NPCClass base(BaseNPC) sphere(innerradius) sphere(outerradius) studio("models/combine_camera/combine_camera.mdl") = npc_combine_camera :
+@NPCClass base(BaseNPC) sphere(innerradius) sphere(outerradius) studio() = npc_combine_camera :
 	"Combine security camera"
 [
 	spawnflags(Flags) = 
@@ -286,6 +286,8 @@
 		64 : "[64] Ignore Enemies (Scripted Targets Only)" : 0
 		128 : "[128] Start Inactive" : 0
 	]
+	
+	model(studio) : "Model" : "models/combine_camera/combine_camera.mdl"
 	
 	innerradius(integer) : "Inner radius" : 300 : "The camera will only lock onto enemies that are within the inner radius."
 	outerradius(integer) : "Outer radius" : 450 : "The camera will flash amber when enemies are within the outer radius, but outside the inner radius."
@@ -605,6 +607,8 @@
 @NPCClass base(BaseNPC) studio("models/antlion.mdl") sphere(radius) = npc_antlion :
 	"Antlions will run away from ai_sound, type: Thumper."
 [
+	model(studio) : "Model Override" : ""
+	
 	startburrowed(choices) : "Start Burrowed" : "No" =
 	[
 		0 : "No"
@@ -1079,8 +1083,9 @@
 	output OnEndTouchAll(void) : "Fires when a player or a member of the player's squad stops touching this trigger, and no other members are touching it."
 ]
 
-@NPCClass base(BaseNPC) studio("models/Barney.mdl") = npc_fisherman : "Fisherman"
+@NPCClass base(BaseNPC) studio() = npc_fisherman : "Fisherman"
 [
+	model(studio) : "Model" : "models/lostcoast/fisherman/fisherman.mdl"
 	ExpressionOverride(string) : "Facial expression override"
 	input SetExpressionOverride(string) : "Set facial expression override"
 ]
@@ -1611,6 +1616,8 @@
 
 @NPCClass base(BaseHelicopter) studio("models/gunship.mdl" ) = npc_combinegunship : "Combine Gunship"
 [
+	model(studio) : "Model Override" : ""
+
 	HealthIncrements(integer) : "Health Increments" : 0 : "The number of times this gunship must be damaged before dying. This value is multiplied by 0.5 on Easy and 1.5 on Hard. 0 = the value stored in sk_gunship_health_increments (default 5)."
 
 	CanGroundAttack(choices) : "Can use ground attack automatically" : 0 : "Allows this gunship to use its belly cannon automatically during combat." =
@@ -1670,12 +1677,14 @@
 [
 ]
 
-@NPCClass base(BaseHelicopter) studio("models/combine_dropship.mdl" ) = npc_combinedropship : "Combine Dropship"
+@NPCClass base(BaseHelicopter) studio() = npc_combinedropship : "Combine Dropship"
 [
 	spawnflags(Flags) =
 	[
 		32768 : "[32768] Wait for input before dropoff" : 0
 	]
+
+	model(studio) : "Model" : "models/combine_dropship.mdl"
 
 	LandTarget(target_destination) : "Land target name"
 	GunRange(float) : "Crate Gun Range" : 2048 : "If the dropship's carrying a crate with a gun on it, it'll only shoot targets within this range."
@@ -1915,8 +1924,10 @@
 	output OnCrab(ehandle) : "Fires when the zombie releases a headcrab, passing the headcrab as the activator and parameter."
 ]
 
-@NPCClass base(BaseZombie) studio("models/Zombie/fast.mdl") = npc_fastzombie : "Fast Zombie"
+@NPCClass base(BaseZombie) studio() = npc_fastzombie : "Fast Zombie"
 [
+	model(studio) : "Model" : "models/Zombie/fast.mdl"
+
 	input AttachToVehicle(target_destination) : "Attach to a specified vehicle entity"
 ]
 
@@ -1925,8 +1936,10 @@
 
 ]
 
-@NPCClass base(BaseZombie) studio("models/Zombie/Classic.mdl") = npc_zombie : "Zombie"
+@NPCClass base(BaseZombie) studio() = npc_zombie : "Zombie"
 [
+	model(studio) : "Model" : "models/Zombie/Classic.mdl"
+	
 	MeleeReach(float) : "Melee Reach" : : "Overrides the maximum distance in which this zombie should be able to swat at enemies. Default is 55"
 ]
 
@@ -1960,8 +1973,10 @@
 ]
 // ------------------
 
-@NPCClass base(BaseZombie) studio("models/Zombie/zombie_soldier.mdl") = npc_zombine : "Combine Soldier Zombie"
+@NPCClass base(BaseZombie) studio() = npc_zombine : "Combine Soldier Zombie"
 [
+	model(studio) : "Model" : "models/Zombie/zombie_soldier.mdl"
+	
 	NumGrenades(choices) : "Number of Grenades" : "1" : "The number of grenades this zombine can pull out." =
 	[
 		"0" : "None"
@@ -1980,9 +1995,11 @@
 	// Outputs
 	output OnPullGrenade(ehandle) : "Fires when the zombine pulls a grenade. Passes the grenade."
 ]
-@NPCClass base(BaseZombie) studio("models/Zombie/Poison.mdl") = npc_poisonzombie :
+@NPCClass base(BaseZombie) studio() = npc_poisonzombie :
 	"A bloated, disgusting, fluid-spurting zombie created by a poison headcrab."
 [
+	model(studio) : "Model" : "models/Zombie/Poison.mdl"
+	
 	crabcount(choices) : "Crabs in nest" : 3 =
 	[
 		1 : "1 Crab"
@@ -2156,8 +2173,10 @@
 [
 ]
 
-@NPCClass base(TalkNPC) studio("models/Monk.mdl") = npc_monk : "Monk"
+@NPCClass base(TalkNPC) studio() = npc_monk : "Monk"
 [
+	model(studio) : "Model" : "models/Monk.mdl"
+
 	additionalequipment(choices) : "Weapons" : "weapon_annabelle" =
 	[
 		"weapon_annabelle" : "Annabelle"
@@ -2300,16 +2319,20 @@
 	]
 ]
 
-@NPCClass base(TalkNPC) studio("models/mossman.mdl") = npc_mossman : "Dr Mossman"
+@NPCClass base(TalkNPC) studio() = npc_mossman : "Dr Mossman"
 [
+	model(studio) : "Model" : "models/mossman.mdl"
 ]
 
-@NPCClass base(TalkNPC) studio("models/gman.mdl") = npc_gman : "The G-Man"
+@NPCClass base(TalkNPC) studio() = npc_gman : "The G-Man"
 [
+	model(studio) : "Model" : "models/gman.mdl"
 ]
 
-@NPCClass base(BaseNPC) studio("models/dog.mdl") = npc_dog : "d0g"
+@NPCClass base(BaseNPC) studio() = npc_dog : "d0g"
 [
+	model(studio) : "Model" : "models/dog.mdl"
+	
 	//Inputs
 	input SetPickupTarget(target_destination) : "Sets the target entity for dog to pickup."
 	input StartCatchThrowBehavior(target_destination) : "Tells d0g to start playing with the player. You can pass in the name of the object you want him to play with otherwise he'll find the closes phys_object."
