@@ -2952,7 +2952,7 @@
 		1: "[1] All Players" : 0
 	]
 	
-	holdtime(float) : "Hold Time" : "5.0" : "The time the menu should stay onscreen if the player doesn't select an option. The OnTimeout output will be fired if this happens. Specify '-1' for infinite hold time."
+	holdtime(float) : "Hold Time" : "5.0" : "The time the menu should stay onscreen before it closes automatically. The OnTimeout output will be fired if the player doesn't select an option in time. Specify '-1' for infinite hold time."
 	
 	Title(string) : "Title" : : "If specified, this will be placed above all of the options. Localization is supported."
 	
@@ -2965,7 +2965,7 @@
 	Case07(string) : "Case 07" : : "If specified, this will be the 7th option in the menu. Localization is supported."
 	Case08(string) : "Case 08" : : "If specified, this will be the 8th option in the menu. Localization is supported."
 	Case09(string) : "Case 09" : : "If specified, this will be the 9th option in the menu. Localization is supported."
-	Case10(string) : "Case 10 (0)" : : "If specified, this will be the 0th option in the menu. Localization is supported."
+	Case10(string) : "Case 10 (0)" : : "If specified, this will be the 0th option in the menu. This option will not have a visual effect when selected. Localization is supported."
 
 	// Inputs
 	input ShowMenu(void) : "Shows the menu to the player."
