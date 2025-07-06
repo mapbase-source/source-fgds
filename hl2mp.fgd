@@ -6,6 +6,20 @@
 
 @include "halflife2.fgd"
 
+@AutoVisGroup = "Entities"
+[
+    "NextBots"
+    [
+        "bot_generator"
+        "bot_action_point"
+        "bot_proxy"
+        "func_nav_blocker"
+        "func_nav_avoid"
+        "func_nav_prefer"
+        "func_nav_prerequisite"
+    ]
+]
+
 
 @PointClass base(PlayerClass, Angles) studio("models/editor/playerstart.mdl") = info_player_deathmatch :
 	"This entity indicates the position and facing direction at which the player will spawn during a deathmatch map. Any number of "+
@@ -46,6 +60,264 @@
 	RespawnTime(float) : "Respawn Time" : 60 : "Ammount in seconds this prop will respawn after it breaks."
 ]
 
+//-------------------------------------------------------------------------
+//
+// NextBot ents
+//
+//-------------------------------------------------------------------------
 
-@PointClass base(Weapon) studio("models/weapons/w_slam.mdl") = weapon_slam : "S.L.A.M. - Selectable Lightweight Attack Munition" []
+@PointClass base(Targetname, Angles) = bot_generator : "Entity spawns <count> HL2MPBots every <interval> seconds, with at most <maxActive> active at once"
+[
+	team(choices) : "Team" : "auto" : "Team" =
+	[
+		"auto" : "Any"
+		"rebels" : "Rebels"
+		"combine" : "Combine"
+	]
 
+	count(integer) : "Count" : 1 : "Number of HL2MPBots to spawn over the lifetime of this bot generator."
+	maxActive(integer) : "Max Active" : 1 : "Maximum number of active HL2MPBots spawned at any given time from this generator."
+	interval(float) : "Interval" : 0 : "Time (in seconds) between spawns"
+
+	action_point(target_destination) : "Action Point" : : "Put the name of a bot_action_point here to tell the spawned bot to move there."
+
+	initial_command(choices) : "Initial Command" : "" : "Initial command to give this bot, if any." =
+	[
+		"goto action point" : "Go to specified Action Point"
+		//"taunt" : "Taunt"
+		"despawn" : "Leave the game"
+		//"cloak" : "If Spy, Cloak"
+		//"uncloak" : "If Spy, Uncloak"
+		//"attack sentry at next action point" : "Attack sentry gun at next action point"
+		//"disguise" : "If Spy, Disguise"
+	]
+
+	suppressFire(choices) : "Suppress Fire" : 0 : "Newly generated HL2MPBots will suppress their fire if this is set." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+
+	disableDodge(choices) : "Disable Dodge" : 0 : "Newly generated HL2MPBots will not dodge if this is set." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+
+	actionOnDeath(choices) : "Action on Death" : 1 : "When a HL2MPBot dies, they will either respawn like a normal player, remove themselves, or move to the spectator team." =
+	[
+		0 : "Repawn as usual"
+		1 : "Remove self"
+		2 : "Move to Spectator team"
+	]
+
+	spectateOnDeath(choices) : "Move to Spectator Team on Death" : 0 : "HL2MPBots will move to the Spectator team on death.  Use this as a pooling mechanism" =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+
+	useTeamSpawnPoint(choices) : "Use Team Spawn Point" : 0 : "HL2MPBots will use their team spawn point, instead of this point if this is set." = 
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+
+	//retainBuildings(choices) : "Retain Buildings After Disconnect" : 0 : "If set, any buildings (sentries, sappers, etc) built by bots from this generator will not be destroyed when their owners are removed." = 
+	//[
+	//	0 : "No"
+	//	1 : "Yes"
+	//]
+
+	difficulty(choices) : "Difficulty" : 0 : "The skill level of bots created by this generator." = 
+	[
+		-1 : "Default"
+		0 : "Easy"
+		1 : "Normal"
+		2 : "Hard"
+		3 : "Expert"
+	]
+
+	spawnOnlyWhenTriggered(choices) : "Don't spawn bots unless triggered" : 0 : "If this is set, you must use the SpawnBot input to have any bots spawn" =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+
+	//spawnflags(flags) =
+	//[
+	//	1 :	   "Spawned Bots Ignore Enemy Scouts" : 0
+	//	2 :    "Spawned Bots Ignore Enemy Soldiers" : 0
+	//	4 :    "Spawned Bots Ignore Enemy Pyros" : 0
+	//	8 :    "Spawned Bots Ignore Enemy Demomen" : 0
+	//	16 :   "Spawned Bots Ignore Enemy Heavies" : 0
+	//	32 :   "Spawned Bots Ignore Enemy Medics" : 0
+	//	64 :   "Spawned Bots Ignore Enemy Engineers" : 0
+	//	128 :  "Spawned Bots Ignore Enemy Snipers" : 0
+	//	256 :  "Spawned Bots Ignore Enemy Spies" : 0
+	//	512 :  "Spawned Bots Ignore Enemy Sentry Guns" : 0
+	//	1024 : "Spawned Bots Ignore Scenario Goals" : 0
+	//]
+
+	// Inputs
+	input Enable(void) : "Begin spawning HL2MPBots"
+	input Disable(void) : "Stop spawning HL2MPBots"
+	input SetSuppressFire(bool) : "Set whether HL2MPBots should suppress their fire."
+	input SetDisableDodge(bool) : "Set whether HL2MPBots should have the dodge ability disabled or not."
+	input SetDifficulty(integer) : "Change the skill level of subsequently generated bots (-1=default, 0=easy, 1=normal, 2=hard, 3=expert)."
+	input CommandGotoActionPoint(target_destination) : "Commands all bots spawned by this generator to go to the specified action point by name."
+	input SetAttentionFocus(target_destination) : "All bots spawned by this generator will focus exclusively on this entity. If entity is action point, entities within that point's radius will be attended to."
+	input ClearAttentionFocus(target_destination) : "Remove attention focus restrictions from bots spawned by this generator."
+	input SpawnBot(void) : "Attempt to spawn a bot within the rules specified."
+	input RemoveBots(void) : "Force remove any bots this entity spawned."
+
+	// Outputs
+	output OnSpawned(void) : "Sent when the HL2MPBot has spawned into the environment"
+	output OnExpended(void) : "Sent when the bot generator has reached its limit of the bots it can create"
+	output OnBotKilled(void) : "Sent when a bot associated with this bot generator is killed"
+]
+
+@PointClass base(Targetname) sphere(desired_distance) = bot_action_point : "A potential destination for a bot"
+[
+	next_action_point(target_destination) : "Next Action Point" : : "The next Action Point to approach after performing this one."
+	desired_distance(float) : "Desired Distance" : 5 : "The distance to get within when approaching this Action Point before the bot says it has reached it."
+	stay_time(float) : "Stay Time" : 0 : "How long the bot should stay at this action point (while perform any commands if applicable)."
+	command(choices) : "Command" : "" : "Command to give to the bot when it gets within range of this Action Point." = 
+	[
+		//"taunt" : "Taunt"
+		"despawn" : "Leave the game"
+		//"cloak" : "If Spy, Cloak"
+		//"uncloak" : "If Spy, Uncloak"
+		//"attack sentry at next action point" : "Attack sentry gun at next action point"
+		//"disguise" : "If Spy, Disguise"
+		//"build sentry at nearest sentry hint" : "If Engineer, build a sentry gun at the nearest sentry hint"
+	]
+
+	// Outputs
+	output OnBotReached(void) : "A bot has reached this action point"
+]
+
+@PointClass base(Targetname) = bot_proxy : "An entity that spawns a HL2MPBot and relays events to/from it"
+[
+	bot_name(string) : "Bot Name" : "HL2MPBot" : "The bot's player name" 
+
+	team(choices) : "Team" : "auto" : "Team" =
+	[
+		"auto" : "Any"
+		"rebels" : "Rebels"
+		"combine" : "Combine"
+	]
+
+	spawn_on_start(choices) : "Spawn on start" : 0 : "Spawn this bot when the round starts" =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+
+	respawn_interval(float) : "Respawn delay" : 0 : "If nonzero, respawn this bot N seconds after it dies"
+
+	action_point(target_destination) : "Action Point" : : "Put the name of a bot_action_point here to tell the bot to move to it when it spawns in."
+
+	// Inputs
+	input SetTeam(string) : "Change the bot's team (auto, rebels, combine)"
+	input SetMovementGoal(target_destination) : "Tell the bot to move to the given goal"
+	input Spawn(void) : "Spawn a HL2MPBot at this position"
+	input Delete(void) : "Delete the existing HL2MPBot"
+
+	// Outputs
+	output OnSpawned(void) : "Sent when the HL2MPBot has spawned into the environment"
+	output OnInjured(void) : "Sent when the HL2MPBot has been injured"
+	output OnKilled(void) : "Sent when the HL2MPBot has been killed"
+	output OnAttackingEnemy(void) : "Sent when the HL2MPBot has started attacking an enemy"
+	output OnKilledEnemy(void) : "Sent when the HL2MPBot has killed an enemy"
+]
+
+@SolidClass base(Targetname) = func_nav_blocker : "A brush entity that can block nav areas touching its AABB." 
+[
+	input BlockNav(string) : "Starts blocking nav areas."
+	input UnblockNav(void) : "Stops blocking nav areas."
+
+	teamToBlock(choices) : "Team(s) to block" : -1 : "Block the nav for bots on this team" =
+	[
+		-1 : "Everyone"
+		2 : "Combine"
+		3 : "Rebels"
+	]
+	
+	affectsFlow(choices) : "Affects Flow?" : 0 : "Does this func_nav_blocker block flow in the level? Only func_nav_blockers with this enabled will cause flow recomputation on blocking/unblocking." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+]
+
+@SolidClass base(Targetname) = func_nav_avoid : "Influence bots to avoid this region by increasing the pathfinding cost within it."
+[
+	tags(string) : "Tags" : "" : "A space delimited list of tags. A tag is a label with no spaces. If a HL2MPBot has at least one matching tag, it will pay attention to this entity." 
+
+	team(choices) : "Team" : -2 : "Which team will avoid this region" =
+	[
+		-2 : "Everyone"
+		2 : "Combine"
+		3 : "Rebels"
+	]
+
+	start_disabled(choices) : "Start Disabled" : 0 =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+
+	// Inputs
+	input Enable(void) : "Enable"
+	input Disable(void) : "Disable"
+	input Toggle(void) : "Toggle"
+]
+
+@SolidClass base(Targetname) = func_nav_prefer : "Influence bots to prefer this region by decreasing the pathfinding cost within it."
+[
+	tags(string) : "Tags" : "" : "A space delimited list of tags. A tag is a label with no spaces. If a HL2MPBot has at least one matching tag, it will pay attention to this entity." 
+
+	team(choices) : "Team" : -2 : "Which team will prefer this region" =
+	[
+		-2 : "Everyone"
+		2 : "Combine"
+		3 : "Rebels"
+	]
+
+	start_disabled(choices) : "Start Disabled" : 0 =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+
+	// Inputs
+	input Enable(void) : "Enable"
+	input Disable(void) : "Disable"
+]
+
+@SolidClass base(Trigger, Targetname) = func_nav_prerequisite : "A trigger volume that requires bots to do perform a task before they can move through it."
+[
+	Task(choices) : "Task" : 1 : "What must be done to move through this volume" =
+	[
+		1 : "Destroy Entity (Value = max range to attack from. -1 for no range restriction)"
+		2 : "Move to Entity"
+		3 : "Wait (Value = seconds to wait)"
+	]
+
+	Entity(target_destination) : "Task Entity" : : "The subject entity of the Task"
+
+	Value(float) : "Task Value" : 0 : "A Task-specific value"
+
+	start_disabled(choices) : "Start Disabled" : 0 =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+
+	// Inputs
+	input Enable(void) : "Enable"
+	input Disable(void) : "Disable"
+]
+
+//-------------------------------------------------------------------------
