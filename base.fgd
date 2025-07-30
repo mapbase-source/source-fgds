@@ -9476,6 +9476,13 @@
 	input DisableCappedPhysicsDamage(void) : "Undo effects of EnableCappedPhysicsDamage"
 	input SetLocatorTargetEntity(target_destination) : "Set the entity that the HUD locator should track. (Usually a vehicle)"
 	
+	input SetHandModel(string)				: "Sets the player's hands viewmodel."
+	input SetHandModelSkin(integer)				: "Sets the skin of the player's hands viewmodel."
+	input SetHandModelBodyGroup(integer)			: "Sets the bodygroup of the player's hands viewmodel."
+
+	input SetPlayerDrawLegs(bool)				: "Sets whether the player should draw its model beneath the camera."
+	input SetPlayerDrawExternally(bool)			: "Sets whether the player should show up in mirrors, cameras, etc."
+
 	input SetMaxInputArmor(integer)			: "Sets the maximum armor value that could be set by armor inputs."
 	input SetSuitZoomFOV(integer)				: "Sets the FOV used by suit zoom."
 
