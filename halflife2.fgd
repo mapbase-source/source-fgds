@@ -5881,3 +5881,100 @@
 	input SetRadius(vector) : "Sets a new radius and time to interpolate to it(as a vector <Size> <Time in Seconds>)."
 ]
 
+@BaseClass = TeamNum
+[
+	TeamNum(choices) : "Team [HL2MP]" : 0 : "Team" =
+	[
+		0 : "Any"
+		2 : "Combine"
+		3 : "Rebels"
+	]
+	input SetTeam(integer) : "Changes the entity's team."
+]
+
+@BaseClass = BaseInstructorHint
+[
+	spawnflags(flags) =
+	[
+	]
+	
+	hint_icon_onscreen(Choices) : "Onscreen Icon" : "icon_tip" : "The icon to use when the hint is within the player's view." =
+	[
+		"icon_bulb" : "icon_bulb"
+		"icon_caution" : "icon_caution"
+		"icon_alert" : "icon_alert"
+		"icon_alert_red" : "icon_alert_red"
+		"icon_tip" : "icon_tip"
+		"icon_skull" : "icon_skull"
+		"icon_no" : "icon_no"
+		"icon_run" : "icon_run"
+		"icon_interact" : "icon_interact"
+		"icon_button" : "icon_button"
+		"icon_door" : "icon_door"
+		"icon_arrow_plain" : "icon_arrow_plain"
+		"icon_arrow_plain_white_dn" : "icon_arrow_plain_white_dn"
+		"icon_arrow_plain_white_up" : "icon_arrow_plain_white_up"
+		"icon_arrow_up" : "icon_arrow_up"
+		"icon_arrow_right" : "icon_arrow_right"
+		"icon_fire" : "icon_fire"
+		"icon_present" : "icon_present"
+		"use_binding" : "show key bindings"
+		
+		"icon_health" : "[HL2] icon_health"
+		"icon_battery" : "[HL2] icon_battery"
+		"icon_frag" : "[HL2] icon_frag"
+		"icon_cmbball" : "[HL2] icon_cmbball"
+		"icon_hl2" : "[HL2] icon_hl2"
+		"icon_gravgun" : "[HL2] icon_gravgun"
+		"icon_bugbait" : "[HL2] icon_bugbait"
+		"icon_rocket" : "[HL2] icon_rocket"
+		"icon_combine" : "[HL2] icon_combine"
+		"icon_lambda" : "[HL2] icon_lambda"
+		"icon_squad" : "[HL2] icon_squad"
+		"icon_squad_medic" : "[HL2] icon_squad_medic"
+		"icon_ammo" : "[HL2] icon_ammo"
+		"icon_flashlight" : "[HL2] icon_flashlight"
+		"icon_slam" : "[HL2] icon_slam"
+		"icon_pistol" : "[HL2] icon_pistol"
+	]
+	
+	hint_icon_offscreen(Choices) : "Offscreen Icon" : "icon_tip" : "The icon to use when the hint is outside the player's view." =
+	[
+		"icon_bulb" : "icon_bulb"
+		"icon_caution" : "icon_caution"
+		"icon_alert" : "icon_alert"
+		"icon_alert_red" : "icon_alert_red"
+		"icon_tip" : "icon_tip"
+		"icon_skull" : "icon_skull"
+		"icon_no" : "icon_no"
+		"icon_run" : "icon_run"
+		"icon_interact" : "icon_interact"
+		"icon_button" : "icon_button"
+		"icon_door" : "icon_door"
+		"icon_arrow_plain" : "icon_arrow_plain"
+		"icon_arrow_plain_white_dn" : "icon_arrow_plain_white_dn"
+		"icon_arrow_plain_white_up" : "icon_arrow_plain_white_up"
+		"icon_arrow_up" : "icon_arrow_up"
+		"icon_arrow_right" : "icon_arrow_right"
+		"icon_fire" : "icon_fire"
+		"icon_present" : "icon_present"
+		
+		"icon_health" : "[HL2] icon_health"
+		"icon_battery" : "[HL2] icon_battery"
+		"icon_frag" : "[HL2] icon_frag"
+		"icon_cmbball" : "[HL2] icon_cmbball"
+		"icon_hl2" : "[HL2] icon_hl2"
+		"icon_gravgun" : "[HL2] icon_gravgun"
+		"icon_bugbait" : "[HL2] icon_bugbait"
+		"icon_rocket" : "[HL2] icon_rocket"
+		"icon_combine" : "[HL2] icon_combine"
+		"icon_lambda" : "[HL2] icon_lambda"
+		"icon_squad" : "[HL2] icon_squad"
+		"icon_squad_medic" : "[HL2] icon_squad_medic"
+		"icon_ammo" : "[HL2] icon_ammo"
+		"icon_flashlight" : "[HL2] icon_flashlight"
+		"icon_slam" : "[HL2] icon_slam"
+		"icon_pistol" : "[HL2] icon_pistol"
+	]
+]
+

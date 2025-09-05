@@ -9860,29 +9860,11 @@
 	input ApplyImpulse(void)  : "Apply impulse to touching entities"
 ]
 
-@PointClass base(Targetname) sphere(hint_range) iconsprite("editor/env_instructor_hint.vmt") = env_instructor_hint : "An entity that allows for creation and control of instructor lessons by map logic"
+// For overriding available icons and spawnflags in derived FGDs
+@BaseClass = BaseInstructorHint
 [
-	hint_replace_key(string) : "Replace Key" : : "Hints with the same Replace Key will replace each other when displayed at the same time. Use different values for each hint if you would like to have multiple hints displaying at once."
-	hint_target(target_destination) : "Target Entity" : : "The entity to show this hint on top of. The entity used must exist on the client, info_target_instructor_hint can be parented to server only entities for this purpose."
-	hint_static(Choices) : "Positioning" : 0 : "Either show at the position of the Target Entity. Or show the hint directly on the hud at a fixed position." =
+	spawnflags(flags) =
 	[
-		0 : "Follow the Target Entity"
-		1 : "Show on the hud"
-	]
-	
-	hint_allow_nodraw_target(Choices) : "Allow invisible target" : 1 : "Do we allow the hint to follow entites with nodraw set?" =
-	[
-		0 : "End immediately on nodraw"
-		1 : "Yes"
-	]
-	
-	hint_caption(string) : "Caption" : : "The text of your hint."
-	hint_activator_caption(string) : "Activator Caption" : : "The text of your hint shown to only the activating player."
-	hint_color(color255) : "Caption Color" : "255 255 255" : "The color of the caption text"
-	hint_forcecaption(Choices) : "Force caption" : 0 : "Do we show the caption text even if the hint is occluded by a wall?" =
-	[
-		0 : "No"
-		1 : "Show when occluded"
 	]
 	
 	hint_icon_onscreen(Choices) : "Onscreen Icon" : "icon_tip" : "The icon to use when the hint is within the player's view." =
@@ -9906,23 +9888,6 @@
 		"icon_fire" : "icon_fire"
 		"icon_present" : "icon_present"
 		"use_binding" : "show key bindings"
-		
-		"icon_health" : "(HL2) icon_health"
-		"icon_battery" : "(HL2) icon_battery"
-		"icon_frag" : "(HL2) icon_frag"
-		"icon_cmbball" : "(HL2) icon_cmbball"
-		"icon_hl2" : "(HL2) icon_hl2"
-		"icon_gravgun" : "(HL2) icon_gravgun"
-		"icon_bugbait" : "(HL2) icon_bugbait"
-		"icon_rocket" : "(HL2) icon_rocket"
-		"icon_combine" : "(HL2) icon_combine"
-		"icon_lambda" : "(HL2) icon_lambda"
-		"icon_squad" : "(HL2) icon_squad"
-		"icon_squad_medic" : "(HL2) icon_squad_medic"
-		"icon_ammo" : "(HL2) icon_ammo"
-		"icon_flashlight" : "(HL2) icon_flashlight"
-		"icon_slam" : "(HL2) icon_slam"
-		"icon_pistol" : "(HL2) icon_pistol"
 	]
 	
 	hint_icon_offscreen(Choices) : "Offscreen Icon" : "icon_tip" : "The icon to use when the hint is outside the player's view." =
@@ -9945,23 +9910,41 @@
 		"icon_arrow_right" : "icon_arrow_right"
 		"icon_fire" : "icon_fire"
 		"icon_present" : "icon_present"
-		
-		"icon_health" : "(HL2) icon_health"
-		"icon_battery" : "(HL2) icon_battery"
-		"icon_frag" : "(HL2) icon_frag"
-		"icon_cmbball" : "(HL2) icon_cmbball"
-		"icon_hl2" : "(HL2) icon_hl2"
-		"icon_gravgun" : "(HL2) icon_gravgun"
-		"icon_bugbait" : "(HL2) icon_bugbait"
-		"icon_rocket" : "(HL2) icon_rocket"
-		"icon_combine" : "(HL2) icon_combine"
-		"icon_lambda" : "(HL2) icon_lambda"
-		"icon_squad" : "(HL2) icon_squad"
-		"icon_squad_medic" : "(HL2) icon_squad_medic"
-		"icon_ammo" : "(HL2) icon_ammo"
-		"icon_flashlight" : "(HL2) icon_flashlight"
-		"icon_slam" : "(HL2) icon_slam"
-		"icon_pistol" : "(HL2) icon_pistol"
+	]
+]
+
+@BaseClass = TeamNum
+[
+	TeamNum(choices) : "Team" : 0 : "Team" =
+	[
+		0 : "Any"
+	]
+	input SetTeam(integer) : "Changes the entity's team."
+]
+
+@PointClass base(Targetname, BaseInstructorHint, TeamNum) sphere(hint_range) iconsprite("editor/env_instructor_hint.vmt") = env_instructor_hint : "An entity that allows for creation and control of instructor lessons by map logic"
+[
+	hint_replace_key(string) : "Replace Key" : : "Hints with the same Replace Key will replace each other when displayed at the same time. Use different values for each hint if you would like to have multiple hints displaying at once."
+	hint_target(target_destination) : "Target Entity" : : "The entity to show this hint on top of. The entity used must exist on the client, info_target_instructor_hint can be parented to server only entities for this purpose."
+	hint_static(Choices) : "Positioning" : 0 : "Either show at the position of the Target Entity. Or show the hint directly on the hud at a fixed position." =
+	[
+		0 : "Follow the Target Entity"
+		1 : "Show on the hud"
+	]
+	
+	hint_allow_nodraw_target(Choices) : "Allow invisible target" : 1 : "Do we allow the hint to follow entites with nodraw set?" =
+	[
+		0 : "End immediately on nodraw"
+		1 : "Yes"
+	]
+	
+	hint_caption(string) : "Caption" : : "The text of your hint."
+	hint_activator_caption(string) : "Activator Caption" : : "The text of your hint shown to only the activating player."
+	hint_color(color255) : "Caption Color" : "255 255 255" : "The color of the caption text"
+	hint_forcecaption(Choices) : "Force caption" : 0 : "Do we show the caption text even if the hint is occluded by a wall?" =
+	[
+		0 : "No"
+		1 : "Show when occluded"
 	]
 	
 	hint_nooffscreen(Choices) : "Show offscreen" : 0 : "When the hint is offscreen, do we show an icon and arrow?" =

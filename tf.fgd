@@ -3020,3 +3020,119 @@
 	input Disable(void) : "Disable."
 	input SetCamera(string) : "Sets the camera to use for this monitor. Takes the name of a point_camera entity in the map."
 ]
+
+@BaseClass = BaseInstructorHint
+[
+	spawnflags(flags) =
+	[
+		2 :	   "Scout" : 0
+		4 :    "Sniper" : 0
+		8 :    "Soldier" : 0
+		16 :    "Demoman" : 0
+		32 :   "Medic" : 0
+		64 :   "Heavyweapons" : 0
+		128 :   "Pyro" : 0
+		256 :  "Spy" : 0
+		512 :  "Engineer" : 0
+		1024 :  "Civilian" : 0
+	]
+
+	hint_icon_onscreen(Choices) : "Onscreen Icon" : "icon_tip" : "The icon to use when the hint is within the player's view." =
+	[
+		"icon_bulb" : "icon_bulb"
+		"icon_caution" : "icon_caution"
+		"icon_alert" : "icon_alert"
+		"icon_alert_red" : "icon_alert_red"
+		"icon_tip" : "icon_tip"
+		"icon_skull" : "icon_skull"
+		"icon_no" : "icon_no"
+		"icon_run" : "icon_run"
+		"icon_interact" : "icon_interact"
+		"icon_button" : "icon_button"
+		"icon_door" : "icon_door"
+		"icon_arrow_plain" : "icon_arrow_plain"
+		"icon_arrow_plain_white_dn" : "icon_arrow_plain_white_dn"
+		"icon_arrow_plain_white_up" : "icon_arrow_plain_white_up"
+		"icon_arrow_up" : "icon_arrow_up"
+		"icon_arrow_right" : "icon_arrow_right"
+		"icon_fire" : "icon_fire"
+		"icon_present" : "icon_present"
+		"use_binding" : "show key bindings"
+		
+		"tf_game_logo" : "tf_game_logo"
+		"tf_game_logo_orange" : "tf_game_logo_orange"
+		"tf_clock" : "tf_clock"
+		"tf_payload" : "tf_payload"
+		"tf_intelligence" : "tf_intelligence"
+		"tf_arrow_clockwise" : "tf_arrow_clockwise"
+		"tf_red_team" : "tf_red_team"
+		"tf_blu_team" : "tf_blu_team"
+		"tf_control_point" : "tf_control_point"
+		"tf_point_a" : "tf_point_a"
+		"tf_point_b" : "tf_point_b"
+		"tf_point_c" : "tf_point_c"
+		"tf_point_d" : "tf_point_d"
+		"tf_point_e" : "tf_point_e"
+		"tf_locked" : "tf_locked"
+		"tf_unlocked" : "tf_unlocked"
+		"tf_scout" : "tf_scout"
+		"tf_soldier" : "tf_soldier"
+		"tf_pyro" : "tf_pyro"
+		"tf_demoman" : "tf_demoman"
+		"tf_heavyweapons" : "tf_heavyweapons"
+		"tf_engineer" : "tf_engineer"
+		"tf_medic" : "tf_medic"
+		"tf_sniper" : "tf_sniper"
+		"tf_spy" : "tf_spy"
+		"tf_run" : "tf_run"
+	]
+	
+	hint_icon_offscreen(Choices) : "Offscreen Icon" : "icon_tip" : "The icon to use when the hint is outside the player's view." =
+	[
+		"icon_bulb" : "icon_bulb"
+		"icon_caution" : "icon_caution"
+		"icon_alert" : "icon_alert"
+		"icon_alert_red" : "icon_alert_red"
+		"icon_tip" : "icon_tip"
+		"icon_skull" : "icon_skull"
+		"icon_no" : "icon_no"
+		"icon_run" : "icon_run"
+		"icon_interact" : "icon_interact"
+		"icon_button" : "icon_button"
+		"icon_door" : "icon_door"
+		"icon_arrow_plain" : "icon_arrow_plain"
+		"icon_arrow_plain_white_dn" : "icon_arrow_plain_white_dn"
+		"icon_arrow_plain_white_up" : "icon_arrow_plain_white_up"
+		"icon_arrow_up" : "icon_arrow_up"
+		"icon_arrow_right" : "icon_arrow_right"
+		"icon_fire" : "icon_fire"
+		"icon_present" : "icon_present"
+		
+		"tf_game_logo" : "tf_game_logo"
+		"tf_game_logo_orange" : "tf_game_logo_orange"
+		"tf_clock" : "tf_clock"
+		"tf_payload" : "tf_payload"
+		"tf_intelligence" : "tf_intelligence"
+		"tf_arrow_clockwise" : "tf_arrow_clockwise"
+		"tf_red_team" : "tf_red_team"
+		"tf_blu_team" : "tf_blu_team"
+		"tf_control_point" : "tf_control_point"
+		"tf_point_a" : "tf_point_a"
+		"tf_point_b" : "tf_point_b"
+		"tf_point_c" : "tf_point_c"
+		"tf_point_d" : "tf_point_d"
+		"tf_point_e" : "tf_point_e"
+		"tf_locked" : "tf_locked"
+		"tf_unlocked" : "tf_unlocked"
+		"tf_scout" : "tf_scout"
+		"tf_soldier" : "tf_soldier"
+		"tf_pyro" : "tf_pyro"
+		"tf_demoman" : "tf_demoman"
+		"tf_heavyweapons" : "tf_heavyweapons"
+		"tf_engineer" : "tf_engineer"
+		"tf_medic" : "tf_medic"
+		"tf_sniper" : "tf_sniper"
+		"tf_spy" : "tf_spy"
+		"tf_run" : "tf_run"
+	]
+]
