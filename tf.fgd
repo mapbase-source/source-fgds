@@ -1761,6 +1761,7 @@
 	// Inputs
 	input ShowTrainingMsg(string) : "Show a training message, for training mode. The parameter should be the string entry in tf_english.txt"
 	input ShowTrainingObjective(string) : "Sets a training objective to show to the player."
+	input ShowTrainingImage(string) : "Sets an image to show on the left side of the training panel. Should be a path relative to materials/vgui."
 	input ForcePlayerSpawnAsClassOutput(void) : "Force the appropriate output to fire for the player spawning as a class.  You can use this to essentially ask what class the player is."
 	input KickBots(void) : "Kicks all the bots from the server."
 	input ShowTrainingHUD(void) : "Makes the training objective HUD visible."
