@@ -2974,7 +2974,7 @@
 		1: "[1] All Players" : 0
 	]
 	
-	holdtime(float) : "Hold Time" : "5.0" : "The time the menu should stay onscreen if the player doesn't select an option. The OnTimeout output will be fired if this happens. Specify '-1' for infinite hold time."
+	holdtime(float) : "Hold Time" : "5.0" : "The time the menu should stay onscreen before it closes automatically. The OnTimeout output will be fired if the player doesn't select an option in time. Specify '-1' for infinite hold time."
 	
 	Title(string) : "Title" : : "If specified, this will be placed above all of the options. Localization is supported."
 	
@@ -2987,7 +2987,7 @@
 	Case07(string) : "Case 07" : : "If specified, this will be the 7th option in the menu. Localization is supported."
 	Case08(string) : "Case 08" : : "If specified, this will be the 8th option in the menu. Localization is supported."
 	Case09(string) : "Case 09" : : "If specified, this will be the 9th option in the menu. Localization is supported."
-	Case10(string) : "Case 10 (0)" : : "If specified, this will be the 0th option in the menu. Localization is supported."
+	Case10(string) : "Case 10 (0)" : : "If specified, this will be the 0th option in the menu. This option will not have a visual effect when selected. Localization is supported."
 
 	// Inputs
 	input ShowMenu(void) : "Shows the menu to the player."
@@ -3015,6 +3015,84 @@
 	SkyboxName(string) : "Skybox Material Name" : "sky_halloween_night_01"
 	input Trigger(void) : "Swap to this skybox."
 ]
+
+@PointClass base(Targetname, EnableDisable) iconsprite("editor/game_timer.vmt") = game_timer : 
+	"An entity that adds a generic timer to the player's HUD. Not to be confused with logic_timer." 
+[
+	timer_length(float) : "Timer length (in seconds)" : 60 : "Initial timer length."
+	max_length(float) : "Max timer length (in seconds)" : 0 : "Maximum timer length (0 = no max). This value is used to ensure the timer never goes above this value when SetTime and AddTime are used."
+	warn_time(float) : "Warn time (-1 default)" : -1 : "The time in seconds at which the timer will turn red to indicate it is almost finished. -1 uses default behavior, turning red when the timer is 75% complete."
+
+	timer_caption(string) : "Timer caption" : "" : "An optional line of text which can accompany the timer."
+
+	StartDisabled(choices) : "Start Disabled" : 1 : "If enabled, the timer will show up on the player's HUD as soon as the entity spawns." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+	
+	start_paused(choices) : "Start paused" : 0 : "Should the timer start paused? (will need to send a Resume input to start the timer if this is set)." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+
+	show_time_remaining(choices) : "Show Time Remaining" : 1 : "Should we show how much time is remaining.  If no, this will display how much time has passed." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+	
+	show_in_hud(choices) : "Show timer in the HUD" : 1 : "Whether or not the timer actually appears on the player's HUD when enabled. Note: Outside of TF2, you can only show one timer in the HUD at a time." =
+	[
+		0 : "No"
+		1 : "Yes"
+	]
+
+	x(float) : "X (0 - 1.0 = left to right) (-1 default)" : "-1" : "Horizontal position on the player's screens to draw the timer. The value should be between 0 and 1, where 0 is the far left of the screen and 1 is the far right. -1 puts it in the game's default position. Note that a non-default value will stop the game from automatically moving or hiding the timer when it gets in the way of other HUD elements."
+	y(float) : "Y (0 - 1.0 = top to bottom) (-1 default)" : "-1" : "Vertical position on the player's screens to draw the timer. The value should be between 0 and 1, where 0 is the top of the screen and 1 is the bottom. -1 puts it in the game's default position. Note that a non-default value will stop the game from automatically moving or hiding the timer when it gets in the way of other HUD elements."
+
+	progress_bar_max(integer) : "Progress bar max segments (-1 default)" : -1 : "Overrides the progress bar's maximum segments. -1 uses the default based on the timer's length."
+	progress_bar_override(integer) : "Progress bar override (-1 default)" : -1 : "Overrides the progress bar's progress. -1 uses the default based on remaining time. Use this with the max segments value to make the progress bar represent a controlled variable (e.g. number of players at a checkpoint)."
+
+	PlayerFilter(filterclass) : "Player Filter" : : "Filter to use to determine who should see this timer. By default, all players will view the timer unless a team number is specified. See filter_activator_name for more explanation."
+
+	TeamNum(choices) : "Team" : 0 : "The team this timer should apply to unless a filter is specified. In TF2, timers are colored based on this value. Specifying a filter allows a team-colored timer to be shown to players not on that team. The Local Player option will appear to each player as their own team color." =
+	[
+		-2 : "Local Player [TF2]"
+		0 : "Any"
+		1 : "Spectator"
+		2 : "Red [TF2] / Combine [HL2MP]"
+		3 : "Blue [TF2] / Rebels [HL2MP]"
+	]
+	
+	// Inputs	
+	input Pause(void) : "Pause the timer."
+	input Resume(void) : "Resume the timer."
+	input SetTime(float) : "Set the timer to this value (in seconds)."
+	input AddTime(float) : "Add time to the timer (in seconds). Added time cannot excede the max timer length."
+	input RemoveTime(float) : "Remove time from the timer (in seconds)."
+	input Restart(void) : "Restart the timer."
+	//input ShowInHUD(integer) : "Show this timer in the HUD (0 no, 1 Yes)."
+	input SetMaxTime(integer) : "Set the max timer length to this value (in seconds). The timer's time will never excede this value."
+	input SetTimerCaption(string) : "Set the timer caption."
+	input SetProgressBarMaxSegments(integer) : "Set the progress bar's max segments."
+	input SetProgressBarOverride(integer) : "Set the progress bar's progress override."
+	input SetX(float) : "Set the X position override."
+	input SetY(float) : "Set the Y position override."
+	input GetTimeRemaining(void) : "Fire OnGetTimeRemaining with the remaining time."
+	input SetPlayerFilter(target_destination) : "Set the player filter."
+	input SetTeam(integer) : "Changes the entity's team."
+		
+	// Outputs
+	output OnFinished(void) : "Sent when the timer is finished."
+	output OnPaused(void) : "Sent when the timer is paused."
+	output OnResumed(void) : "Sent when the timer is resumed."
+	output OnWarned(void) : "Sent when timer passes its warn time."
+	output OnTick(integer) : "Sent for each second the timer ticks, with the remaining time as the parameter."
+	output OnGetTimeRemaining(float) : "Sent when GetTimeRemaining input is used, with the remaining time as the parameter."
+]
+
 
 @PointClass base(Parentname, Angles) size(-2 -2 -2, 2 2 2) = point_enable_motion_fixup : 
 	"An entity used to move a motion-disabled prop when it enables motion. Parent this entity to the prop, and when the prop has its motion enabled, it will immediately teleport to the origin of this entity."
@@ -9441,6 +9519,13 @@
 	input DisableCappedPhysicsDamage(void) : "Undo effects of EnableCappedPhysicsDamage"
 	input SetLocatorTargetEntity(target_destination) : "Set the entity that the HUD locator should track. (Usually a vehicle)"
 	
+	input SetHandModel(string)				: "Sets the player's hands viewmodel."
+	input SetHandModelSkin(integer)				: "Sets the skin of the player's hands viewmodel."
+	input SetHandModelBodyGroup(integer)			: "Sets the bodygroup of the player's hands viewmodel."
+
+	input SetPlayerDrawLegs(bool)				: "Sets whether the player should draw its model beneath the camera."
+	input SetPlayerDrawExternally(bool)			: "Sets whether the player should show up in mirrors, cameras, etc."
+
 	input SetMaxInputArmor(integer)			: "Sets the maximum armor value that could be set by armor inputs."
 	input SetSuitZoomFOV(integer)				: "Sets the FOV used by suit zoom."
 
