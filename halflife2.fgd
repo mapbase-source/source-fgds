@@ -2636,8 +2636,8 @@
 	m_flRadius(integer) : "Search Radius (0=everywhere)" : 0 : "Radius to search within for an NPC to use. 0 searches everywhere."
 
 	MoveSpeed(integer) : "Move Speed" : 5 : "How quickly should target move between scripted targets."
-	PauseDuration(integer) : "Pause Duration" : 0	 : "How long should target pause at scripted target."
-	EffectDuration(integer) : "Effect Duration" : 2	 : "How long should any associated effect last."
+	PauseDuration(integer) : "Pause Duration" : 0 : "How long should target pause at scripted target."
+	EffectDuration(integer) : "Effect Duration" : 2 : "How long should any associated effect last."
 
 	target(target_destination) : "Next Target" :  : "Next scripted target."
 
