@@ -139,7 +139,7 @@
 	input BeginRappel(void) : "BeginRappel"
 
 	// Outputs
-	output OnRappelTouchdown(void) : "Fires when done rappeling"
+	output OnRappelTouchdown(void) : "Fires when done rappelling"
 ]
 
 @BaseClass = AlyxInteractable
@@ -216,7 +216,7 @@
 
 	// Outputs
 	output OnDissolveWeapon(void) : "Fires when one weapon is starting to dissolve in the trigger volume."
-	output OnChargingPhyscannon(void) : "Fires when the trigger begins to charge the physcannon."
+	output OnChargingPhyscannon(void) : "Fires when the trigger begins to supercharge the physcannon."
 
 	// Inputs
 	input StopSound(void) : "Stops all sounds."
@@ -272,9 +272,9 @@
 ]
 
 
-@NPCClass base(BaseNPC) sphere(sightdist) studio("models/combine_soldier.mdl") = npc_combine_cannon : "Combine Cannon"
+@NPCClass base(BaseNPC) sphere(sightdist) studio("models/combine_soldier.mdl") = npc_combine_cannon : "Obsolete Combine Cannon entity"
 [
-	sightdist(float) : "Sight radius" : 1024 : "Radius distance at which the cannon is able to aquire enemies."
+	sightdist(float) : "Sight radius" : 1024 : "Radius distance at which the cannon is able to acquire enemies."
 ]
 
 @NPCClass base(BaseNPC) sphere(innerradius) sphere(outerradius) studio() = npc_combine_camera :
@@ -460,8 +460,8 @@
 	input StartForward(void) : "Tell the driver to start driving."
 	input Stop(void) : "Tell the driver to stop driving."
 
-	input DisableFiring(float) : "Disables firing from happening"
-	input EnableFiring(float) : "Enables firing to start. Firing is enabled by default"
+	input DisableFiring(void) : "Disables firing from happening"
+	input EnableFiring(void) : "Enables firing to start. Firing is enabled by default"
 ]
 
 
@@ -553,7 +553,7 @@
 	type(choices) : "Type of target" : 0 = 
 	[
 		0 : "Generic Citizen Beacon"
-		1 : "Magnussen RDU Beacon"
+		1 : "Magnusson RDU Beacon"
 		2 : "Dog"
 		3 : "Ally Installation"
 		4 : "Enemy"
@@ -617,7 +617,7 @@
 
 	spawnflags(Flags) =
 	[
-		65536 : "[65536] Burrow when eluded" : 0
+		65536 : "[65536] Burrow away when eluded" : 0
 		131072 : "[131072] Use Ground Checks" : 0
 		262144 : "[262144] Worker Type" : 0
 	]
@@ -710,7 +710,7 @@
 
 @BaseClass base(BaseNPC) = BaseBird
 [
-	input FlyAway( target_destination ) : "Forces the crow to fly to the nearest crow flyto hint node."
+	input FlyAway( target_destination ) : "Forces the bird to fly to the nearest 'fly to' hint node."
 
 	deaf(choices) : "Deaf?" : 0 =
 	[
@@ -828,12 +828,12 @@
 		524288  : "[524288] Can be an enemy" : 0
 	]
 	FieldOfView(float) : "FieldOfView" : "0.2" : "The enemy finder's viewcone. (1.0 = straight ahead, 0.0 = +/- 90 degrees, -1.0 = all directions)"
-	MinSearchDist(integer) : "Min Search Dist" : 0
-	MaxSearchDist(integer) : "Max Search Dist" : 2048
+	MinSearchDist(integer) : "Min Search Distance" : 0
+	MaxSearchDist(integer) : "Max Search Distance" : 2048
 
-	freepass_timetotrigger(float) : "Player pass issue time" : 0 : "Amount of time an enemy is hidden after which a 'free pass' on reaquire is granted"
-	freepass_duration(float) : "Player pass duration" : 0 : "After granted 'free pass', the amount of time a target is allowed before reaquire"
-	freepass_movetolerance(float) : "Player pass move tolerance" : 120 : "After granted 'free pass', the distance the target is allowed to move before reaquire"
+	freepass_timetotrigger(float) : "Player pass issue time" : 0 : "Amount of time an enemy is hidden after which a 'free pass' on reacquire is granted"
+	freepass_duration(float) : "Player pass duration" : 0 : "After granted 'free pass', the amount of time a target is allowed before reacquire"
+	freepass_movetolerance(float) : "Player pass move tolerance" : 120 : "After granted 'free pass', the distance the target is allowed to move before reacquire"
 	freepass_refillrate(float) : "Player pass refill rate" : "0.5" : "After free pass begins expiring, how much the time the target gets back for every second they hide again"
 	freepass_peektime(float) : "Player pass peek time" : 0 : "How long targets in cover are allowed to peek without penalty"
 
@@ -891,14 +891,14 @@
 		524288  : "[524288] Can be an enemy" : 0
 	]
 	FieldOfView(string) : "FieldOfView" : "0.2" : "How far to look (1.0 = straight ahead, 0.0 = +/- 90 degrees, -1.0 = all directions)"
-	MinSearchDist(integer) : "Min Search Dist" : 0
-	MaxSearchDist(integer) : "Max Search Dist" : 2048
+	MinSearchDist(integer) : "Min Search Distance" : 0
+	MaxSearchDist(integer) : "Max Search Distance" : 2048
 
 	SnapToEnt(target_destination) : "Name of entity to snap to" : "" : "Since it can be hard to position these entities with respect to the func_tank brushwork, you can specify an entity name here and this enemyfinder will position itself at the center of that entity."
 
-	freepass_timetotrigger(float) : "Player pass issue time" : 0 : "Amount of time an enemy is hidden after which a 'free pass' on reaquire is granted"
-	freepass_duration(float) : "Player pass duration" : 0 : "After granted 'free pass', the amount of time a target is allowed before reaquire"
-	freepass_movetolerance(float) : "Player pass move tolerance" : 120 : "After granted 'free pass', the distance the target is allowed to move before reaquire"
+	freepass_timetotrigger(float) : "Player pass issue time" : 0 : "Amount of time an enemy is hidden after which a 'free pass' on reacquire is granted"
+	freepass_duration(float) : "Player pass duration" : 0 : "After granted 'free pass', the amount of time a target is allowed before reacquire"
+	freepass_movetolerance(float) : "Player pass move tolerance" : 120 : "After granted 'free pass', the distance the target is allowed to move before reacquire"
 	freepass_refillrate(float) : "Player pass refill rate" : "0.5" : "After free pass begins expiring, how much the time the target gets back for every second they hide again"
 	freepass_peektime(float) : "Player pass peek time" : 0 : "How long targets in cover are allowed to peek without penalty"
 
@@ -944,7 +944,7 @@
 		"weapon_crowbar" : "Crowbar"
 		"weapon_shotgun" : "Shotgun"
 		"weapon_pistol" : "Pistol"
-		"weapon_357" : "357"
+		"weapon_357" : ".357 Magnum"
 		"weapon_crossbow" : "Crossbow"
 		//"weapon_beerbottle" : "Beer Bottle"
 		//"weapon_beerbottle2" : "Beer Bottle2"
@@ -1015,7 +1015,7 @@
 		1 : "Yes"
 	]
 
-	neverleaveplayersquad(choices) : "Permanent squad member?" : 0 : "A permanent squad member cannot leave the player's squad unless killed or explicity removed by entity I/O. Only use this if you're sure you want to override the default AI." =
+	neverleaveplayersquad(choices) : "Permanent squad member?" : 0 : "A permanent squad member cannot leave the player's squad unless killed or explicitly removed by entity I/O. Only use this if you're sure you want to override the default AI." =
 	[
 		0 : "No. This is default behavior."
 		1 : "Yes, stay in squad until death."
@@ -1055,7 +1055,7 @@
 	output OnFollowOrder(void) : "Fires when ordered to follow player"
 	output OnStationOrder(void) : "Fires when ordered to a location by player"
 	output OnPlayerUse(void) : "Fires when a player +USEs the citizen"
-	output OnNavFailBlocked(void) : "Fires when this citizen's movement fails because he/she is blocked."
+	output OnNavFailBlocked(void) : "Fires when this citizen's movement fails because they are blocked."
 	
 	output OnHealedNPC(void) : "Fires when this citizen heals a NPC."
 	output OnHealedPlayer(void) : "Fires when this citizen heals a player."
@@ -1121,7 +1121,7 @@
 		"weapon_rpg" : "RPG"
 		"weapon_stunstick" : "Stun Stick"
 		"weapon_pistol" : "Pistol"
-		"weapon_357" : "357"
+		"weapon_357" : ".357 Magnum"
 		"weapon_citizenpackage" : "Citizen Package"
 		"weapon_citizensuitcase" : "Citizen Suitcase"
 		"0" : "Nothing"
@@ -1131,7 +1131,7 @@
 	[
 		65536 :  "[65536] Start LookOff" : 0
 		131072	: "[131072] Don't drop grenades" : 0
-		262144  : "[262144] Don't drop ar2 alt fire (elite only) " : 0
+		262144  : "[262144] Don't drop AR2 alt fire (elite only) " : 0
 	]
 	
 	NumGrenades(choices) : "Number of Grenades" : "5" =
@@ -1232,7 +1232,7 @@
 	] 
 	LaunchDelay(integer) : "Launch Delay" : 8	    : "When ON, how long to wait between each launch"
 	LaunchSpeed(string) : "Launch Speed" : 200   : "Initial launch speed of missile (in up direction)"
-	PathCornerName(target_destination) : "Path Corner Name" : "" : "Name of a path corner.  If set launches a pathfollowing missing, rather than a homing missile"
+	PathCornerName(target_destination) : "Path Corner Name" : "" : "Name of a path corner.  If set launches a path-following missile, rather than a homing missile"
 	HomingSpeed(string) : "Homing Speed" : 0	    : "Speed to reach when homing"
 	HomingStrength(integer) : "Homing Strength" : 10    : "How strong in homing effect (0-100)"
 	HomingDelay(string) : "Homing Delay" : 0 : "Number of seconds to delay before homing starts"
@@ -1240,12 +1240,12 @@
 	HomingDuration(string) : "Homing Duration" : 5     : "Number of seconds the homing effect lasts"
 	HomingRampDown(string) : "Homing Ramp Down" : "1.0" : "Number of seconds it takes homing effect to decay after homing duration"
 	Gravity(string) : "Gravity" : "1.0" : "Scale for effect of gravity. (1.0 = normal gravity)"
-	MinRange(integer) : "Min Range" : 100   : "Minimun distance a target can be to be attacked"
+	MinRange(integer) : "Min Range" : 100   : "Minimum distance a target can be to be attacked"
 	MaxRange(integer) : "Max Range" : 2048  : "Maximum distance a target can be to be attacked"
 	SpinMagnitude(string) : "Spin Magnitude" : 0	    : "Strength of spin in missile trajectory"
 	SpinSpeed(string) : "Spin Speed" : 0     : "How fast does the spin rotate through 360"
 	Damage(string) : "Damage" : 50    : "How much damage does each missile do"
-	DamageRadius(string) : "DamageRadius" : 200   : "How far away from impact does the missle do damage"
+	DamageRadius(string) : "DamageRadius" : 200   : "How far away from impact does the missile do damage"
 
 	// Outputs
 	output OnLaunch(void) : "Fires when missile is launched"
@@ -1630,7 +1630,7 @@
 	input OmniscientOn(void) : "Gunship knows target's location even when target is out of sight or behind cover"
 	input OmniscientOff(void) : "Gunship relies on normal sight functions to locate target"
 	input BlindfireOn(void ) : "Gunship will fire at an unseen target, attempting to punch through to them"
-	input BlindfireOff(void ) : "Gunship only fires at viusible target"
+	input BlindfireOff(void ) : "Gunship only fires at visible target"
 	input SetPenetrationDepth( float ) : "Set penetration depth of bullets"
 
 	input SetDockingBBox( void ) : "Shrink Bounding Box"
@@ -1780,11 +1780,11 @@
 		4194304 : "[4194304] Aim at enemies even when gun is off" : 0
 	]
 
-	InitialSpeed(string) : "Initial Speed" : "0"
+	InitialSpeed(float) : "Initial Speed" : "0"
 	GracePeriod(float) : "Grace Period" : "2.0" : "Time in seconds the helicopter has to see the player before he starts shooting"
 	PatrolSpeed(float) : "Patrol Speed" : "0" : "Speed at which the helicopter moves if he has no enemy."
 	
-	FieldOfView(float) : "Field of View" : "-1.0" : "The helicoter's viewcone. (1.0 = straight ahead, 0.0 = +/- 90 degrees, -1.0 = all directions)"
+	FieldOfView(float) : "Field of View" : "-1.0" : "The helicopter's viewcone. (1.0 = straight ahead, 0.0 = +/- 90 degrees, -1.0 = all directions)"
 
 	noncombat(choices) : "Non-combat (Do not precache gibs)" : "No" : "If enabled, this helicopter will not precache stuff that would only be seen in combat, like mines or gibs. Even damaging the helicopter in this state can crash the game, so you might want to use a damage filter too." =
 	[
@@ -1810,7 +1810,7 @@
 		1 : "Yes"
 	]
 
-	DisableExplosions(choices) : "Disable Explosions" : "No" : "Stops explosions from occuring when the helicopter is damaged." =
+	DisableExplosions(choices) : "Disable Explosions" : "No" : "Stops explosions from occurring when the helicopter is damaged." =
 	[
 		0 : "No"
 		1 : "Yes"
@@ -1827,7 +1827,7 @@
 	input DisableRotorSound(void) : "Turns off rotor sounds"
 	input StartBombingVehicle(void) : "Starts the chopper leading enemy vehicles and dropping bombs on them."
 	input StartTrailingVehicle(void) : "Starts the chopper trailing enemy vehicles and shooting at them."
-	input StartDefaultBehavior(void) : "Starts the chopper in the mode where he always stops at nav points instead of stopping anywhere in between nav points."
+	input StartDefaultBehavior(void) : "Starts the chopper in the mode where it always stops at nav points instead of stopping anywhere in between nav points."
 	input StartAlwaysLeadingVehicle(void) : "Starts the chopper *always* leading enemy vehicles (regardless of how they are moving w/respect to the path) and dropping bombs on them. This mode is different from StartBombingVehicle in that it never uses the machine gun."
 	input StartSprinkleBehavior(void) : "Starts the chopper dropping bombs randomly + shooting at the player."
 	input StartBullrushBehavior(void) : "Starts the chopper bullrushing the player."
@@ -1841,7 +1841,7 @@
 	input StartContinuousShooting(void) : "The chopper fires continuously."
 	input StartFastShooting(void) : "The chopper fires normal bursts, but does not 'charge up' the gun. Fires immediately."
 
-	input ResetIdleTime(void) : "Allows the helicopter to fire immediately if he's not in the middle of charging or firing"
+	input ResetIdleTime(void) : "Allows the helicopter to fire immediately if it's not in the middle of charging or firing"
 	input SetAngles(string) : "Instantly snaps the orientation of the helicopter (Pitch Yaw Roll)"
 	input DropBomb(void) : "Immediately drops a bomb based on normal bomb dropping rules"
 	input DropBombStraightDown(void) : "Immediately drops a bomb directly downwards"
@@ -1850,8 +1850,8 @@
 	input DropBombDelay(float) : "Add a delay before the next bomb is dropped"
 	input BecomeIndestructible(void) : "Makes the helicopter take no more damage"
 
-	input DisablePathVisibilityTests(void) : "When the helicopter moves, he will not check for visibility from the path_track to the enemy to cull out path_tracks"
-	input EnablePathVisibilityTests(void) : "When the helicopter moves, he will only move to path_tracks that have line-of-sight to the enemy"
+	input DisablePathVisibilityTests(void) : "When the helicopter moves, it will not check for visibility from the path_track to the enemy to cull out path_tracks"
+	input EnablePathVisibilityTests(void) : "When the helicopter moves, it will only move to path_tracks that have line-of-sight to the enemy"
 
 	input StartCarpetBombing(void) : "Starts the helicopter constantly dropping megabombs until StopCarpetBombing input"
 	input StopCarpetBombing(void) : "Stop the carpet bombing behavior"
@@ -1868,6 +1868,7 @@
 [
 	spawnflags(Flags) = 
 	[
+		1 :  "[1] Megabomb" : 0
 		65536 :  "[65536] Is a dud" : 0
 	]
 
@@ -1890,7 +1891,7 @@
 	AvoidFilter(filterclass) : "Avoid Filter" : : "Filter to use to see if the helicopter avoids this sphere. See filter_activator_name for more explanation."
 ]
 
-@SolidClass base(Origin, Angles, Parentname) color(255 255 0) = npc_heli_avoidbox : "Helicopter avoidance box"
+@SolidClass base(Origin, Angles, Parentname, Targetname) color(255 255 0) = npc_heli_avoidbox : "Helicopter avoidance box"
 [
 	spawnflags(Flags) = 
 	[
@@ -2118,7 +2119,7 @@
 		"weapon_crowbar"  : "Crowbar"
 		"weapon_ar2"  : "AR2"
 		"weapon_shotgun"  : "Shotgun"
-		"weapon_357" : "357"
+		"weapon_357" : ".357 Magnum"
 		"weapon_rpg"  : "RPG"
 		"weapon_citizenpackage" : "Citizen Package"
 		"weapon_citizensuitcase" : "Citizen Suitcase"
@@ -2186,7 +2187,7 @@
 		"weapon_crowbar" : "Crowbar"
 		"weapon_shotgun" : "Shotgun"
 		"weapon_pistol" : "Pistol"
-		"weapon_357" : "357"
+		"weapon_357" : ".357 Magnum"
 		"weapon_crossbow" : "Crossbow"
 		//"weapon_beerbottle" : "Beer Bottle"
 		//"weapon_beerbottle2" : "Beer Bottle2"
@@ -2228,7 +2229,7 @@
 		1 : "Yes"	
 	]
 
-	ShouldHaveEMP(choices) : "Should alyx have her EMP?" : "1" =
+	ShouldHaveEMP(choices) : "Should Alyx have her EMP?" : "1" =
 	[
 		0 : "No"
 		1 : "Yes"
@@ -2492,7 +2493,7 @@
 
 @PointClass base(Targetname) sphere(repelradius) color(0 0 255) = point_antlion_repellant : "Antlion Repellant"
 [
-	repelradius(float): "Repell radius" : 512 : "Antlions aren't allowed to be inside this radius"
+	repelradius(float): "Repel radius" : 512 : "Antlions aren't allowed to be inside this radius"
 	input Enable(void) : "Enable"
 	input Disable(void) : "Disable"
 ]
@@ -2601,7 +2602,7 @@
 	]
 
 	sentence(string) : "Sentence Name" : ""
-	entity(string) : "Speaker Type"
+	entity(string) : "Speaker Entity"
 	delay(string) : "Additional Sentence Time" : "0"
 	radius(integer) : "Search Radius" : 512
 	refire(string) : "Delay Before Refire" : "3"
@@ -2634,11 +2635,11 @@
 	m_iszEntity(npcclass) : "Target NPC"
 	m_flRadius(integer) : "Search Radius (0=everywhere)" : 0 : "Radius to search within for an NPC to use. 0 searches everywhere."
 
-	MoveSpeed(integer) : "Move Speed" : 5			// How quickly should target move between scripted targets
-	PauseDuration(integer) : "Pause Duration" : 0		// How long should target pause at scripted target
-	EffectDuration(integer) : "Effect Duration" : 2		// How long should any associated effect last
+	MoveSpeed(integer) : "Move Speed" : 5 : "How quickly should target move between scripted targets."
+	PauseDuration(integer) : "Pause Duration" : 0	 : "How long should target pause at scripted target."
+	EffectDuration(integer) : "Effect Duration" : 2	 : "How long should any associated effect last."
 
-	target(target_destination) : "Next Target"		// Next scripted target
+	target(target_destination) : "Next Target" :  : "Next scripted target."
 
 	// Inputs
 	input Enable(void) : "Enable this entity"
@@ -3054,7 +3055,7 @@
 		2 : "Medium"
 		3 : "High"
 		4 : "Very High"
-		// Custom agression disabled
+		// Custom aggression disabled
 		5 : "Custom"
 	]
 
@@ -3199,7 +3200,7 @@
 
 	// Inputs
 	input SetClearOnContact(integer) : "Set the clear on contact flag. NPCs who spot enemies while running to the assault point, or while waiting at it, will immediately Clear it."
-	input SetAllowDiversion(integer) : "Set the allow diversion flag. NPCs who spot enemies whil running to the assault point, or while waiting on it, will divert away (leave Assault mode) to deal with the enemies. Upon losing enemies, they'll go back to Assault mode, and return to this assault point."
+	input SetAllowDiversion(integer) : "Set the allow diversion flag. NPCs who spot enemies while running to the assault point, or while waiting on it, will divert away (leave Assault mode) to deal with the enemies. Upon losing enemies, they'll go back to Assault mode, and return to this assault point."
 	input SetForceClear(integer) : "Set the Force Clear flag. NPCs who are currently running to the assault point will Clear it immediately. NPCs who acquire it in the future will Clear it automatically."
 
 	// Outputs
@@ -3317,12 +3318,12 @@
 
 	output OnNPCStartedLeavingBusy(ehandle) : "Fired right when an NPC targeted by this goal begins to stop acting busy, which would be right as they play their exit animation."
 	output OnNPCLostSeeEntity(void) : "Fired when the NPC loses sight of the see entity (if one is specified)."
-	output OnNPCSeeEnemy(void)  : "Fired when this NPC leaves his actbusy because of sighting an enemy."
+	output OnNPCSeeEnemy(void)  : "Fired when this NPC leaves their actbusy because of sighting an enemy."
 ]
 
 @PointClass base(BaseActBusy) = ai_goal_actbusy_queue : "AI Goal Act Busy Queue"
 [
-	node_exit(target_destination) : "Exit Node" : "" : "The name of the node the first NPC in the queue should move to when he leaves the head of the queue."
+	node_exit(target_destination) : "Exit Node" : "" : "The name of the node the first NPC in the queue should move to when they leave the head of the queue."
 	node01(target_destination) : "Node 1" : "" : "The name of the first actbusy hint node in the queue."
 	node02(target_destination) : "Node 2" : "" : "The name of the second actbusy hint node in the queue."
 	node03(target_destination) : "Node 3" : "" : "The name of the third actbusy hint node in the queue."
@@ -3364,7 +3365,7 @@
 @PointClass base(Targetname) iconsprite("editor/ai_goal_fear.vmt") = ai_goal_fear :
 	"AI Goal Fear\n\n" +
 	"Allows player allies to use fear withdrawal points and other fear behavior otherwise unique with npc_hunters. " +
-	"Citizens will still engage in fear behavior with npc_hunters, but this allows them to use it with other NPCs." +
+	"Citizens will still engage in fear behavior with npc_hunters, but this allows them to use it with other NPCs." 
 [
 	actor(target_name_or_class) : "Actor(s) to affect" : "" : "NPC(s) that should engage in fear behavior."
 	target(target_destination) : "Fear Target" : "" : "Target to fear. Only applies whenever the actors' relationship to the target is D_FR. Supports wildcards and can be a classname or an entity name."
@@ -3558,7 +3559,7 @@
 	// Outputs
 	output OnConditionsSatisfied(void) : "Fires when AI conditions satisfied"
 	output OnConditionsTimeout(void)   : "Fires when AI conditions timed out"
-	output NoValidActor(void) : "Fires if/when there are no matching actors in the map."
+	output NoValidActors(void) : "Fires if/when there are no matching actors in the map."
 ]
 
 @PointClass base(BaseScripted, Angles, DXLevelChoice) studio("models/editor/scriptedsequence.mdl") sphere(m_flRadius) = scripted_sequence :
@@ -3715,15 +3716,16 @@
 [
 	spawnflags(flags) =
 	[
-		8192  : "[8192] LookDoor Threshold" : 0
-		16384 : "[16384] LookDoor Invert" : 0
-		32768 : "[32768] LookDoor From Open" : 0
+		8192  : "[8192] Threshold" : 0
+		16384 : "[16384] Invert" : 0
+		32768 : "[32768] From Open" : 0
 	]
 
-	ProximityDistance(string) : "Proximity Distance" : "0.0"  : "If non-zero, proximity range over which door will move"
-	ProximityOffset(string) : "Proximity Offset" : "0.0" : "Offset from the target object"
-	FieldOfView(string) : "FieldOfView" : "0.0"  : "If non-zero, field of view over which door will move"
+	ProximityDistance(float) : "Proximity Distance" : 0  : "If non-zero, proximity range over which door will move"
+	ProximityOffset(float) : "Proximity Offset" : 0 : "Offset from the target object"
+	FieldOfView(float) : "FieldOfView" : 0  : "If non-zero, field of view over which door will move"
 
+	target(target_destination) : "Target" :  : "Thing to be looked at. !player works." 
 	// Input
 	input InvertOn(void) : "InvertOn - when set behavior of door is inverted."
 	input InvertOff(void) : "InvertOff - when set behavior of door is normal."
@@ -3831,9 +3833,9 @@
 	]
 ]
 
-@PointClass base(Targetname, Parentname, EnableDisable) sphere(SetRadius) = point_radiation_source : "Radiation source that trips the player's geiger counter. Does no actual damage."
+@PointClass base(Targetname, Parentname, EnableDisable) sphere(SetRadius) = point_radiation_source : "Radiation source that trips the player's Geiger counter. Does no actual damage."
 [
-	SetRadius(float): "Radius" : "0" : "Only affects the geiger counter if the player is within this radius. 0 = no radius, use intensity only"
+	SetRadius(float): "Radius" : "0" : "Only affects the Geiger counter if the player is within this radius. 0 = no radius, use intensity only"
 	SetIntensity(float): "Intensity" : "1.0" : "The intensity of the radiation source. Cannot be 0."
 	
 	TestPVS(choices) : "Test PVS" : 1 : "Tests whether the player is in this entity's PVS before attempting to update." =
@@ -3901,7 +3903,7 @@
 		3: "Large cone"
 		4: "Extra-large cone"
 	]
-	minRange(string) : "Minmum target range" : "0"
+	minRange(string) : "Minimum target range" : "0"
 	maxRange(string) : "Maximum target range" : "0"
 	_minlight(string) : "Minimum light level"
 
@@ -4020,7 +4022,7 @@
 		"Pistol" : "Pistol"
 		"SMG1" : "SMG1"
 		"AR2" : "AR2"
-		"CombineHeavyCannon" : "Combine Heavy Cannon (Episodic only)"
+		"CombineHeavyCannon" : "Combine Autocannon (Episodic only)"
 		"StriderMinigun" : "Strider Minigun"
 	]
 ]
@@ -4114,7 +4116,7 @@
 	barrel_volume(target_destination) : "Barrel Volume" : "" : "Name of a trigger the specifies the volume in which cannisters must be placed."
 ]
 
-@SolidClass base(BaseTank, TankShootSound) = func_tank_combine_cannon : "Combine sentry cannon"
+@SolidClass base(BaseTank, TankShootSound) = func_tank_combine_cannon : "Combine Autocannon"
 [
 	firerate(string) : "Rate of Fire" : "1.5"
 
@@ -4124,7 +4126,7 @@
 		"Pistol" : "Pistol"
 		"SMG1" : "SMG1"
 		"AR2" : "AR2"
-		"CombineHeavyCannon" : "Combine Heavy Cannon"
+		"CombineHeavyCannon" : "Combine Autocannon"
 	]
 	
 	ControllableVersion(choices) : "Controllable Version" : 0 : "Enables a tweaked version of func_tank_combine_cannon that is designed to be controlled by players and NPCs." =
@@ -4159,7 +4161,7 @@
 // Items
 //
 //-------------------------------------------------------------------------
-@BaseClass color(0 0 200) base(Targetname, Angles, Shadow) sphere(fademindist) sphere(fademaxdist) = Item
+@BaseClass color(0 0 200) base(Targetname, Angles, Shadow, BaseFadeProp, RenderFields) sphere(fademindist) sphere(fademaxdist) = Item
 [
 	output OnPlayerTouch(void) : "Fires when the player touches this object"
 
@@ -4229,18 +4231,18 @@
 		16 : "[16] Alternate master" : 0
 	]
 
-	DesiredHealth(float) : "Desired Health Ratio" : "1" : "A ratio from 0 to 1. Attempt to fill the player up to this percentage of his max health."
-	DesiredArmor(float) : "Desired Armor Ratio" : "0.3" : "A ratio from 0 to 1. Attempt to fill the player up to this percentage of his max armor."
-	DesiredAmmoPistol(float) : "Desired Pistol Ammo Ratio" : "0.5" : "A ratio from 0 to 1. Attempt to fill the player up to this percentage of his max ammo carrying capacity."
-	DesiredAmmoSMG1(float) : "Desired SMG1 Ammo Ratio" : "0.5" : "A ratio from 0 to 1. Attempt to fill the player up to this percentage of his max ammo carrying capacity."
-	DesiredAmmoSMG1_Grenade(float) : "Desired SMG1 Grenade Ammo Ratio" : "0.1" : "A ratio from 0 to 1. Attempt to fill the player up to this percentage of his max ammo carrying capacity."
-	DesiredAmmoAR2(float) : "Desired AR2 Ammo Ratio" : "0.4" : "A ratio from 0 to 1. Attempt to fill the player up to this percentage of his max ammo carrying capacity."
-	DesiredAmmoBuckshot(float) : "Desired Shotgun Ammo Ratio" : "0.5" : "A ratio from 0 to 1. Attempt to fill the player up to this percentage of his max ammo carrying capacity."
-	DesiredAmmoRPG_Round(float) : "Desired RPG Ammo Ratio" : "0" : "A ratio from 0 to 1. Attempt to fill the player up to this percentage of his max ammo carrying capacity."
-	DesiredAmmoGrenade(float) : "Desired Grenade Ammo Ratio" : "0.1" : "A ratio from 0 to 1. Attempt to fill the player up to this percentage of his max ammo carrying capacity."
-	DesiredAmmo357(float) : "Desired 357 Ammo Ratio" : "0" : "A ratio from 0 to 1. Attempt to fill the player up to this percentage of his max ammo carrying capacity."
-	DesiredAmmoCrossbow(float) : "Desired Crossbow Ammo Ratio" : "0" : "A ratio from 0 to 1. Attempt to fill the player up to this percentage of his max ammo carrying capacity."
-	DesiredAmmoAR2_AltFire(float) : "Desired AR2 Alt-fire Ammo Ratio" : "0" : "A ratio from 0 to 1. Attempt to fill the player up to this percentage of his max ammo carrying capacity."
+	DesiredHealth(float) : "Desired Health Ratio" : "1" : "A ratio from 0 to 1. Attempt to fill the player up to this percentage of their max health."
+	DesiredArmor(float) : "Desired Armor Ratio" : "0.3" : "A ratio from 0 to 1. Attempt to fill the player up to this percentage of their max armor."
+	DesiredAmmoPistol(float) : "Desired Pistol Ammo Ratio" : "0.5" : "A ratio from 0 to 1. Attempt to fill the player up to this percentage of their max ammo carrying capacity."
+	DesiredAmmoSMG1(float) : "Desired SMG1 Ammo Ratio" : "0.5" : "A ratio from 0 to 1. Attempt to fill the player up to this percentage of their max ammo carrying capacity."
+	DesiredAmmoSMG1_Grenade(float) : "Desired SMG1 Grenade Ammo Ratio" : "0.1" : "A ratio from 0 to 1. Attempt to fill the player up to this percentage of their max ammo carrying capacity."
+	DesiredAmmoAR2(float) : "Desired AR2 Ammo Ratio" : "0.4" : "A ratio from 0 to 1. Attempt to fill the player up to this percentage of their max ammo carrying capacity."
+	DesiredAmmoBuckshot(float) : "Desired Shotgun Ammo Ratio" : "0.5" : "A ratio from 0 to 1. Attempt to fill the player up to this percentage of their max ammo carrying capacity."
+	DesiredAmmoRPG_Round(float) : "Desired RPG Ammo Ratio" : "0" : "A ratio from 0 to 1. Attempt to fill the player up to this percentage of their max ammo carrying capacity."
+	DesiredAmmoGrenade(float) : "Desired Grenade Ammo Ratio" : "0.1" : "A ratio from 0 to 1. Attempt to fill the player up to this percentage of their max ammo carrying capacity."
+	DesiredAmmo357(float) : "Desired 357 Ammo Ratio" : "0" : "A ratio from 0 to 1. Attempt to fill the player up to this percentage of their max ammo carrying capacity."
+	DesiredAmmoCrossbow(float) : "Desired Crossbow Ammo Ratio" : "0" : "A ratio from 0 to 1. Attempt to fill the player up to this percentage of their max ammo carrying capacity."
+	DesiredAmmoAR2_AltFire(float) : "Desired AR2 Alt-fire Ammo Ratio" : "0" : "A ratio from 0 to 1. Attempt to fill the player up to this percentage of their max ammo carrying capacity."
 
 	// Inputs
 	input CalculateType(void) : "Force the dynamic resupply to calculate which item it should spawn."
@@ -4253,8 +4255,8 @@
 @PointClass base(ItemAmmo) studio("models/items/BoxMRounds.mdl")= item_ammo_smg1_large : "Large Box of SMG1 ammo" []
 @PointClass base(ItemAmmo) studio("models/items/combine_rifle_cartridge01.mdl")= item_ammo_ar2 : "Box of AR2 ammo" []
 @PointClass base(ItemAmmo) studio("models/items/combine_rifle_cartridge01.mdl")= item_ammo_ar2_large : "Large Box of AR2 ammo" []
-@PointClass base(ItemAmmo) studio("models/items/357ammo.mdl")= item_ammo_357 : "Box of 357 ammo" []
-@PointClass base(ItemAmmo) studio("models/items/357ammobox.mdl")= item_ammo_357_large : "Large Box of 357 ammo" []
+@PointClass base(ItemAmmo) studio("models/items/357ammo.mdl")= item_ammo_357 : "Box of .357 ammo" []
+@PointClass base(ItemAmmo) studio("models/items/357ammobox.mdl")= item_ammo_357_large : "Large Box of .357 ammo" []
 @PointClass base(ItemAmmo) studio("models/items/CrossbowRounds.mdl")= item_ammo_crossbow : "Box of Crossbow ammo" []
 @PointClass base(ItemAmmo) studio("models/items/BoxBuckshot.mdl")= item_box_buckshot : "Box Buckshot" []
 @PointClass base(ItemAmmo) studio("models/weapons/w_missile_closed.mdl")= item_rpg_round : "RPG Round" []
@@ -4301,10 +4303,10 @@
 		3 : "RPG Rounds"
 		4 : "Buckshot"
 		5 : "Grenades"
-		6 : "357 Magnum"
+		6 : ".357 Magnum"
 		7 : "Crossbow"
 		8 : "AR2 Alt-Fire Balls"
-		9 : "SMG Alt-Fire Grenades"
+		9 : "SMG1 Alt-Fire Grenades"
 		10 : "S.L.A.M."
 		11 : "Empty"
 	]
@@ -4319,7 +4321,7 @@
 	input Skin(integer) : "Changes the model skin to the specified number."
 ]
 
-@PointClass base(BasePropPhysics, Targetname, Angles, DamageFilter, BaseFadeProp) studioprop() = item_item_crate : "Item Crate" // studio("models/items/item_item_crate.mdl")
+@PointClass base(BasePropPhysics, Targetname, Angles, DamageFilter, BaseFadeProp, RenderFields, Global, Shadow) studioprop() = item_item_crate : "Item Crate" // studio("models/items/item_item_crate.mdl")
 [
 	model(studio) : "Model" : "models/items/item_item_crate.mdl" : "The model of this item_item_crate. Only works when this crate's appearance is set to use a custom model."
 
@@ -4456,7 +4458,7 @@
 	input ForceSecondaryFire(void) : "Forces the weapon to fire its secondary attack. Whether or not it actually fires a secondary attack depends on the weapon and who owns it."
 
 	// Outputs
-	output OnPlayerUse(void) : "Fires when the player +uses this weapon"
+	output OnPlayerUse(void) : "Fires when the player +USEs this weapon"
 	output OnPlayerPickup(void) : "Fires when the player picks up this weapon"
 	output OnNPCPickup(void) : "Fires when an NPC picks up this weapon"
 	output OnCacheInteraction(void) : "Fires when the player 'proves' they've found this weapon. Fires on: Player Touch, +USE pickup, Physcannon pickup, Physcannon punt."
@@ -4474,7 +4476,7 @@
 @PointClass base(Weapon) studio("models/weapons/w_irifle.mdl") sphere(fademindist) sphere(fademaxdist) = weapon_ar2 : "Assault Rifle 2" []
 @PointClass base(Weapon) studio("models/weapons/w_rocket_launcher.mdl") sphere(fademindist) sphere(fademaxdist) = weapon_rpg : "Missile Launcher" []
 @PointClass base(Weapon) studio("models/weapons/w_smg1.mdl") sphere(fademindist) sphere(fademaxdist) = weapon_smg1 : "SMG1" []
-@PointClass base(Weapon) studio("models/weapons/w_357.mdl") sphere(fademindist) sphere(fademaxdist) = weapon_357 : "357" []
+@PointClass base(Weapon) studio("models/weapons/w_357.mdl") sphere(fademindist) sphere(fademaxdist) = weapon_357 : ".357 Magnum" []
 @PointClass base(Weapon) studio("models/weapons/w_crossbow.mdl") sphere(fademindist) sphere(fademaxdist) = weapon_crossbow : "Crossbow" []
 @PointClass base(Weapon) studio("models/weapons/w_shotgun.mdl") sphere(fademindist) sphere(fademaxdist) = weapon_shotgun : "Shotgun" []
 @PointClass base(Weapon) studio("models/weapons/w_grenade.mdl") sphere(fademindist) sphere(fademaxdist) = weapon_frag : "Frag Grenade" []
@@ -4616,7 +4618,7 @@
 ]
 
 
-@PointClass base(Targetname, Angles) size(16 16 16) line(255 255 255, targetname, target) color(247 181 82) = path_corner : "Generic path point"
+@PointClass base(Targetname, Angles) size(16 16 16) line(255 255 255, targetname, target) color(247 181 82) cylinder(255 255 255, targetname, target, radius, targetname, targetname, radius) = path_corner : "Generic path point"
 [
 	spawnflags(Flags) =
 	[
@@ -4629,7 +4631,7 @@
 	yaw_speed(integer) : "New Train rot. Speed" : 0
 
 	// Inputs 
-	input SetNextPathCorner(target_destination) : "Sets next pathcorner"
+	input SetNextPathCorner(target_destination) : "Sets next path_corner"
 
 	// Outputs
 	output OnPass(void) : "Fires when a path follower passes this point"
@@ -4664,7 +4666,7 @@
 [
 	// Inputs
 	input Strip(void) : "Strip player's weapons"
-	input StripWeaponsAndSuit(void) : "Strip player's weapons and his suit"
+	input StripWeaponsAndSuit(void) : "Strip player's weapons and their suit"
 ]
 
 @PointClass base(Targetname) size(-16 -16 -16, 16 16 16) = player_speedmod: "Speeds up or slows down player velocity over time (slow mo/fast forward)"
@@ -4685,7 +4687,7 @@
 	AdditionalButtons(integer) : "Additional Buttons" : 0 : "Additional buttons to suppress, other than those listed in the spawnflags. Advanced users only."
 
 	// Inputs
-	input ModifySpeed(float) : "Modifies player speed by X ammount. Use 1.0 to reset."
+	input ModifySpeed(float) : "Modifies player speed by X amount. Use 1.0 to reset."
 	
 	input Enable(void) : "Enables the spawnflag abilities without actually modifying the player's speed."
 	input Disable(void) : "Disables the spawnflag abilities without actually modifying the player's speed."
@@ -4781,7 +4783,7 @@
 ]
 
 @PointClass color(0 0 255) base(Targetname) iconsprite("editor/choreo_manager.vmt") = logic_scene_list_manager :
-	"Manages a list of logic_choreographed_scene entities. Store choreo scenes in them in order that they will be played by other inputs. Whenever a scene plays, the manager will remove all scenes before that one in the list. The name of another logic_scene_list_manager can be entered in a slot instead of an invididual scene, which will cause all scenes in that manager to be removed when a later scene in this list is played."
+	"Manages a list of logic_choreographed_scene entities. Store choreo scenes in them in order that they will be played by other inputs. Whenever a scene plays, the manager will remove all scenes before that one in the list. The name of another logic_scene_list_manager can be entered in a slot instead of an individual scene, which will cause all scenes in that manager to be removed when a later scene in this list is played."
 [
 	scene0(target_destination) : "Scene 1" : "" : "The name of a logic_choreographed_scene, or logic_scene_list_manager."
 	scene1(target_destination) : "Scene 2" : "" : "The name of a logic_choreographed_scene, or logic_scene_list_manager."
@@ -4858,6 +4860,7 @@
 		33554432 : "Explosion (use with combat sound type)"
 		134217728 : "Danger approach (run if see sound owner, turn to face if not)"
 		268435456 : "Only allies can hear"
+		536870912 : "Player vehicle"
 	]
 
 	locationproxy(target_destination) : "Location Proxy" : "" : "The name of an entity to use as a proxy to determine the location at which to make the sound. If you specify an entity here, the sound will be made at that entity's location (!player included)" 
@@ -4869,7 +4872,7 @@
 [
 	spawnflags(Flags) =
 	[
-		1 : "[1] Ignore solid" : 0
+		1 : "[1] Ignore solids" : 0
 	]
 
 	input DoEffect(Void) : "Make a rotor puff"
@@ -4972,13 +4975,6 @@
 	material(material) : "Particle Material" : "particle/particle_noisesphere" : "The material to use for each particle in the explosion."
 ]
 
-@PointClass size( -4 -4 -4, 4 4 4 ) base(Targetname) = env_starfield : "Starfield effect" 
-[
-	input TurnOn(void) : "Turn on"
-	input TurnOff(void) : "Turn off"
-	input SetDensity(float) : "Set the density of the starfield. It's a multiplier, so 1 is the default."
-]
-
 @PointClass size( -4 -4 -4, 4 4 4 ) base(Targetname, Parentname, Angles) = env_flare : "Flare"
 [
 	scale(float) : "Scale" : 1
@@ -5024,7 +5020,7 @@
 														" If set to 0.5, the surface will be pulled exactly half way to this entity's position. " +
 														"If set to 2, the surface will be pulled to an imaginary point twice as far away as this entity. " +
 														"(Any Displacement Fraction greater than 1.0 will result in clipping. The surface cannot be pulled beyond " +
-														"This entity's position and any vertices attemping will clip to this entity's position. You may use this feature to create mesas.)"
+														"This entity's position and any vertices attempting will clip to this entity's position. You may use this feature to create mesas.)"
 
 	// Inputs
 	input BeginMorph(void) : "Begin Morph"
@@ -5067,7 +5063,7 @@
 		"ACHIEVEMENT_EVENT_HL2_BEAT_TOXICTUNNEL"				: "[HL2] Get through the toxic tunnel under City 17 in Half-Life 2."
 		"ACHIEVEMENT_EVENT_HL2_BEAT_PLAZASTANDOFF"				: "[HL2] Survive the Generator Plaza standoff in chapter Anticitizen One."
 		"ACHIEVEMENT_EVENT_HL2_KILL_ALLC1709SNIPERS"				: "[HL2] Kill all of the snipers in City 17."
-		"ACHIEVEMENT_EVENT_HL2_BEAT_SUPRESSIONDEVICE"			: "[HL2] Shut down the supression device by disabling its generators."
+		"ACHIEVEMENT_EVENT_HL2_BEAT_SUPRESSIONDEVICE"			: "[HL2] Shut down the suppression device by disabling its generators."
 		"ACHIEVEMENT_EVENT_HL2_BEAT_C1713STRIDERSTANDOFF"			: "[HL2] Survive the rooftop strider battle in the ruins of City 17."
 		"ACHIEVEMENT_EVENT_HL2_BEAT_GAME"						: "[HL2] Destroy the Citadel's reactor core (Beat Game)."
 
@@ -5078,7 +5074,7 @@
 		"ACHIEVEMENT_EVENT_HL2_GMAN_CATWALK"					: "[HL2] G-Man: canals_12 on catwalk"
 		"ACHIEVEMENT_EVENT_HL2_GMAN_DAM"					: "[HL2] G-Man: canals_13 to the left of the dam"
 		"ACHIEVEMENT_EVENT_HL2_GMAN_TRAINTRACKS"				: "[HL2] G-Man: town_05 at the end of the tracks"
-		"ACHIEVEMENT_EVENT_HL2_GMAN_ODESSA"					: "[HL2] G-Man: coast_03 odessa meeting"
+		"ACHIEVEMENT_EVENT_HL2_GMAN_ODESSA"					: "[HL2] G-Man: coast_03 Odessa meeting"
 		"ACHIEVEMENT_EVENT_HL2_GMAN_PRISONMONITOR"				: "[HL2] G-Man: prison_02 control room monitor"
 		"ACHIEVEMENT_EVENT_HL2_GMAN_FOYERTV"					: "[HL2] G-Man: c17_02 on TV in the destroyed foyer"
 		
@@ -5113,7 +5109,7 @@
 		"ACHIEVEMENT_EVENT_HL2_LAMDACACHE_RAILROADSHACK"		: "[HL2] Lamda: coast_07 fenced off area outside of town"
 		"ACHIEVEMENT_EVENT_HL2_LAMDACACHE_COASTABOVEBATTERY"		: "[HL2] Lamda: coast_09 above the bathroom in the battery puzzle building"
 		"ACHIEVEMENT_EVENT_HL2_LAMDACACHE_SANDSHACK"			: "[HL2] Lamda: coast_11 elevated shack after the board bridge"
-		"ACHIEVEMENT_EVENT_HL2_LAMDACACHE_GMANCACHE"			: "[HL2] Lamda: prison_02 in the boarded up area of the gman sighting"
+		"ACHIEVEMENT_EVENT_HL2_LAMDACACHE_GMANCACHE"			: "[HL2] Lamda: prison_02 in the boarded up area of the G-Man sighting"
 		"ACHIEVEMENT_EVENT_HL2_LAMDACACHE_CELLCACHE"			: "[HL2] Lamda: prison_03 in the prison cell"
 		"ACHIEVEMENT_EVENT_HL2_LAMDACACHE_POISONLAUNDRY"		: "[HL2] Lamda: prison_05 in the laundry utility room"
 		"ACHIEVEMENT_EVENT_HL2_LAMDACACHE_SODAMACHINE"			: "[HL2] Lamda: prison_06 on top of the soda machine"
@@ -5192,7 +5188,7 @@
 
 	// Inputs
 	input Toggle(void) : "Toggle the relay between enabled and disabled."
-	input FireEvent(void) : "Tells the achievement system the specifed event has occured."
+	input FireEvent(void) : "Tells the achievement system the specified event has occurred."
 	
 	// Outputs
 	output OnFired(void) : "When the event fires, this fires."
@@ -5361,7 +5357,7 @@
 
 
 @PointClass base(BaseDriveableVehicle) studioprop() = prop_vehicle_driveable :
-	"Generic driveable studiomodel vehicle."
+	"Generic drivable studiomodel vehicle."
 [
 ]
 
@@ -5379,7 +5375,7 @@
 	rotatestartsound(sound) : "Rotate Start Sound" : ""
 	rotatesound(sound) : "Rotate Loop Sound" : ""
 	rotatestopsound(sound) : "Rotate Stop Sound" : ""
-	minRange(string) : "Minmum target range" : "0"
+	minRange(string) : "Minimum target range" : "0"
 	maxRange(string) : "Maximum target range" : "0"
 	targetentityname(target_destination) : "Name of entity I should follow/attack" : ""
 
@@ -5425,7 +5421,7 @@
 @PointClass base(BaseDriveableVehicle) studioprop() = prop_vehicle_jeep :
 	"Driveable studiomodel jeep."
 [
-	model(studio) : "World model" : "models/buggy.mdl" : "Use jalopy.mdl if you're using Episodic. If you want to use the original HL2 buggy in Episodic, use prop_vehicle_jeep_old."
+	model(studio) : "World model" : "models/vehicle.mdl" : "Use vehicle.mdl if you're using Episodic. If you want to use the original HL2 buggy in Episodic, use prop_vehicle_jeep_old."
 
 	input StartRemoveTauCannon(void) : "Start the tau removal sequence."
 	input FinishRemoveTauCannon(void) : "Finish the tau removal sequence."
@@ -5565,6 +5561,11 @@
 
 @PointClass size( -4 -4 -4, 4 4 4 ) base(Targetname) = env_starfield : "Starfield effect" 
 [
+
+	m_bOn(choices) : "Start On?" : 1 : "Start env_starfield already on?" = [
+		0 : "No"
+		1 : "Yes"
+	]
 	input TurnOn(void) : "Turn on"
 	input TurnOff(void) : "Turn off"
 	input SetDensity(float) : "Set the density of the starfield. It's a multiplier, so 1 is the default."
@@ -5595,9 +5596,9 @@
 	input Deactivate(void) : "Stop controlling the view."
 	input SetCameraViewEntity(target_destination) : "Set the viewpoint to blend with the player's viewpoint."
 	input SetBlendMode(integer) : "Set the blending mode to use."
-	input SetFOV(integer) : "Set the fov for the second camera."
-	input SetNextFOV(integer) : "Set the FOV to blend to over time. Follow this with a SetFOVBlendTime input to start the fov blend."
-	input SetFOVBlendTime(float) : "Set the amount of time it should take to blend to the next fov target, and start blending."
+	input SetFOV(integer) : "Set the FOV for the second camera."
+	input SetNextFOV(integer) : "Set the FOV to blend to over time. Follow this with a SetFOVBlendTime input to start the FOV blend."
+	input SetFOVBlendTime(float) : "Set the amount of time it should take to blend to the next FOV target, and start blending."
 	input SetNextBlendMode(integer) : "Set the blending mode to blend to over time. Follow this with a SetNextBlendTime input to start the mode blend."
 	input SetNextBlendTime(float) : "Set the amount of time it should take to blend to the next mode, and start blending."
 	input FadeTo(string) : "Fade to a specific alpha amount of an amount of time. Parameters: <alpha> <duration>"
@@ -5720,7 +5721,7 @@
 	input EnterVehicle(void) : "Forces the activator (or player) into the vehicle."
 	input EnterVehicleImmediate(void) : "Forces the activator (or player) into the vehicle without enter/exit animations."
 	input ExitVehicle(void) : "Boots the prisoner out of the vehicle."
-	input Viewlock(bool) : "Set true to prevent Gordon from looking around *at all*. Set false to let him look within limits."
+	input Viewlock(bool) : "Set true to prevent player from looking around *at all*. Set false to let them look within limits."
 	input SetAnimation(string) : "Force the prop to play an animation. The parameter should be the name of the animation."
 	
 	output OnOpen(void) : "Fired when the vehicle is open enough to enter."
@@ -5850,7 +5851,7 @@
 
 
 @PointClass base(BasePropPhysics) studioprop() sphere(fademindist) sphere(fademaxdist) studio("models/magnusson_device.mdl") = weapon_striderbuster :
-	"Strider Buster"
+	"Strider Buster aka Magnusson Device"
 [
 	spawnflags(Flags) = 
 	[
